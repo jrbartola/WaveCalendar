@@ -1,3 +1,106 @@
+body {
+  background: linear-gradient(#00ffd5, #66b3ff);
+  background-repeat: no-repeat;
+  background-attachment: fixed; }
 
+/*
+#wavelist {
+	height: 800px;
+
+}*/
+#googleMap {
+  height: 500px;
+  border-radius: 20px; }
+
+h1 {
+  font-family: monospace;
+  font-size: 4rem;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 26.4px; }
+
+h2 {
+  padding: 20px;
+  font-family: monospace;
+  font-size: 3rem;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 20px; }
+
+h3 {
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 15.4px; }
+
+.navbar-default {
+  padding: 10px;
+  background-color: #0080ff;
+  border-color: transparent;
+  border-radius: 5px; }
+  .navbar-default .navbar-brand {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 3em;
+    color: #00ffd5; }
+    .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:active, .navbar-default .navbar-brand.active {
+      color: #0061c2; }
+  .navbar-default .navbar-collapse {
+    border-color: fade(white, 2%); }
+  .navbar-default .navbar-toggle {
+    background-color: #0080ff;
+    border-color: #0080ff; }
+    .navbar-default .navbar-toggle .icon-bar {
+      background-color: white; }
+    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+      background-color: #0080ff; }
+  .navbar-default .nav li ul.dropdown-menu {
+    background-color: #0080ff; }
+  .navbar-default .nav li a {
+    font-weight: 500;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    color: white; }
+    .navbar-default .nav li a:hover, .navbar-default .nav li a:focus {
+      background-color: #0080ff;
+      color: #00ffd5;
+      outline: none; }
+    .navbar-default .nav li a .dropdown-toggle {
+      background-color: #0080ff; }
+  .navbar-default .navbar-nav > .active > a {
+    border-radius: 0;
+    color: white;
+    background-color: #0080ff; }
+  .navbar-default .navbar-nav > .active > a:hover,
+  .navbar-default .navbar-nav > .active > a:focus {
+    color: white;
+    background-color: #0066cc; }
+
+.btn-norm {
+  color: white;
+  background-color: #0080ff;
+  border-color: #0080ff; }
+  .btn-norm:hover, .btn-norm:focus, .btn-norm:active, .btn-norm.active,
+  .btn-norm .open .dropdown-toggle {
+    color: white;
+    background-color: #0066cc;
+    border-color: #0061c2; }
+  .btn-norm:active, .btn-norm.active,
+  .btn-norm .open .dropdown-toggle {
+    background-image: none; }
+  .btn-norm.disabled, .btn-norm.disabled:hover, .btn-norm.disabled:focus, .btn-norm.disabled:active, .btn-norm.disabled.active, .btn-norm[disabled], .btn-norm[disabled]:hover, .btn-norm[disabled]:focus, .btn-norm[disabled]:active, .btn-norm[disabled].active,
+  .btn-norm fieldset[disabled],
+  .btn-norm fieldset[disabled]:hover,
+  .btn-norm fieldset[disabled]:focus,
+  .btn-norm fieldset[disabled]:active,
+  .btn-norm fieldset[disabled].active {
+    background-color: #0080ff;
+    border-color: #0080ff; }
+  .btn-norm .badge {
+    color: #0080ff;
+    background-color: white; }
 
 /*# sourceMappingURL=waves.css.map */

@@ -57,12 +57,24 @@ var ratingSchema = new Schema({
 	// ... More to possibly come
 });
 
+var tagSchema = new Schema({
+	created_by: { type: String, default: "Admin" },
+	added_on: { type: Date, default: Date.now },
+	data: String,
+	// if tag is pending, it doesn't show up in search box results
+	pending: { type: Boolean, default: true }
+
+});
 
 var User = mongoose.model('User', userSchema);
 var Party = mongoose.model('Party', partySchema);
 var Rating = mongoose.model('Rating', ratingSchema);
+var Tag = mongoose.model('Tag', tagSchema);
 
 module.exports.User = User;
 module.exports.Party = Party;
 module.exports.Rating = Rating;
+module.exports.Tag = Tag;
 module.exports.Mongoose = mongoose;
+
+{created_by: data: "Lit", pending: false}
