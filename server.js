@@ -9,7 +9,6 @@ var db = require('./db.js');
 
 // set static directory
 app.use(express.static(__dirname + '/assets'));
-app.use(express.static(__dirname + '/app'));
 
 var auth = function(req, res, next) {
     if (req.session && req.session.user) {

@@ -1,11 +1,23 @@
 'use strict';
 
-angular.module('waveCal').controller('TypeaheadCtrl', function($scope, $http) {
+var typeAhead = angular.module('waveCal');
+
+typeAhead.factory('tagFactory', function($http) {
+  return {
+    get: function(url) {
+      return $http.get(url).then(function(resp) {
+        return resp.data;
+      });
+    }
+  }
+})
+
+typeAhead.controller('TypeaheadCtrl', function($scope, $http) {
 
   var _selected;
 
   $scope.selected = undefined;
-  $scope.states = ['Lit','Pike','Savage','Paint','Dry','House','Frat'];
+  $scope.tags = ['Lit','Pike','Savage','Paint','Dry','House','Frat'];
   // Any function returning a promise object can be used to load values asynchronously
   // $scope.getLocation = function(val) {
   //   return $http.get('//maps.googleapis.com/maps/api/geocode/json', {

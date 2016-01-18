@@ -21,7 +21,7 @@ var userSchema = new Schema({
 	num_parties: { type: Number, default: 0},
 	attended_parties: { type: Number, default: 0},
 	rated_parties: { type: Number, default: 0},
-	join_date: {type: Date, default: Date.now},
+	join_date: {type: Date, default: Date.now() },
 	num_logins: {type: Number, default: 0 }
 	// ... More to possibly come
 });
@@ -50,7 +50,7 @@ var partySchema = new Schema({
 var ratingSchema = new Schema({
 	user: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 	party: { type: Schema.Types.ObjectId, required: true, ref: 'Party' },
-	date_posted: { type: Date, default: Date.now },
+	date_posted: { type: Date, default: Date.now() },
 	rating: { type: Number, default: 3},
 	description: String
 	// ... More to possibly come
@@ -58,7 +58,7 @@ var ratingSchema = new Schema({
 
 var tagSchema = new Schema({
 	created_by: { type: String, default: "Admin" },
-	added_on: { type: Date, default: Date.now },
+	added_on: { type: Date, default: Date.now() },
 	data: String,
 	// if tag is pending, it doesn't show up in search box results
 	pending: { type: Boolean, default: true }

@@ -14,7 +14,12 @@ function retrieveTags(callback) {
 
 function addTag(props, callback) {
 	// Add tag with entered properties
-
+	var newTag = new schemas.Tag(props);
+	newTag.save(function(err) {
+		if (err) throw err;
+		return callback(newTag);
+	});
 }
 
+module.exports.addTag = addTag;
 module.exports.retrieveTags = retrieveTags;
