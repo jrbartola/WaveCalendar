@@ -12,40 +12,47 @@ typeAhead.factory('tagFactory', function($http) {
   }
 })
 
-typeAhead.controller('TypeaheadCtrl', function($scope, $http) {
+typeAhead.controller('TypeaheadCtrl', function($scope, tagFactory) { // DI in action
+  tagFactory.get('/api/tags').then(function(data) {
+    $scope.items = data;
+  });
 
-  var _selected;
-
-  $scope.selected = undefined;
-  $scope.tags = ['Lit','Pike','Savage','Paint','Dry','House','Frat'];
-  // Any function returning a promise object can be used to load values asynchronously
-  // $scope.getLocation = function(val) {
-  //   return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-  //     params: {
-  //       address: val,
-  //       sensor: false
-  //     }
-  //   }).then(function(response){
-  //     return response.data.results.map(function(item){
-  //       return item.formatted_address;
-  //     });
-  //   });
-  // };
-
-  $scope.ngModelOptionsSelected = function(value) {
-    if (arguments.length) {
-      _selected = value;
-    } else {
-      return _selected;
-    }
+  $scope.name = ''; // This will hold the selected item
+  $scope.onItemSelected = function() { // this gets executed when an item is selected
+    console.log('selected=' + $scope.name);
   };
 
-  $scope.modelOptions = {
-    debounce: {
-      default: 500,
-      blur: 250
+});
+
+typeAhead.directive('typeahead', function($timeout) {
+  return {
+    restrict: 'AEC',
+    scope: {
+      items: '=',
+      prompt: '@',
+      title: '@',
+      subtitle: '@',
+      model: '=',
+      onSelect: '&'
     },
-    getterSetter: true
+    link: function(scope, elem, attrs) {
+      scope.handleSelection = function(selectedItem) {
+        scope.model = selectedItem;
+        scope.current = 0;
+        scope.selected = true;
+        $timeout(function() {
+          scope.onSelect();
+        }, 200);
+      };
+      scope.current = 0;
+      scope.selected = true; // hides the list initially
+      scope.isCurrent = function(index) {
+        return scope.current == index;
+      };
+      scope.setCurrent = function(index) {
+        scope.current = index;
+      };
+    },
+    templateUrl: '../templates/typeahead.html'
   };
-
 });
