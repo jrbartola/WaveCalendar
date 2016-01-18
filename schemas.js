@@ -12,9 +12,8 @@ db.once('open', function (callback) {
 
 var userSchema = new Schema({
 	name: {
-		first: String,
-		last: String,
-		required: true
+		first: { type: String, required: true },
+		last: { type: String, required: true }
 	},
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
@@ -77,4 +76,5 @@ module.exports.Rating = Rating;
 module.exports.Tag = Tag;
 module.exports.Mongoose = mongoose;
 
-{created_by: data: "Lit", pending: false}
+//
+//{created_by: "Admin", added_on: Date.now, data: "Lit", pending: false}
