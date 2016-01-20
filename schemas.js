@@ -39,11 +39,16 @@ var partySchema = new Schema({
 		guys: { type: Number, default: 1 },
 		girls: { type: Number, default: 1 }
 	},
-	tags: [String],
+	filters: [String],
 	rating: { type: Number, default: 3 },
 	num_ratings: { type: Number, default: 0 },
 	num_guests: Number,
-	location: String
+	location: {
+		street: String,
+		town: String,
+		zip_code: String
+	},
+	title: { type: String, required: true }
 	// ... More to possibly come
 });
 
@@ -56,24 +61,26 @@ var ratingSchema = new Schema({
 	// ... More to possibly come
 });
 
-var tagSchema = new Schema({
+var filterSchema = new Schema({
 	created_by: { type: String, default: "Admin" },
 	added_on: { type: Date, default: Date.now() },
 	data: String,
-	// if tag is pending, it doesn't show up in search box results
-	pending: { type: Boolean, default: true }
+	// if filter is pending, it doesn't show up in search box results
+	pending: { type: Boolean, default: true },
+	// Type can either be 'tag' or 'location'
+	type: String
 
 });
 
 var User = mongoose.model('User', userSchema);
 var Party = mongoose.model('Party', partySchema);
 var Rating = mongoose.model('Rating', ratingSchema);
-var Tag = mongoose.model('Tag', tagSchema);
+var Filter = mongoose.model('Filter', filterSchema);
 
 module.exports.User = User;
 module.exports.Party = Party;
 module.exports.Rating = Rating;
-module.exports.Tag = Tag;
+module.exports.Filter = Filter;
 module.exports.Mongoose = mongoose;
 
 //

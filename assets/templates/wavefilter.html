@@ -1,0 +1,17 @@
+<div class="wave" ng-repeat="wave in waves track by $index">
+	<div class="media">
+	  <div class="media-left media-middle">
+	    <a href="#">
+	      <img class="media-object" src="../img/pushpin.png" alt="">
+	    </a>
+	  </div>
+	  <div class="media-body">
+	    <h4 class="media-heading">{{ wave[title] }}</h4>
+	    <ul>
+	    	<li>Where: {{ wave[location][street] }}</li>
+	    	<li>{{ wave[location][town] }}, {{ wave[location][zipCode] }}</li>
+	    	<li></li>
+	    </ul>
+	  </div>
+	</div>
+</div>

@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var db = require('./db.js');
 
+app.use(bodyParser.urlencoded({ extended: false })); 
+app.use(bodyParser.json());
+
 // set static directory
 app.use(express.static(__dirname + '/assets'));
 
@@ -22,9 +25,18 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/index.html");
 });
 
-app.get('/api/tags', function(req, res) {
-	db.retrieveTags(function(tags) {
-		res.json(tags);
+app.get('/api/filters', function(req, res) {
+	db.retrieveFilters(function(filters) {
+		res.json(filters);
+	});
+});
+
+app.post('/api/parties', function(req, res) {
+	console.log(req.query);
+	var filters = req.body.filters;
+
+	db.retrieveParties(filters, function(parties) {
+		res.json(parties);
 	});
 });
 

@@ -3,11 +3,15 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed; }
 
-/*
-#wavelist {
-	height: 800px;
+ul {
+  display: block;
+  list-style-type: none; }
 
-}*/
+footer {
+  margin-top: 50px;
+  padding: 30px;
+  background-color: blue; }
+
 #googleMap {
   height: 500px;
   border-radius: 20px; }
@@ -102,5 +106,43 @@ h3 {
   .btn-norm .badge {
     color: #0080ff;
     background-color: white; }
+
+.active {
+  font-size: 2rem;
+  border-radius: 5px;
+  background-color: #0080ff;
+  color: #00ffd5; }
+
+ul.selected-items {
+  padding: 0px; }
+  ul.selected-items li {
+    padding: 5px;
+    display: inline;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #0080ff;
+    color: #00ffd5;
+    box-sizing: border-box; }
+    ul.selected-items li button {
+      padding: 0;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      -webkit-appearance: none; }
+
+.closed {
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20); }
+  .closed:hover, .closed:focus {
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.5;
+    filter: alpha(opacity=50); }
 
 /*# sourceMappingURL=waves.css.map */

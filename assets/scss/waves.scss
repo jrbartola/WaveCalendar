@@ -10,11 +10,16 @@ body {
     background-attachment: fixed;
 }
 
-/*
-#wavelist {
-	height: 800px;
+ul {
+	display: block;
+	list-style-type: none;
+}
 
-}*/
+footer {
+	margin-top: 50px;
+	padding: 30px;
+	background-color: blue;
+}
 
 // Google Map API
 
@@ -138,6 +143,57 @@ h3 {
 
 // TypeAhead
 .active {
-  background-color: #C44741;
-  color: #f2f2f2;
+  font-size: 2rem;
+  border-radius: 5px;
+  background-color: $primary-color;
+  color: $secondary-color;
 }
+
+// Selected search tags
+
+ul {
+	&.selected-items {
+
+		padding: 0px;
+
+		li {
+
+			button {
+				padding: 0;
+			    cursor: pointer;
+			    background: transparent;
+			    border: 0;
+			    -webkit-appearance: none;
+			}
+
+			padding: 5px;
+			display: inline;
+			margin: 5px;
+			border-radius: 5px;
+			background-color: $primary-color;
+			color: $secondary-color;
+			box-sizing: border-box;
+		}
+	}
+}
+
+.closed {
+	&:hover,
+	&:focus {
+  		color: #000000;
+  		text-decoration: none;
+  		cursor: pointer;
+  		opacity: 0.5;
+  		filter: alpha(opacity=50);
+	}
+
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000000;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+
+

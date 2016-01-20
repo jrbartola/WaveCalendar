@@ -3,23 +3,53 @@
 var schemas = require('./schemas.js');
 //var bcript = require('bcrypt');
 
-function retrieveTags(callback) {
+function retrieveFilters(callback) {
 	// Retrieve all tag entries
-	schemas.Tag.find({}, function(err, tags) {
+	schemas.Filter.find({}, function(err, filters) {
 		if (err) throw err;
 		// Return callback with tags listed
-		return callback(tags);
+		return callback(filters);
 	});
 }
 
-function addTag(props, callback) {
+function addFilter(props, callback) {
 	// Add tag with entered properties
-	var newTag = new schemas.Tag(props);
-	newTag.save(function(err) {
+	var newFilter = new schemas.Filter(props);
+	newFilter.save(function(err) {
 		if (err) throw err;
-		return callback(newTag);
+		return callback(newFilter);
 	});
 }
 
-module.exports.addTag = addTag;
-module.exports.retrieveTags = retrieveTags;
+function retrieveParties(filters, callback) {
+	// Filter party entries based on tags
+	schemas.Party.find({}).
+	where('filters').all(filters).
+	exec(function(err, parties) {
+		if (err) throw err;
+		// Return callback with parties listed
+		return callback(parties);
+	});
+}
+
+function addParty(props, callback) {
+	// Add party with entered properties
+	var newParty = new Schemas.Party(props);
+	newParty.save(function(err) {
+		if (err) throw err;
+		return callback(newParty);
+	});
+}
+
+function getCoordinates(address) {
+
+}
+
+
+module.exports.addFilter = addFilter;
+module.exports.retrieveFilters = retrieveFilters;
+module.exports.retrieveParties = retrieveParties;
+module.exports.addParty = addParty;
+
+
+
