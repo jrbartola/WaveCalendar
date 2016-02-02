@@ -60,7 +60,7 @@
 			  		<div class="col-md-4" id="wavelist" ng-controller="TypeaheadCtrl">
 			  			<div class="row">
 			  					
-    						<typeahead items="items" prompt="Search by..." title="data" subtitle="type" model="name" on-select="onItemSelected()" on-change="getParties()" chosen="chosen_" />
+    						<typeahead items="items" prompt="Search for tags.." title="data" subtitle="type" model="name" location="distance" on-select="onItemSelected()" on-change="getParties()" chosen="chosen_" />
       							<!-- <input type="text" class="form-control" placeholder="Search by..."> -->
       							
 			  				<h2>Upcoming Waves</h2>
@@ -94,12 +94,13 @@
   		<!-- jQuery -->
   		<script src="../js/jquery-1.11.1.js"></script>
   		<!-- Google Maps -->
-  		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbSB586nZ-BZAaKIHnzSuEyB8Zpi_Y0WE"></script>
   		<!-- Google Maps Initializer -->
   		<script src="../js/googlemap.js" type="text/javascript"></script>
+  		<script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBbSB586nZ-BZAaKIHnzSuEyB8Zpi_Y0WE&callback=initialize"></script>
+  		
   		<script type="text/javascript">
   		$(document).ready(function() {
-  			initialize();
+  			
   		});
   		</script>
   		<!-- Bootstrap JS -->

@@ -4,10 +4,19 @@
 // Whole page customs
 
 body {
-	background: linear-gradient($secondary-color, 
-		lighten($primary-color, 20%));
+	//background: linear-gradient($secondary-color, 
+	//	lighten($primary-color, 20%));
+	background-color: #f7f7f7;
 	background-repeat: no-repeat;
     background-attachment: fixed;
+}
+
+section#main {
+	margin-top: 50px;
+}
+
+#tagbox {
+	border-radius: 0px;
 }
 
 ul {
@@ -18,14 +27,16 @@ ul {
 footer {
 	margin-top: 50px;
 	padding: 30px;
-	background-color: blue;
+	background-color: $secondary-color;
+	border-top: 5px solid $primary-color;
+	box-shadow: -1px -1px 15px #888;
 }
 
 // Google Map API
 
 #googleMap {
 	height: 500px;
-	border-radius: 20px;
+	//border-radius: 20px;
 }
 
 h1 {
@@ -61,14 +72,17 @@ h3 {
 // Navbar customs
 
 .navbar-default {
+	box-shadow: 1px 1px 15px #888;
 	padding: 10px;
-	background-color: $primary-color;
-	border-color: transparent;
-	border-radius: 5px;
+	background-color: $secondary-color;
+	//border: 25px $primary-color;
+	//border-color: $primary-color;
+	border-bottom: 5px solid $primary-color;
+	border-radius: 0px;
 	.navbar-brand {
-		font-family: 'Brush Script MT', cursive;
+		font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
 		font-size: 3em;
-		color: $secondary-color;
+		color: lighten($primary-color, 30%);
         &:hover,
         &:focus,
         &:active,
@@ -87,7 +101,7 @@ h3 {
 		}
 		&:hover,
 		&:focus {
-			background-color: $primary-color;
+			background-color: $secondary-color;
 		}
 	}
     .nav {
@@ -98,18 +112,18 @@ h3 {
     		}
 
     		ul.dropdown-menu {
-    			background-color: $primary-color;
+    			background-color: $secondary-color;
     		}
 
     		a {
     			font-weight: 500;
     			font-size: 2rem;
     			letter-spacing: 1px;
-    			color: white;
+    			color: $primary-color;
     			&:hover,
     			&:focus {
-    				background-color: $primary-color;
-    				color: $secondary-color;
+    				background-color: $secondary-color;
+    				color: $primary-color;
     				outline: none;
     			}
 
@@ -121,13 +135,13 @@ h3 {
     }
 	.navbar-nav>.active>a {
 		border-radius: 0;
-		color: white;
-		background-color: $primary-color;
+		color: $primary-color;
+		background-color: $secondary-color;
 	}
 	.navbar-nav>.active>a:hover,
 	.navbar-nav>.active>a:focus {
-		color: white;
-		background-color: darken($primary-color, 10%);
+		color: darken($primary-color, 10%);
+		background-color: $secondary-color;
 	}
 }
 
@@ -135,6 +149,7 @@ h3 {
 
 .btn-norm {
 	@include button_var(white, $primary-color, $primary-color);
+	//border-radius: 0;
 }
 
 .btn-larger {
@@ -144,7 +159,7 @@ h3 {
 // TypeAhead
 .active {
   font-size: 2rem;
-  border-radius: 5px;
+  //border-radius: 5px;
   background-color: $primary-color;
   color: $secondary-color;
 }

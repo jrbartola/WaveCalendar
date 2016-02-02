@@ -17,7 +17,10 @@ var userSchema = new Schema({
 	},
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
-	location: String,
+	location: {
+		town: String,
+		state: String
+	},
 	num_parties: { type: Number, default: 0},
 	attended_parties: { type: Number, default: 0},
 	rated_parties: { type: Number, default: 0},

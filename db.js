@@ -21,15 +21,46 @@ function addFilter(props, callback) {
 	});
 }
 
-function retrieveParties(filters, callback) {
+function retrieveParties(callback, filters, location) {
+
 	// Filter party entries based on tags
-	schemas.Party.find({}).
-	where('filters').all(filters).
-	exec(function(err, parties) {
-		if (err) throw err;
-		// Return callback with parties listed
-		return callback(parties);
-	});
+
+	if (location && filters) {
+		schemas.Party.find({}).
+		where('filters').all(filters).
+		where({'location.town': location}).
+		exec(function(err, parties) {
+			if (err) throw err;
+			// Return callback with parties listed
+			return callback(parties);
+		});
+	} else if (filters) {
+		schemas.Party.find({}).
+		where('filters').all(filters).
+		exec(function(err, parties) {
+			if (err) throw err;
+			// Return callback with parties listed
+			return callback(parties);
+		});
+	} else if (location) {
+		schemas.Party.find({}).
+		where({'location.town': location}).
+		exec(function(err, parties) {
+			if (err) throw err;
+			// Return callback with parties listed
+			return callback(parties);
+		});
+	} else {
+		schemas.Party.find({}).
+		exec(function(err, parties) {
+			if (err) throw err;
+			// Return callback with parties listed
+			return callback(parties);
+		});
+	}
+	
+	 
+	
 }
 
 function addParty(props, callback) {
@@ -41,9 +72,6 @@ function addParty(props, callback) {
 	});
 }
 
-function getCoordinates(address) {
-
-}
 
 
 module.exports.addFilter = addFilter;

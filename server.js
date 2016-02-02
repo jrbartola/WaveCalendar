@@ -1,6 +1,6 @@
 'use strict';
 
-var express = require('express');
+var express = require('express'); 
 var app = express();
 var http = require('http').Server(app);
 var bodyParser = require('body-parser');
@@ -32,12 +32,13 @@ app.get('/api/filters', function(req, res) {
 });
 
 app.post('/api/parties', function(req, res) {
-	console.log(req.query);
+	var location = req.body.location;
 	var filters = req.body.filters;
 
-	db.retrieveParties(filters, function(parties) {
+	db.retrieveParties(function(parties) {
 		res.json(parties);
-	});
+	}, filters, location);
+	
 });
 
 http.listen(3002, function() {

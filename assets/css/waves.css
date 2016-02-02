@@ -1,7 +1,13 @@
 body {
-  background: linear-gradient(#00ffd5, #66b3ff);
+  background-color: #f7f7f7;
   background-repeat: no-repeat;
   background-attachment: fixed; }
+
+section#main {
+  margin-top: 50px; }
+
+#tagbox {
+  border-radius: 0px; }
 
 ul {
   display: block;
@@ -10,11 +16,12 @@ ul {
 footer {
   margin-top: 50px;
   padding: 30px;
-  background-color: blue; }
+  background-color: white;
+  border-top: 5px solid #0080ff;
+  box-shadow: -1px -1px 15px #888; }
 
 #googleMap {
-  height: 500px;
-  border-radius: 20px; }
+  height: 500px; }
 
 h1 {
   font-family: monospace;
@@ -42,14 +49,15 @@ h3 {
   line-height: 15.4px; }
 
 .navbar-default {
+  box-shadow: 1px 1px 15px #888;
   padding: 10px;
-  background-color: #0080ff;
-  border-color: transparent;
-  border-radius: 5px; }
+  background-color: white;
+  border-bottom: 5px solid #0080ff;
+  border-radius: 0px; }
   .navbar-default .navbar-brand {
-    font-family: 'Brush Script MT', cursive;
+    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
     font-size: 3em;
-    color: #00ffd5; }
+    color: #99ccff; }
     .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:active, .navbar-default .navbar-brand.active {
       color: #0061c2; }
   .navbar-default .navbar-collapse {
@@ -60,33 +68,34 @@ h3 {
     .navbar-default .navbar-toggle .icon-bar {
       background-color: white; }
     .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-      background-color: #0080ff; }
+      background-color: white; }
   .navbar-default .nav li ul.dropdown-menu {
-    background-color: #0080ff; }
+    background-color: white; }
   .navbar-default .nav li a {
     font-weight: 500;
     font-size: 2rem;
     letter-spacing: 1px;
-    color: white; }
+    color: #0080ff; }
     .navbar-default .nav li a:hover, .navbar-default .nav li a:focus {
-      background-color: #0080ff;
-      color: #00ffd5;
+      background-color: white;
+      color: #0080ff;
       outline: none; }
     .navbar-default .nav li a .dropdown-toggle {
       background-color: #0080ff; }
   .navbar-default .navbar-nav > .active > a {
     border-radius: 0;
-    color: white;
-    background-color: #0080ff; }
+    color: #0080ff;
+    background-color: white; }
   .navbar-default .navbar-nav > .active > a:hover,
   .navbar-default .navbar-nav > .active > a:focus {
-    color: white;
-    background-color: #0066cc; }
+    color: #0066cc;
+    background-color: white; }
 
 .btn-norm {
   color: white;
   background-color: #0080ff;
-  border-color: #0080ff; }
+  border-color: #0080ff;
+  border-radius: 0px; }
   .btn-norm:hover, .btn-norm:focus, .btn-norm:active, .btn-norm.active,
   .btn-norm .open .dropdown-toggle {
     color: white;
@@ -109,9 +118,8 @@ h3 {
 
 .active {
   font-size: 2rem;
-  border-radius: 5px;
   background-color: #0080ff;
-  color: #00ffd5; }
+  color: white; }
 
 ul.selected-items {
   padding: 0px; }
@@ -121,7 +129,7 @@ ul.selected-items {
     margin: 5px;
     border-radius: 5px;
     background-color: #0080ff;
-    color: #00ffd5;
+    color: white;
     box-sizing: border-box; }
     ul.selected-items li button {
       padding: 0;
