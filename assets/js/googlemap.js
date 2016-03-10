@@ -33,34 +33,42 @@ function initialize() {
       title: "You are here!"
     });
 
-    getAddress(latLong, function(town) {
-      console.log(town);
-    })
+    // getAddress(latLong, function(town) {
+    //   console.log(town);
+    // })
   });
 }
 
-
-function dropPin(address, title) {
+function getCoords(address, callback) {
   geocoder.geocode( {'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location,
-            title: title
-        });
-        // Add marker to array
-        markers.push(marker);
-        //console.log("Dropped a pin!");
+        
+        return callback(results[0].geometry.location);
+
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
   });
 }
 
+function dropPin(address, title) {
+  
+  getCoords(address, function(coords) {
+    
+    var marker = new google.maps.Marker({
+      map: map,
+      position: new google.maps.LatLng(coords.lat(), coords.lng()),
+      title: title
+    });
+    // Add marker to array
+    markers.push(marker);
+  });
+}
+
 function getAddress(lat_long, callback) {
   geocoder.geocode({'location': lat_long}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
-      console.log(results);
+      
       return callback(results[0].address_components[2].long_name);
     } else {
       return null;
@@ -86,3 +94,13 @@ function getDistance(dest, callback) {
     return callback(response.rows[0].elements[0].distance.value);
   });
 }
+
+function setCenter(address) {
+  getCoords(address, function(coords) {
+    map.setCenter(coords);
+  });
+}
+
+
+
+

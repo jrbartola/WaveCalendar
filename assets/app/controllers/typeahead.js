@@ -221,7 +221,10 @@ typeAhead.directive('wavefilter', function($timeout) {
     },
     link: function(scope, elem, attrs) {
       // insert scope functions here
-
+      scope.centerMap = function(party) {
+        var address = party.location.street + ", " + party.location.town + ", " + party.location.zip_code;
+        setCenter(address);
+      }
     },
     templateUrl: '../templates/wavefilter.html'
   };

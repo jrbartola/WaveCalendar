@@ -1,7 +1,7 @@
 <div class="input-group">
 <input type="text" id="tagbox" class="form-control" ng-model="model" placeholder="{{prompt}}" ng-keydown="selected=false" />
 <span class="input-group-btn">
-  <button class="btn btn-norm" id="add" ng-click="onAdd()" type="button">Add</button>
+  <button class="btn btn-norm" id="add" ng-click="onPoop()" type="button">Add</button>
 </span>
 </div>
 <br/>
@@ -29,7 +29,7 @@
 	    <span class="caret"></span>
 	  </a>
 	  <ul class="dropdown-menu" aria-labelledby="loc-dropdown">
-	    <li><a ng-click="setText('Within 1 mile', 109)" href="">Within 1 mile</a></li>
+	    <li><a ng-click="setText('Within 1 mile', 1609)" href="">Within 1 mile</a></li>
 	    <li><a ng-click="setText('Within 5 miles', 8047)" href="">Within 5 miles</a></li>
 	    <li><a ng-click="setText('Within 10 miles', 16093)" href="">Within 10 miles</a></li>
 	    <li><a ng-click="setText('Within my town', 0)" href="">Within my town</a></li>

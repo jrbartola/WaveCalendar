@@ -11,10 +11,13 @@
         <![endif]-->
     	<title>WaveCalendar</title>
 
+    	<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
     	<!-- Bootstrap CSS -->
     	<link rel="stylesheet" href="../css/bootstrap.min.css">
     	<!-- FontAwesome CSS -->
     	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    	<!-- Animation CSS -->
+    	<link rel="stylesheet" href="../css/animate.min.css">
     	<!-- Custom CSS -->
     	<link rel="stylesheet" href="../css/waves.css">
   	</head>
@@ -76,6 +79,15 @@
 		  		</div>
 	  		</div>
 	    </section>
+
+	    <section id="create" ng-controller="WaveRiderCtrl">
+	    	<div class="container">
+	    		<h1>Ride the Wave</h1>
+	    		<br/>
+	    		<partycode party="party" on-search="getParty()" code="code"></partycode>
+	    		
+	    	</div>
+	    </section>
 	  	
 
 
@@ -105,6 +117,8 @@
   		</script>
   		<!-- Bootstrap JS -->
   		<script src="../js/bootstrap.min.js"></script>
+  		<!-- Waypoints Plugin --> 
+  		<script src="../js/noframework.waypoints.min.js" type="text/javascript"></script>
   		<!-- Angular JS -->
   		<script src="../js/angular.min.js" type="text/javascript"></script>
   		<!-- Main Angular JS App -->
@@ -112,6 +126,7 @@
 		<!-- Main Controller jS -->
 		<script src="../app/controllers/main.js" type="text/javascript"></script>
 		<script src="../app/controllers/typeahead.js" type="text/javascript"></script>
+		<script src="../app/controllers/waverider.js" type="text/javascript"></script>
   		
   	</body>
 

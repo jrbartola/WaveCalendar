@@ -59,8 +59,14 @@ function retrieveParties(callback, filters, location) {
 		});
 	}
 	
-	 
-	
+}
+
+function partyByCode(code, callback) {
+	schemas.Party.findOne({"reg_code": code}, function(err, party) {
+		if (err) throw err;
+		// Return callback with matched party
+		return callback(party);
+	});
 }
 
 function addParty(props, callback) {

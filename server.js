@@ -25,6 +25,10 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/index.html");
 });
 
+app.get('/home', function(req, res) {
+	res.sendFile(__dirname + "/assets/templates/front.html");
+});
+
 app.get('/api/filters', function(req, res) {
 	db.retrieveFilters(function(filters) {
 		res.json(filters);
@@ -38,6 +42,15 @@ app.post('/api/parties', function(req, res) {
 	db.retrieveParties(function(parties) {
 		res.json(parties);
 	}, filters, location);
+	
+});
+
+app.post('/api/partycode', function(req, res) {
+	var code = req.body.code;
+
+	db.partyByCode(function(party) {
+		res.json(party);
+	});
 	
 });
 
