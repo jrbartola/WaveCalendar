@@ -67,11 +67,11 @@ h2 {
 
 h3 {
 	font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 500;
-	line-height: 15.4px;
+	line-height: 16.4px;
 }
 
 
@@ -160,7 +160,8 @@ h3 {
 }
 
 .btn-larger {
-	
+	@include button_var(white, $primary-color, $primary-color);
+	padding: 10px, 25px;
 }
 
 // TypeAhead
@@ -243,9 +244,11 @@ section#create {
 }
 
 .modaldiv {
-	h2 {
+	h2, h3 {
 		text-align: center;
 	}
+
+	padding-bottom: 20px;
 	background-color:lighten($primary-color, 20%);;
 	//border: 1px solid darken($primary-color, 30%);
 	
@@ -253,7 +256,15 @@ section#create {
 		box-shadow: 0px 1px 4px black;
 		-webkit-transition: all ease 0.3s;
 	}
+
+
 	
+}
+
+// Error message for the code box
+#codeerror {
+	color: red;
+	display: none;
 }
 
 // Class for blurred background, unused at this point
@@ -263,5 +274,15 @@ section#create {
     -o-filter: blur(5px);
     -ms-filter: blur(5px);
     filter: blur(5px);
+}
+
+// Class for hidden/invisible objects while preserving their space
+.invisible {
+	visibility: hidden;
+}
+
+// Class for loading objects
+.loading {
+	background: transparent url(../img/ajax-loader.gif) no-repeat center center;
 }
 

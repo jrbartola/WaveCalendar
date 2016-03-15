@@ -48,7 +48,7 @@ app.post('/api/parties', function(req, res) {
 app.post('/api/partycode', function(req, res) {
 	var code = req.body.code;
 
-	db.partyByCode(function(party) {
+	db.partyByCode(code, function(party) {
 		res.json(party);
 	});
 	

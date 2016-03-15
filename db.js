@@ -83,6 +83,7 @@ function addParty(props, callback) {
 module.exports.addFilter = addFilter;
 module.exports.retrieveFilters = retrieveFilters;
 module.exports.retrieveParties = retrieveParties;
+module.exports.partyByCode = partyByCode;
 module.exports.addParty = addParty;
 
 

@@ -48,11 +48,11 @@ h2 {
 
 h3 {
   font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-style: normal;
   font-variant: normal;
   font-weight: 500;
-  line-height: 15.4px; }
+  line-height: 16.4px; }
 
 .navbar-default {
   box-shadow: 1px 1px 15px #888;
@@ -123,6 +123,33 @@ h3 {
     color: #0080ff;
     background-color: white; }
 
+.btn-larger {
+  color: white;
+  background-color: #0080ff;
+  border-color: #0080ff;
+  border-radius: 0px;
+  padding: 10px, 25px; }
+  .btn-larger:hover, .btn-larger:focus, .btn-larger:active, .btn-larger.active,
+  .btn-larger .open .dropdown-toggle {
+    color: white;
+    background-color: #0066cc;
+    border-color: #0061c2; }
+  .btn-larger:active, .btn-larger.active,
+  .btn-larger .open .dropdown-toggle {
+    background-image: none; }
+  .btn-larger.disabled, .btn-larger.disabled:hover, .btn-larger.disabled:focus, .btn-larger.disabled:active, .btn-larger.disabled.active, .btn-larger[disabled], .btn-larger[disabled]:hover, .btn-larger[disabled]:focus, .btn-larger[disabled]:active, .btn-larger[disabled].active,
+  .btn-larger fieldset[disabled],
+  .btn-larger fieldset[disabled]:hover,
+  .btn-larger fieldset[disabled]:focus,
+  .btn-larger fieldset[disabled]:active,
+  .btn-larger fieldset[disabled].active {
+    -webkit-transition: all ease 0.3s;
+    background-color: #0080ff;
+    border-color: #0080ff; }
+  .btn-larger .badge {
+    color: #0080ff;
+    background-color: white; }
+
 .active {
   font-size: 2rem;
   background-color: #0080ff;
@@ -175,12 +202,17 @@ section#create {
     text-align: center; }
 
 .modaldiv {
+  padding-bottom: 20px;
   background-color: #66b3ff; }
-  .modaldiv h2 {
+  .modaldiv h2, .modaldiv h3 {
     text-align: center; }
   .modaldiv:hover {
     box-shadow: 0px 1px 4px black;
     -webkit-transition: all ease 0.3s; }
+
+#codeerror {
+  color: red;
+  display: none; }
 
 .blurred {
   -webkit-filter: blur(5px);
@@ -188,5 +220,11 @@ section#create {
   -o-filter: blur(5px);
   -ms-filter: blur(5px);
   filter: blur(5px); }
+
+.invisible {
+  visibility: hidden; }
+
+.loading {
+  background: transparent url(../img/ajax-loader.gif) no-repeat center center; }
 
 /*# sourceMappingURL=waves.css.map */

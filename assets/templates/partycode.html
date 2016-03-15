@@ -1,13 +1,17 @@
 <div class="modaldiv col-md-6 col-md-offset-3">
-	<h2>Got a code?</h2>
-	<div class="col-md-6 col-md-offset-3">
-		<form class="text-center">
-		  <div class="form-group">
-		    <label for="codebox">8 Digit Party Code</label>
-		    <input type="text" ng-model="codemodel" class="form-control" id="codebox" placeholder="">
-		  </div>
-		  <button type="submit" ng-click="getParty(codemodel)" class="btn btn-norm">Submit</button>
+	<div ng-hide="state!=0" class="col-md-6 col-md-offset-3 text-center modal-inside">
+		<h2>Got a code?</h2>
+		<p id="codeerror">Must be 8 alpha-numeric characters</p>
+		<form id="findform" ng-submit="getParty()">
+		    <div class="input-group">
+			    <!-- <label for="codebox">8 Character Party Code</label> -->
+			    <input type="text" ng-change="sendCode()" ng-model="codemodel" class="form-control" id="codebox" placeholder="8-Character code" data-toggle="tooltip" data-placement="top" title="Must be 8 alpha-numeric characters">
+			  <span class="input-group-btn">
+			    <button type="submit" class="btn btn-norm">Find</button>
+			  </span>
+		    </div>
 		</form>
-		<br/>
+		<h3>or</h3>
+		<button type="button" class="btn btn-larger">Create</button>
 	</div>
 </div>
