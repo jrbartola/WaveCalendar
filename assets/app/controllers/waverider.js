@@ -68,7 +68,7 @@ waveRider.directive('partycode', function($timeout) {
     },
     link: function(scope, elem, attrs) {
       // insert scope functions here
-      scope.getParty = function() {
+      scope.findParty = function() {
       	
       	if (scope.codemodel && scope.codemodel.length == 8) {
       		//scope.code = joincode;
@@ -97,6 +97,12 @@ waveRider.directive('partycode', function($timeout) {
       scope.sendCode = function() {
       	scope.code = scope.codemodel;
       };
+
+      scope.squareOne = function() {
+        $('.modal-inside').children().removeClass('invisible');
+        scope.code = '';
+        scope.state = 0;
+      }
     },
     templateUrl: '../templates/partycode.html'
   };

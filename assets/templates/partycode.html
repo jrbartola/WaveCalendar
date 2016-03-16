@@ -1,8 +1,8 @@
-<div class="modaldiv col-md-6 col-md-offset-3">
-	<div ng-hide="state!=0" class="col-md-6 col-md-offset-3 text-center modal-inside">
+<div ng-hide="state!=0" class="modaldiv col-md-6 col-md-offset-3">
+	<div class="col-md-6 col-md-offset-3 text-center modal-inside">
 		<h2>Got a code?</h2>
 		<p id="codeerror">Must be 8 alpha-numeric characters</p>
-		<form id="findform" ng-submit="getParty()">
+		<form id="findform" ng-submit="findParty()">
 		    <div class="input-group">
 			    <!-- <label for="codebox">8 Character Party Code</label> -->
 			    <input type="text" ng-change="sendCode()" ng-model="codemodel" class="form-control" id="codebox" placeholder="8-Character code" data-toggle="tooltip" data-placement="top" title="Must be 8 alpha-numeric characters">
@@ -14,4 +14,48 @@
 		<h3>or</h3>
 		<button type="button" class="btn btn-larger">Create</button>
 	</div>
+</div>
+<div ng-hide="state!=1" class="col-md-8 col-md-offset-2 modal-found">
+	<div class="row">
+		<div class="col-md-2">
+			<img class="top-icon" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
+		</div>
+		<div class="col-md-10">
+	    	<h2>{{ party.title }}</h2>
+		</div>
+	</div>
+	    
+	<div class="col-md-6">
+		<div class="media">
+		  <!-- <a class="media-left" href="#">
+		    <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
+		  </a> -->
+		  <div class="media-body">
+		    <h4 class="media-heading">Where</h4>
+		    {{ party.location.street }}
+		    {{ party.location.town }},
+		    {{ party.location.zip_code }}
+		  </div>
+		  <h3>From</h3>{{ party.time.start }}
+		  <h3>Until</h3>{{ party.time.end }}
+		</div>
+		<div class="btn-only text-center">
+		  <button type="button" class="btn btn-larger">Attend</button>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="media">
+		  <!-- <a class="media-left" href="#">
+		    <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
+		  </a> -->
+		  <div class="media-body">
+		    <h4 class="media-heading">Details</h4>
+		    
+		  </div>
+		</div>
+		<div class="btn-only text-center">
+		  <button type="button" ng-click="squareOne()" class="btn btn-larger">Search Again</button>
+		</div>
+	</div>
+	
 </div>
