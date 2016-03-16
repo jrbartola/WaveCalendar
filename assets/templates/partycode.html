@@ -36,8 +36,8 @@
 		    {{ party.location.town }},
 		    {{ party.location.zip_code }}
 		  </div>
-		  <h3>From</h3>{{ party.time.start }}
-		  <h3>Until</h3>{{ party.time.end }}
+		  <h3>From</h3>{{ readableDate(party.time.start) }}
+		  <h3>Until</h3>{{ readableDate(party.time.end) }}
 		</div>
 		<div class="btn-only text-center">
 		  <button type="button" class="btn btn-larger">Attend</button>

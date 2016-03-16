@@ -102,7 +102,13 @@ waveRider.directive('partycode', function($timeout) {
         $('.modal-inside').children().removeClass('invisible');
         scope.code = '';
         scope.state = 0;
-      }
+      };
+
+      scope.readableDate = function(datestring) {
+        // Convert date from nonsense into a readable string
+        var d = new Date(datestring)
+        return d.toDateString();
+      };
     },
     templateUrl: '../templates/partycode.html'
   };
