@@ -25,6 +25,9 @@ footer {
   border-top: 5px solid #0080ff;
   box-shadow: -1px -1px 15px #888; }
 
+.content {
+  padding-top: 150px; }
+
 #googleMap {
   height: 500px;
   background: transparent url(../img/ajax-loader.gif) no-repeat center center; }

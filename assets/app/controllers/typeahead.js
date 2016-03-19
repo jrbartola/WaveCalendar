@@ -103,7 +103,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     clearMarkers();
     partyFactory.post('/api/parties', {'filters': filData, 'location': locData}).then(function(data) {
       
-      
+      // Use $scope.$apply() eventually..
       $.each(data, function(index, value) {
         var address = value.location.street + ", " + value.location.town + ", " + value.location.zip_code;
         
@@ -123,6 +123,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
           }
 
           // Hack to get around weird bug that prevents parties from showing up
+          // $scope.$apply will fix this..
           if (index + 1 == data.length) {
             $('#add').click();
           }

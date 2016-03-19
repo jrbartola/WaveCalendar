@@ -49,9 +49,12 @@
 		    <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
 		  </a> -->
 		  <div class="media-body">
-		    <h4 class="media-heading">Details</h4>
-		    
+		    <h4 class="media-heading">Owner</h4>
+		    {{ party.owner }}
 		  </div>
+		  <h3>Status</h3>{{ party.status }}
+		  <h3>Tags</h3>{{ party.tags }}
+		  <h3>Ratio</h3>{{ party.ratio.girls }} girls to {{ party.ratio.guys }} guys
 		</div>
 		<div class="btn-only text-center">
 		  <button type="button" ng-click="squareOne()" class="btn btn-larger">Search Again</button>

@@ -44,6 +44,7 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
             $('.modal-inside').children().removeClass('invisible');
           });
       } else {
+        $('.modal-found').removeClass('invisible');
         $scope.view = 1;
       }
       
@@ -99,9 +100,21 @@ waveRider.directive('partycode', function($timeout) {
       };
 
       scope.squareOne = function() {
-        $('.modal-inside').children().removeClass('invisible');
-        scope.code = '';
-        scope.state = 0;
+        $('.modal-found').addClass('animated zoomOut');
+
+        $('.modal-found').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+          $('.modal-found').removeClass('animated zoomOut').addClass('invisible');
+          $('.modal-inside').children().removeClass('invisible');
+
+          scope.$apply(function() {
+            scope.code = '';
+            scope.state = 0;
+          });
+          
+        });
+        
+
+        
       };
 
       scope.readableDate = function(datestring) {
@@ -114,7 +127,7 @@ waveRider.directive('partycode', function($timeout) {
         if (minutes < 10)
           minutes = "0" + minutes
 
-        if (hours > 12)
+        if (hours > 12) // Might show AM instead of PM for 12 o clock
           total = " " + (hours - 12) + ":" + minutes + " PM"
         else
           total = " " + hours + ":" + minutes + " AM"
