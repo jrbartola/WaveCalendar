@@ -26,7 +26,14 @@ footer {
   box-shadow: -1px -1px 15px #888; }
 
 .content {
-  padding-top: 150px; }
+  padding-top: 125px; }
+
+.heading {
+  padding: 25px;
+  margin-top: 50px;
+  border: 5px solid #0080ff;
+  border-radius: 4px;
+  background-color: #75baff; }
 
 #googleMap {
   height: 500px;
