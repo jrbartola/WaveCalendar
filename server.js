@@ -6,6 +6,7 @@ var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var db = require('./db.js');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
@@ -32,6 +33,15 @@ app.get('/home', function(req, res) {
 app.get('/api/filters', function(req, res) {
 	db.retrieveFilters(function(filters) {
 		res.json(filters);
+	});
+});
+
+app.post('/api/users', function(req, res) {
+	var field = req.body.field;
+	var value = req.body.value;
+
+	db.getUser(field, value, function(user) {
+		res.json(user);
 	});
 });
 

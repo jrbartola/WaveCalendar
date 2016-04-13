@@ -59,7 +59,7 @@
 		</div><!-- /.container-fluid -->
 	  </nav>
 
-	    <section id="main" ng-controller="mainCtrl">
+	    <section id="main">
 	    	<div class="container">
 		    	<div class="row">
 			  		<div class="col-md-4" id="wavelist" ng-controller="TypeaheadCtrl">
@@ -86,7 +86,7 @@
 	    	<div class="container">
 	    		<h1>Ride the Wave</h1>
 	    		<br/>
-	    		<partycode party="party" on-search="getParty()" code="code" state="view"></partycode>
+	    		<partycode party="party" on-search="getParty()" code="code" state="view" on-attend="attendParty()" square-one="initialView()"></partycode>
 	    		
 	    	</div>
 	    </section>
@@ -128,7 +128,7 @@
   		<!-- Main Angular JS App -->
 		<script src="../app/app.js" type="text/javascript"></script>
 		<!-- Main Controller jS -->
-		<script src="../app/controllers/main.js" type="text/javascript"></script>
+		<!-- <script src="../app/controllers/main.js" type="text/javascript"></script> -->
 		<script src="../app/controllers/typeahead.js" type="text/javascript"></script>
 		<script src="../app/controllers/waverider.js" type="text/javascript"></script>
   		

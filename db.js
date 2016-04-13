@@ -78,6 +78,25 @@ function addParty(props, callback) {
 	});
 }
 
+// Retrieve user by field and specified value of that field
+function getUser(field, value, callback) {
+	if (field == '_id') {
+		schemas.User.findById(value, function(err, user) {
+			if (err) throw err;
+			// Return callback with matched user
+			
+			return callback(user);
+		});
+	} else {
+		schemas.User.findOne({field: value}, function(err, user) {
+			if (err) throw err;
+			// Return callback with matched user
+			return callback(user);
+		});
+	}
+	
+}
+
 
 
 module.exports.addFilter = addFilter;
@@ -85,6 +104,7 @@ module.exports.retrieveFilters = retrieveFilters;
 module.exports.retrieveParties = retrieveParties;
 module.exports.partyByCode = partyByCode;
 module.exports.addParty = addParty;
+module.exports.getUser = getUser;
 
 
 

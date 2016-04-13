@@ -4,7 +4,7 @@ body {
   background-attachment: fixed; }
 
 section#waves {
-  background: transparent url(../img/ocean.jpg) no-repeat center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), transparent url(../img/ocean.jpg) no-repeat center;
   height: 600px;
   width: 100%; }
 
@@ -34,6 +34,9 @@ footer {
   border: 5px solid #0080ff;
   border-radius: 4px;
   background-color: #75baff; }
+
+.signin {
+  padding-top: 25px; }
 
 #googleMap {
   height: 500px;
@@ -74,7 +77,7 @@ h3 {
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
     font-size: 3em;
     color: #99ccff; }
-    .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:active, .navbar-default .navbar-brand.active {
+    .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand.active {
       color: #0061c2; }
   .navbar-default .navbar-collapse {
     border-color: fade(white, 2%); }
@@ -106,6 +109,13 @@ h3 {
   .navbar-default .navbar-nav > .active > a:focus {
     color: #0066cc;
     background-color: white; }
+
+#frontbar {
+  background-color: transparent;
+  border: none;
+  box-shadow: none; }
+  #frontbar .navbar-brand {
+    color: white; }
 
 .btn-norm {
   color: white;

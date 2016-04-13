@@ -12,7 +12,7 @@ body {
 }
 
 section#waves {
-	background: transparent url(../img/ocean.jpg) no-repeat center;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), transparent url(../img/ocean.jpg) no-repeat center;
 	height: 600px;
 	width: 100%;
 }
@@ -51,6 +51,10 @@ footer {
 	border: 5px solid $primary-color;
 	border-radius: 4px;
 	background-color: lighten($primary-color, 23%);
+}
+
+.signin {
+	padding-top: 25px;
 }
 
 // Google Map API
@@ -107,7 +111,7 @@ h3 {
 		color: lighten($primary-color, 30%);
         &:hover,
         &:focus,
-        &:active,
+        //&:active,
         &.active {
         	color: darken($primary-color, 12%);
         }
@@ -164,6 +168,16 @@ h3 {
 	.navbar-nav>.active>a:focus {
 		color: darken($primary-color, 10%);
 		background-color: $secondary-color;
+	}
+}
+
+// Front Page Navbar
+#frontbar {
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+	.navbar-brand {
+		color: white;
 	}
 }
 

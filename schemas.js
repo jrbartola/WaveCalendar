@@ -15,6 +15,7 @@ var userSchema = new Schema({
 		first: { type: String, required: true },
 		last: { type: String, required: true }
 	},
+	username: { type: String, required: true, unique: true },
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	location: {
@@ -23,6 +24,7 @@ var userSchema = new Schema({
 	},
 	num_parties: { type: Number, default: 0},
 	attended_parties: { type: Number, default: 0},
+	attending: [String],
 	rated_parties: { type: Number, default: 0},
 	join_date: {type: Date, default: Date.now() },
 	num_logins: {type: Number, default: 0 }

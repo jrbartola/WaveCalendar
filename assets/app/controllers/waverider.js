@@ -22,17 +22,20 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
   $scope.view = 0;
   $scope.code = '';
   $scope.party = {};
+  $scope.owner = '';
 
   $scope.getParty = function() {
     
 
     partyCodeFactory.post('/api/partycode', {'code': $scope.code}).then(function(data) {
+      // Set current party
     	$scope.party = data;
-    	
+
       // Erase the input box
-    	$('#codebox').val('');
+      $('#codebox').val('');
       // Take away the loading animation
       $('.modal-inside').removeClass('loading');
+      
       if ($scope.party == null) {
         swal({title: "Uh Oh!",
           text: "We could not find a party " +
@@ -44,13 +47,52 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
             $('.modal-inside').children().removeClass('invisible');
           });
       } else {
-        $('.modal-found').removeClass('invisible');
-        $scope.view = 1;
+        // Get the real owner's name based on the id field
+        partyCodeFactory.post('/api/users', {'field': '_id', 'value': $scope.party.owner}).then(function(owner) {
+          
+          if (owner == null)
+            console.error("Found user was null");
+
+          $scope.party.owner = owner.username;
+          $('.modal-found').removeClass('invisible');
+          $scope.view = 1;
+          
+          console.log($scope.party);
+
+        });
       }
       
-    	console.log($scope.party);
     });
   }
+
+  $scope.attendParty = function() {
+    swal({title: "You're Going!",
+      text: "The creator of the party " +
+      "has been notified of your attendance.", 
+      type: "success", 
+      confirmButtonText: "Okay"
+      },
+      function() {
+        $scope.initialView();
+      });
+  }
+
+  $scope.initialView = function() {
+    $('.modal-found').addClass('animated zoomOut');
+
+    $('.modal-found').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+      $('.modal-found').removeClass('animated zoomOut').addClass('invisible');
+      $('.modal-inside').children().removeClass('invisible');
+
+      $scope.$apply(function() {
+        $scope.code = '';
+        $scope.view = 0;
+      });
+      
+    });
+    
+    
+  };
 
 });
 
@@ -63,8 +105,9 @@ waveRider.directive('partycode', function($timeout) {
       party: '=',
       code: '=',
       onSearch: '&',
-      state: '='
-
+      state: '=',
+      onAttend: '&',
+      squareOne: '&'
 
     },
     link: function(scope, elem, attrs) {
@@ -99,23 +142,7 @@ waveRider.directive('partycode', function($timeout) {
       	scope.code = scope.codemodel;
       };
 
-      scope.squareOne = function() {
-        $('.modal-found').addClass('animated zoomOut');
-
-        $('.modal-found').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-          $('.modal-found').removeClass('animated zoomOut').addClass('invisible');
-          $('.modal-inside').children().removeClass('invisible');
-
-          scope.$apply(function() {
-            scope.code = '';
-            scope.state = 0;
-          });
-          
-        });
-        
-
-        
-      };
+      
 
       scope.readableDate = function(datestring) {
         // Convert date from nonsense into a readable string
