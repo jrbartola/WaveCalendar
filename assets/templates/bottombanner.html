@@ -1,0 +1,27 @@
+<div id="bannertitles" class="row">
+  <h1 ng-hide="view!=0">Why Wave Calendar?</h1>
+  <h1 ng-hide="view!=1">Login</h1>
+  <h1 ng-hide="view!=2">Sign Up!</h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <img src="../img/WaveIcon.png" style="height:256px;width:256px;" class="img-centered">
+    </div>
+    <div class="col-md-8">
+      <!-- Login/Registration/Description Goes here -->
+      <p class="description" ng-hide="view!=0">Wave Calendar is a system which allows you to plan and coordinate parties with others while at the same time being able to see who is doing what at what time!</p>
+      <form class="signin" ng-hide="view!=1">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" ng-model="efield" ng-change="" class="form-control" id="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="passwrd">Password</label>
+          <input type="password" ng-model="pfield" ng-change="" class="form-control" id="passwrd" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-norm">Login</button> 
+      </form>
+    </div>
+  </div>
+</div>

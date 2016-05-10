@@ -11,8 +11,20 @@ section#waves {
 section#main {
   margin-top: 50px; }
 
+section#signup {
+  margin-top: 50px;
+  margin-bottom: 50px; }
+  section#signup h1 {
+    text-align: center; }
+  section#signup div.container {
+    padding: 50px 50px; }
+
 #tagbox {
   border-radius: 0px; }
+
+.img-centered {
+  display: block;
+  margin: auto; }
 
 ul {
   display: block;
@@ -29,11 +41,9 @@ footer {
   padding-top: 125px; }
 
 .heading {
-  padding: 25px;
-  margin-top: 50px;
-  border: 5px solid #0080ff;
-  border-radius: 4px;
-  background-color: #75baff; }
+  padding: 25px; }
+  .heading div button {
+    margin-top: 50px; }
 
 .signin {
   padding-top: 25px; }
@@ -116,6 +126,14 @@ h3 {
   box-shadow: none; }
   #frontbar .navbar-brand {
     color: white; }
+  #frontbar .nav li a {
+    color: white; }
+    #frontbar .nav li a:hover, #frontbar .nav li a:focus {
+      background-color: transparent;
+      color: #0080ff;
+      outline: none; }
+    #frontbar .nav li a .dropdown-toggle {
+      background-color: #0080ff; }
 
 .btn-norm {
   color: white;
@@ -148,7 +166,8 @@ h3 {
   background-color: #0080ff;
   border-color: #0080ff;
   border-radius: 0px;
-  padding: 10px, 25px; }
+  padding: 10px 25px;
+  font-size: 16px; }
   .btn-larger:hover, .btn-larger:focus, .btn-larger:active, .btn-larger.active,
   .btn-larger .open .dropdown-toggle {
     color: white;

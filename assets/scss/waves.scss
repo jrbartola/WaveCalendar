@@ -21,8 +21,24 @@ section#main {
 	margin-top: 50px;
 }
 
+section#signup {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	h1 {
+		text-align: center;
+	}
+	div.container {
+		padding: 50px 50px;
+	}
+}
+
 #tagbox {
 	border-radius: 0px;
+}
+
+.img-centered {
+	display: block;
+	margin: auto;
 }
 
 ul {
@@ -47,10 +63,15 @@ footer {
 
 .heading {
 	padding: 25px;
-	margin-top: 50px;
-	border: 5px solid $primary-color;
-	border-radius: 4px;
-	background-color: lighten($primary-color, 23%);
+	//margin-top: 50px;
+	//border: 5px solid $primary-color;
+	//border-radius: 4px;
+	//background-color: lighten($primary-color, 23%);
+	div {
+		button {
+			margin-top: 50px;
+		}
+	}
 }
 
 .signin {
@@ -179,6 +200,25 @@ h3 {
 	.navbar-brand {
 		color: white;
 	}
+	.nav {
+    	li {
+
+    		a {
+    			
+    			color: white;
+    			&:hover,
+    			&:focus {
+    				background-color: transparent;
+    				color: $primary-color;
+    				outline: none;
+    			}
+
+    			.dropdown-toggle {
+    				background-color: $primary-color;
+    			}
+    		}
+    	}
+    }
 }
 
 // Custom Buttons
@@ -190,7 +230,8 @@ h3 {
 
 .btn-larger {
 	@include button_var(white, $primary-color, $primary-color);
-	padding: 10px, 25px;
+	padding: 10px 25px;
+	font-size: 16px;
 }
 
 // TypeAhead
