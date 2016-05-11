@@ -44,7 +44,29 @@ footer {
   padding: 25px; }
   .heading div button {
     margin-top: 50px; }
+  .heading h1 {
+    font-size: 7rem;
+    color: white;
+    flex: 2; }
 
+.btn-flex {
+  flex: 1; }
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap; }
+
+.wave-pic {
+  flex: 1; }
+
+.body-form {
+  flex: 2; }
+
+@media (min-width: 768px) {
+  .flex {
+    flex-direction: row; } }
 .signin {
   padding-top: 25px; }
 

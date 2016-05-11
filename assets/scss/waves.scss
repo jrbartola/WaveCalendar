@@ -63,14 +63,42 @@ footer {
 
 .heading {
 	padding: 25px;
-	//margin-top: 50px;
-	//border: 5px solid $primary-color;
-	//border-radius: 4px;
-	//background-color: lighten($primary-color, 23%);
 	div {
 		button {
 			margin-top: 50px;
 		}
+	}
+
+	h1 {
+		font-size: 7rem;
+		color: white;
+		flex: 2;
+	}
+}
+
+.btn-flex {
+	flex: 1;
+}
+
+.flex { 
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.wave-pic {
+	flex: 1;
+}
+
+.body-form {
+	flex: 2;
+}
+
+// Media Query for bottom banner flexbox
+@media(min-width:768px) {
+	.flex {
+		flex-direction: row;
 	}
 }
 
