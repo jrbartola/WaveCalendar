@@ -7,17 +7,21 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var db = require('./db.js');
 var ObjectId = require('mongoose').Types.ObjectId;
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 // set static directory
 app.use(express.static(__dirname + '/assets'));
+
+app.use(session({
+    secret: '89wF./z@#iaF29BQoK32NDlaq~-+3nps',
+    resave: true,
+    saveUninitialized: true
+}));
 
 var auth = function(req, res, next) {
     if (req.session && req.session.user) {
@@ -31,12 +35,19 @@ app.get('/', auth, function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/home.html");
 });
 
-// app.post('/login', passport.authenticate('local', {
-// 	successRedirect:
-// }))  
+app.post('/login', function(req, res) {
+	var email = req.body.email;
+	var password = req.body.password;
 
-app.get('/home', function(req, res) {
-	res.sendFile(__dirname + "/assets/templates/index.html");
+	db.loginUser(email, password, function(user) {
+		if (!user) {
+			res.json(null);
+		} else {
+			db.updateLogins(email);
+			req.session.user = user;
+			res.json(user);
+		}
+	});
 });
 
 app.get('/api/filters', function(req, res) {

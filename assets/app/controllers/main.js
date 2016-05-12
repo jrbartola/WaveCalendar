@@ -52,7 +52,7 @@ main.controller('MainCtrl', function($scope, formFactory) {
                 $(".signin").addClass('animated bounceInRight');
               else
                 $(".register").addClass("animated bounceInRight");
-                // Insert registration form animation here...
+                
 
             });
           });
@@ -106,6 +106,36 @@ main.controller('MainCtrl', function($scope, formFactory) {
     
   }
 
+  $scope.login = function() {
+    formFactory.post('/login', {'email': $scope.login.email, 'password': $scope.login.pass}).then(function(data) {
+      if (data) {
+        swal({title: "Logging in",
+            text: "Please wait a moment...", 
+            type: "success", 
+            timer: 3000,
+            showConfirmButton: false
+          });
+        setTimeout(function() {
+          window.location.href = '/';
+        }, 3000);
+        
+      } else {
+        swal({title: "Uh Oh!",
+          text: "Wrong email/password", 
+          type: "error", 
+          confirmButtonText: "Try again"
+          },
+          function() {
+            $scope.$apply(function() {
+              // Erase password field
+              $("#passwrd").val('');
+            });
+              
+        });
+      }
+    });
+  }
+
 
 });
 
@@ -125,7 +155,8 @@ main.directive('bottombanner', function($timeout) {
       city: '=',
       esignup: '=',
       psignup: '=',
-      sendsignup: '&'
+      sendsignup: '&',
+      sendlogin: '&'
 
     },
     link: function(scope, elem, attrs) {
@@ -140,6 +171,10 @@ main.directive('bottombanner', function($timeout) {
         }
         
         
+      }
+
+      scope.completeLogin = function() {
+        scope.sendlogin();
       }
     },
     templateUrl: '../templates/bottombanner.html'

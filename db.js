@@ -125,11 +125,24 @@ function createUser(props, callback) {
 	
 }
 
-function loginUser(username, password, callback) {
+function loginUser(email, password, callback) {
 	// TODO: Replace plaintext password with bcrypt or some other module (that works :( )
-	schemas.User.findOne({'username': username, 'password': password}, function(err, user) {
+	schemas.User.findOne({'email': email, 'password': password}, function(err, user) {
 		if (err) throw err;
 		return callback(user);
+	});
+}
+
+function updateLogins(email) {
+	schemas.User.findOne({'email': email}, function(err, user) {
+		if (err) throw err;
+
+		if (user) {
+			user.num_logins = user.num_logins + 1;
+			user.save();
+		}
+		
+		
 	});
 }
 
@@ -143,5 +156,6 @@ module.exports.addParty = addParty;
 module.exports.getUser = getUser;
 module.exports.createUser = createUser;
 module.exports.loginUser = loginUser;
+module.exports.updateLogins = updateLogins;
 
 
