@@ -55,7 +55,7 @@ footer {
 .flex {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap; }
 
 .wave-pic {

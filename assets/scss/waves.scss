@@ -73,18 +73,21 @@ footer {
 		font-size: 7rem;
 		color: white;
 		flex: 2;
+
 	}
 }
 
 .btn-flex {
 	flex: 1;
+
 }
 
 .flex { 
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
 	flex-wrap: wrap;
+	//align-content: space-between;
 }
 
 .wave-pic {
