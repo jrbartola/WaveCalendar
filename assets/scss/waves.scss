@@ -73,6 +73,7 @@ footer {
 		font-size: 7rem;
 		color: white;
 		flex: 2;
+		line-height: 1;
 
 	}
 }
@@ -95,7 +96,7 @@ footer {
 }
 
 .body-form {
-	flex: 2;
+	flex: 1;
 }
 
 // Media Query for bottom banner flexbox

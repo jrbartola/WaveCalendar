@@ -2,8 +2,8 @@
 
 var main = angular.module('waveCal');
 
-// Login verification factory
-main.factory('loginFactory', function($http) {
+// Login/Registration verification factory
+main.factory('formFactory', function($http) {
   return {
     post: function(url, data) {
         return $http.post(url, data).then(function(resp) {
@@ -13,79 +13,102 @@ main.factory('loginFactory', function($http) {
   }
 });
 
-main.controller('MainCtrl', function($scope, loginFactory) {
+main.controller('MainCtrl', function($scope, formFactory) {
 	// Scope view of 0 is the description of wave calendar
 	// Scope view of 1 is the login form
 	// Scope view of 2 is the registration form; leads to dashboard
 	// Scope view of 3 is the completed registration form; leads to user profile
 	$scope.view = 0;
-	$scope.email = '';
-	$scope.pass = '';
+  $scope.login = {'email': '', 'pass': ''}
+  $scope.reg = {'email': '', 'pass': ''}
 
-  $scope.changeView = function(view) {
+  $scope.name = {'first': '', 'last': ''}
+  $scope.location = {'state': '', 'city': ''}
 
-  }
-
-  $scope.startLogin = function() {
+  $scope.changeBanner = function(state) {
+    // State of 1 is login form, state of 2 is registration
     $.scrollTo($('#signup'), 800, {
       onAfter: function() {
-        if ($scope.view != 1) {
-          $("#bannertitles").find(':not(.ng-hide)').addClass('animated bounceOutLeft');
-          $(".description").addClass('animated bounceOutLeft');
-          $('#bannertitles').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        if ($scope.view != state) {
+          var title = $("#bannertitles").find(':not(.ng-hide)');
+          var body = $(".body-form").children().filter(":not(.ng-hide)");
+          title.addClass('animated bounceOutLeft');
+          body.addClass('animated bounceOutLeft');
+          title.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
             $scope.$apply(function() {
 
-              $scope.view = 1;
-              $($("#bannertitles").children()[1]).addClass('animated bounceInRight');
-              $(".signin").addClass('animated bounceInRight');
+              $scope.view = state;
+              // Remove animation frames so the function works properly next time
+              title.removeClass('animated bounceOutLeft');
+              body.removeClass('animated bounceOutLeft');
+              $($("#bannertitles").children()[state]).addClass('animated bounceInRight').one('webkitAnimationEnd mozAnimationEnd ' +
+                'MSAnimationEnd oanimationend animationend', function() {
+
+                // Remove animation classes right after it happens
+                $($("#bannertitles").children()[state]).removeClass('animated bounceInRight');
+              });
+
+              if (state == 1)
+                $(".signin").addClass('animated bounceInRight');
+              else
+                $(".register").addClass("animated bounceInRight");
+                // Insert registration form animation here...
 
             });
           });
         }  
       }
     });
-
   }
 
-  $scope.startRegister = function() {
-    $.scrollTo($('#signup'), 800, {
-      onAfter: function() {
-        if ($scope.view != 2) {
-          $("#bannertitles").find(':not(.ng-hide)').addClass('animated bounceOutLeft');
-          $('#bannertitles').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-            $scope.$apply(function() {
-              $scope.view = 2;
-              $($("#bannertitles").children()[2]).addClass('animated bounceInRight');
-            });
+  $scope.register = function() {
+    if ($scope.name.first != '' && $scope.name.last != '' && $scope.reg.email != '' &&
+      $scope.location.city != '' && $scope.location.state != '') {
+
+     
+      var submission = {'name': $scope.name, 'email': $scope.reg.email, 
+        'password': $scope.reg.pass, 'location': $scope.location, 'attending': []};
+            
+      formFactory.post('/api/register', {'props': submission}).then(function(data) {
+
+        if (data === null) {
+          swal({title: "Uh Oh!",
+            text: "That email is taken. Try another one", 
+            type: "error", 
+            confirmButtonText: "Try again"
+            },
+            function() {
+              $scope.$apply(function() {
+                // Erase email and password fields
+                $('#reg-email').val('');
+                $('#reg-pass').val('');
+              });
+              
+          });
+        } else {
+          swal({title: "All Done!",
+            text: "Please wait a moment...", 
+            type: "success", 
+            timer: 5000,
+            showConfirmButton: false
+            },
+            function() {
+              $scope.$apply(function() {
+                $('.register').trigger('.reset');
+              });
+              
           });
         }
-      }
-    });
+      });
+      
+      
+    }
     
   }
 
+
 });
 
-// Directive for login/registration panel
-main.directive('frontwave', function($timeout) {
-  
-  return {
-    restrict: 'AEC',
-    scope: {
-      onLogin: '&',
-      onRegister: '&'
-
-    },
-    link: function(scope, elem, attrs) {
-      // insert scope functions here
-      // scope.function()...
-      // scope.getemail = function() {
-      // 	//console.log(scope.efield);
-      // };
-    },
-    templateUrl: '../templates/frontwave.html'
-  };
-});
 
 // Directive for login/registration panel
 main.directive('bottombanner', function($timeout) {
@@ -95,16 +118,29 @@ main.directive('bottombanner', function($timeout) {
     scope: {
       efield: '=',
       pfield: '=',
-      onRegister: '&',
-      view: '='
+      view: '=',
+      fname: '=',
+      lname: '=',
+      stateabb: '=',
+      city: '=',
+      esignup: '=',
+      psignup: '=',
+      sendsignup: '&'
 
     },
     link: function(scope, elem, attrs) {
       // insert scope functions here
       // scope.function()...
-      scope.getemail = function() {
-        console.log(scope.efield);
-      };
+      scope.completeRegister = function() {
+        
+        if (scope.psignup != '' && scope.psignup.length > 8) {
+          scope.sendsignup();
+        } else {
+          console.log("password too short");
+        }
+        
+        
+      }
     },
     templateUrl: '../templates/bottombanner.html'
   };

@@ -15,11 +15,11 @@ var userSchema = new Schema({
 		first: { type: String, required: true },
 		last: { type: String, required: true }
 	},
-	username: { type: String, required: true, unique: true },
+	username: { type: String, unique: true },
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	location: {
-		town: String,
+		city: String,
 		state: String
 	},
 	num_parties: { type: Number, default: 0},
@@ -50,7 +50,7 @@ var partySchema = new Schema({
 	num_guests: Number,
 	location: {
 		street: String,
-		town: String,
+		city: String,
 		zip_code: String
 	},
 	title: { type: String, required: true }

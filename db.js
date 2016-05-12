@@ -71,7 +71,7 @@ function partyByCode(code, callback) {
 
 function addParty(props, callback) {
 	// Add party with entered properties
-	var newParty = new Schemas.Party(props);
+	var newParty = new schemas.Party(props);
 	newParty.save(function(err) {
 		if (err) throw err;
 		return callback(newParty);
@@ -80,14 +80,23 @@ function addParty(props, callback) {
 
 // Retrieve user by field and specified value of that field
 function getUser(field, value, callback) {
-	if (field == '_id') {
+	if (field === '_id') {
 		schemas.User.findById(value, function(err, user) {
 			if (err) throw err;
 			// Return callback with matched user
 			
 			return callback(user);
 		});
+	} else if (field === 'email') {
+		
+		schemas.User.findOne({'email': value}, function(err, user) {
+			if (err) throw err;
+			// Return callback with matched user
+			return callback(user);
+		});
+
 	} else {
+		// FIX THIS: "field" is taken literally rather than as a variable
 		schemas.User.findOne({field: value}, function(err, user) {
 			if (err) throw err;
 			// Return callback with matched user
@@ -95,6 +104,33 @@ function getUser(field, value, callback) {
 		});
 	}
 	
+}
+
+function createUser(props, callback) {
+	getUser('email', props.email, function(user) {
+		
+		// Make sure there is no user with the same email
+		if (user == null) {
+			
+			var newUser = new schemas.User(props);
+			newUser.save(function(err) {
+				if (err) throw err;
+				return callback(newUser);
+			});
+		} else {
+			console.dir(user);
+			return callback(null);
+		}
+	});
+	
+}
+
+function loginUser(username, password, callback) {
+	// TODO: Replace plaintext password with bcrypt or some other module (that works :( )
+	schemas.User.findOne({'username': username, 'password': password}, function(err, user) {
+		if (err) throw err;
+		return callback(user);
+	});
 }
 
 
@@ -105,6 +141,7 @@ module.exports.retrieveParties = retrieveParties;
 module.exports.partyByCode = partyByCode;
 module.exports.addParty = addParty;
 module.exports.getUser = getUser;
-
+module.exports.createUser = createUser;
+module.exports.loginUser = loginUser;
 
 

@@ -47,7 +47,8 @@ footer {
   .heading h1 {
     font-size: 7rem;
     color: white;
-    flex: 2; }
+    flex: 2;
+    line-height: 1; }
 
 .btn-flex {
   flex: 1; }
@@ -62,7 +63,7 @@ footer {
   flex: 1; }
 
 .body-form {
-  flex: 2; }
+  flex: 1; }
 
 @media (min-width: 768px) {
   .flex {

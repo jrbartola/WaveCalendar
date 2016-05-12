@@ -11,126 +11,95 @@
         <![endif]-->
     	<title>Wave Calendar</title>
 
-    	<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
     	<!-- Bootstrap CSS -->
     	<link rel="stylesheet" href="../css/bootstrap.min.css">
-    	<!-- FontAwesome CSS -->
-    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    	<!-- Animation CSS -->
-    	<link rel="stylesheet" href="../css/animate.min.css">
-    	<!-- SweetAlert CSS -->
-    	<link rel="stylesheet" href="../css/sweetalert.css">
+      <!-- FontAwesome CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+      <!-- Animation CSS -->
+      <link rel="stylesheet" href="../css/animate.min.css">
+      <!-- SweetAlert CSS -->
+      <link rel="stylesheet" href="../css/sweetalert.css">
     	<!-- Custom CSS -->
     	<link rel="stylesheet" href="../css/waves.css">
   	</head>
+  	<body ng-app="waveCal" ng-controller="MainCtrl">
+      <section id="waves">
+        <nav class="navbar navbar-default" id="frontbar">
+          <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home">Wave Calendar</a>
+          </div>
 
-  	<body ng-app="waveCal">
-	  <nav class="navbar navbar-default">
-		<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		    <span class="sr-only">Toggle navigation</span>
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		  </button>
-		  <a class="navbar-brand" href="#">Wave Calendar</a>
-		</div>
+          
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><i class="fa fa-user"></i> Register</a></li>
+              <li><a href="#"><i class="fa fa-user"></i> Log in</a></li>
+            </ul>
+          </div>
+          </div>
+        </nav>
+      
+        <div class="blurred">
+        </div>
+        <div class="content text-center container">
+          <div class="heading">
+            <h1>Ride the Wave</h1>
+            <div class="flex">
+              <div class="btn-flex">
+                <button type="button" ng-click="changeBanner(1)" class="btn btn-larger">Login</button>
+              </div>
+              <div class="btn-flex">
+                <button type="button" ng-click="changeBanner(2)" class="btn btn-larger">Register</button>
+              </div>
+            </div>
+          </div>
+          <!-- <frontwave efield="email" pfield="pass" start-register="registration()" /> -->
+        </div>
+        
+      </section>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse">
-		  <!-- <ul class="nav navbar-nav">
-		    <li class="active"><a href="#">Link</a></li>
-		    <li><a href="#">Link</a></li>
-		  </ul> -->
-		  <ul class="nav navbar-nav navbar-right">
-		    <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
-		    <li class="dropdown">
-		      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i> Settings <span class="caret"></span></a>
-		      <ul class="dropdown-menu">
-		        <li><a href="#">Edit Profile</a></li>
-		        <li><a href="#">Account</a></li>
-		        <li><a href="#">Log out</a></li>
-		      </ul>
-		    </li>
-		  </ul>
-		</div><!-- /.navbar-collapse -->
-		</div><!-- /.container-fluid -->
-	  </nav>
-
-	    <section id="main">
-	    	<div class="container">
-		    	<div class="row">
-			  		<div class="col-md-4" id="wavelist" ng-controller="TypeaheadCtrl">
-			  			<div class="row">
-			  					
-    						<typeahead items="items" prompt="Search for tags.." title="data" subtitle="type" model="name" location="distance" on-select="onItemSelected()" on-change="getParties()" chosen="chosen_" />
-      							<!-- <input type="text" class="form-control" placeholder="Search by..."> -->
-      							
-			  				<h2>Upcoming Waves</h2>
-			  			</div>
-			  			<div class="row">
-			  				<wavefilter filters="chosen_" waves="parties" title="title" location="location" street="street" town="town" zip-code="zip_code"/>
-			  			</div>
-			    	</div>
-			    	<div class="col-md-8">
-			    		<!--  google maps api -->
-			    		<div id="googleMap"></div>
-			    	</div>
-		  		</div>
-	  		</div>
-	    </section>
-
-	    <section id="create" ng-controller="WaveRiderCtrl">
-	    	<div class="container">
-	    		<h1>Ride the Wave</h1>
-	    		<br/>
-	    		<partycode party="party" on-search="getParty()" code="code" state="view" on-attend="attendParty()" square-one="initialView()"></partycode>
-	    		
-	    	</div>
-	    </section>
-	  	
+      <section id="signup">
+        <bottombanner view="view" efield="login.email" pfield="login.pass" fname="name.first" lname="name.last" stateabb="location.state" city="location.city" esignup="reg.email" psignup="reg.pass" sendsignup="register()"/>
+        
+      </section>
+		
+		  <footer>
+        <div class="container">
+          <div class="col-md-4">
+            <span class="copyright">Copyright &copy; Jesse Bartola 2016</span>
+          </div>
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+          </div>
+        </div>
+		  </footer>
 
 
-	    <footer>
-	    	<div class="container">
-	    		<div class="col-md-4">
-	    			<span class="copyright">Copyright &copy; Jesse Bartola 2016</span>
-	    		</div>
-	    		<div class="col-md-4">
-	    		</div>
-	    		<div class="col-md-4">
-	    		</div>
-	    	</div>
-	    </footer>
 
-  		<!-- jQuery -->
-  		<script src="../js/jquery-1.11.1.js"></script>
-  		<!-- Google Maps -->
-  		<!-- Google Maps Initializer -->
-  		<script src="../js/googlemap.js" type="text/javascript"></script>
-  		<script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBbSB586nZ-BZAaKIHnzSuEyB8Zpi_Y0WE&callback=initialize"></script>
-  		
-  		<script type="text/javascript">
-  		$(document).ready(function() {
-  			
-  		});
-  		</script>
-  		<!-- Bootstrap JS -->
-  		<script src="../js/bootstrap.min.js"></script>
-  		<!-- Waypoints Plugin --> 
-  		<script src="../js/noframework.waypoints.min.js" type="text/javascript"></script>
-  		<!-- Sweetalert Plugin --> 
-  		<script src="../js/sweetalert.min.js" type="text/javascript"></script>
-  		<!-- Angular JS -->
-  		<script src="../js/angular.min.js" type="text/javascript"></script>
-  		<!-- Main Angular JS App -->
+
+
+		<!-- jQuery -->
+		<script src="../js/jquery-1.11.1.js"></script>
+		<!-- Bootstrap JS -->
+		<script src="../js/bootstrap.min.js"></script>
+    <!-- ScrollTo Plugin -->
+    <script src="../js/jquery.scrollTo.min.js"></script>
+    <!-- Sweetalert Plugin --> 
+      <script src="../js/sweetalert.min.js" type="text/javascript"></script>
+		<!-- Angular JS -->
+		<script src="../js/angular.min.js" type="text/javascript"></script>
+		<!-- Main Angular JS App -->
 		<script src="../app/app.js" type="text/javascript"></script>
 		<!-- Main Controller jS -->
-		<!-- <script src="../app/controllers/main.js" type="text/javascript"></script> -->
-		<script src="../app/controllers/typeahead.js" type="text/javascript"></script>
-		<script src="../app/controllers/waverider.js" type="text/javascript"></script>
+		<script src="../app/controllers/main.js" type="text/javascript"></script>
   		
   	</body>
 

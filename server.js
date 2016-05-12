@@ -7,9 +7,14 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var db = require('./db.js');
 var ObjectId = require('mongoose').Types.ObjectId;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // set static directory
 app.use(express.static(__dirname + '/assets'));
@@ -22,12 +27,16 @@ var auth = function(req, res, next) {
 	}  
 };
 
-app.get('/', function(req, res) {
-	res.sendFile(__dirname + "/assets/templates/index.html");
+app.get('/', auth, function(req, res) {
+	res.sendFile(__dirname + "/assets/templates/home.html");
 });
 
+// app.post('/login', passport.authenticate('local', {
+// 	successRedirect:
+// }))  
+
 app.get('/home', function(req, res) {
-	res.sendFile(__dirname + "/assets/templates/front.html");
+	res.sendFile(__dirname + "/assets/templates/index.html");
 });
 
 app.get('/api/filters', function(req, res) {
@@ -42,6 +51,19 @@ app.post('/api/users', function(req, res) {
 
 	db.getUser(field, value, function(user) {
 		res.json(user);
+	});
+});
+
+app.post('/api/register', function(req, res) {
+	// Registration form data in JSON format
+	var formprops = req.body.props;
+
+	db.createUser(formprops, function(newUser) {
+		if (newUser == null) {
+			res.json(null);
+		} else {
+			res.json(newUser);
+		}
 	});
 });
 
