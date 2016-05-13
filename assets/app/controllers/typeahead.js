@@ -10,7 +10,7 @@ var currentUser = {
   "email": "jrbartola@gmail.com",
   "password": "pass123",
   "location": {
-    "town": "Amherst",
+    "city": "Amherst",
     "state": "MA"
   },
   "num_parties": 0,
@@ -66,7 +66,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
 
 
   // originally filter by current town of user
-  partyFactory.post('/api/parties', {'location': $scope.location.town}).then(function(data) {
+  partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
     $scope.parties = data;
     
     
@@ -86,10 +86,10 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
 
   $scope.getParties = function() {
     // Clear markers when new tags are invoked
-    var locData; // Temporary variable sending the current town if that is the current location filter
+    var locData; // Temporary variable sending the current city if that is the current location filter
     var filData; // Temporary variable storing the list of filters, or null if the list is empty
     if ($scope.distance == 0)
-      locData = $scope.location.town;
+      locData = $scope.location.city;
     else
       locData = null;
 
@@ -98,34 +98,22 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     else
       filData = null;
 
-    var parts = [];
     $scope.parties = [];
     clearMarkers();
     partyFactory.post('/api/parties', {'filters': filData, 'location': locData}).then(function(data) {
       
       // Use $scope.$apply() eventually..
       $.each(data, function(index, value) {
-        var address = value.location.street + ", " + value.location.town + ", " + value.location.zip_code;
+        var address = value.location.street + ", " + value.location.city + ", " + value.location.zip_code;
         
         getDistance(address, function(distance) {
 
-          if (locData) {
+          if (locData || (!locData && distance < $scope.distance)) {
             dropPin(address, value.title);
+            $scope.$apply(function() {
+              $scope.parties.push(value);
+            });
             
-            $scope.parties.push(value);
-          } else if (!locData && distance < $scope.distance) { // drop pin if party is within 1 mile, change later to accomodate
-            dropPin(address, value.title);
-            
-            $scope.parties.push(value);
-          } else {
-            //console.log("locData is : " + locData + " and " + distance + " is greater than " + $scope.distance);
-            
-          }
-
-          // Hack to get around weird bug that prevents parties from showing up
-          // $scope.$apply will fix this..
-          if (index + 1 == data.length) {
-            $('#add').click();
           }
           
           
@@ -172,7 +160,7 @@ typeAhead.directive('typeahead', function($timeout) {
         
       };
       // Set location box dialogue
-      scope.location = "Within my town";
+      scope.location = "Within my city";
       $('#loc-dropdown').html(scope.location + ' <span class="caret"></span>');
 
       scope.chosen = [];
@@ -223,7 +211,7 @@ typeAhead.directive('wavefilter', function($timeout) {
     link: function(scope, elem, attrs) {
       // insert scope functions here
       scope.centerMap = function(party) {
-        var address = party.location.street + ", " + party.location.town + ", " + party.location.zip_code;
+        var address = party.location.street + ", " + party.location.city + ", " + party.location.zip_code;
         setCenter(address);
       }
     },
