@@ -50,6 +50,10 @@ app.post('/login', function(req, res) {
 	});
 });
 
+app.get('/api/currentuser', auth, function(req, res) {
+	
+});
+
 app.get('/api/filters', function(req, res) {
 	db.retrieveFilters(function(filters) {
 		res.json(filters);

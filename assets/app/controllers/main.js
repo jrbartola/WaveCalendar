@@ -112,7 +112,7 @@ main.controller('MainCtrl', function($scope, formFactory) {
         swal({title: "Logging in",
             text: "Please wait a moment...", 
             type: "success", 
-            timer: 2000,
+            timer: 1900,
             showConfirmButton: false
           });
         setTimeout(function() {

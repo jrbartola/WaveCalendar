@@ -28,7 +28,7 @@ function retrieveParties(callback, filters, location) {
 	if (location && filters) {
 		schemas.Party.find({}).
 		where('filters').all(filters).
-		where({'location.town': location}).
+		where({'location.city': location}).
 		exec(function(err, parties) {
 			if (err) throw err;
 			// Return callback with parties listed
@@ -44,7 +44,7 @@ function retrieveParties(callback, filters, location) {
 		});
 	} else if (location) {
 		schemas.Party.find({}).
-		where({'location.town': location}).
+		where({'location.city': location}).
 		exec(function(err, parties) {
 			if (err) throw err;
 			// Return callback with parties listed

@@ -266,6 +266,15 @@ h3 {
 	font-size: 16px;
 }
 
+// Class for rating star buttons 
+.rating {
+	background-image: url('../img/rating_star.png');
+
+	&:hover {
+		background-image: url('../img/rating_star.png');
+	}
+}
+
 // TypeAhead
 .active {
   font-size: 2rem;

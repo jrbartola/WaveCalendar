@@ -212,6 +212,11 @@ h3 {
     color: #0080ff;
     background-color: white; }
 
+.rating {
+  background-image: url("../img/rating_star.png"); }
+  .rating:hover {
+    background-image: url("../img/rating_star.png"); }
+
 .active {
   font-size: 2rem;
   background-color: #0080ff;

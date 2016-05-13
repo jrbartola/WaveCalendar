@@ -65,7 +65,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
   });
 
 
-  // originally filter by current town of user
+  // originally filter by current city of user
   partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
     $scope.parties = data;
     
@@ -204,7 +204,7 @@ typeAhead.directive('wavefilter', function($timeout) {
       title: '@',
       location: '@',
       street: '@',
-      town: '@',
+      city: '@',
       zipCode: '@'
 
     },
