@@ -103,6 +103,7 @@ footer {
 @media(min-width:768px) {
 	.flex {
 		flex-direction: row;
+		flex-wrap: nowrap;
 	}
 }
 
@@ -128,7 +129,7 @@ h1 {
 }
 
 h2 {
-	padding: 20px;
+	padding: 15px;
 	font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
 	font-size: 3rem;
 	font-style: normal;
@@ -381,6 +382,17 @@ section#create {
 // Class for icon in the top left corner of resulted party search
 .top-icon {
 	margin: 25px;
+	flex: 1;
+}
+
+#party-title {
+	flex: 5;
+}
+
+// Search results box class
+.search-half {
+	flex: 1;
+	flex-direction: column;
 }
 
 // Error message for the code box

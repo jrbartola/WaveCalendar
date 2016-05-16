@@ -50,6 +50,11 @@ app.post('/login', function(req, res) {
 	});
 });
 
+app.get('/logout', function(req, res) {
+	req.session.user = null;
+	res.redirect('/');
+});
+
 app.get('/api/currentuser', function(req, res) {
 	if (req.session && req.session.user)
 		res.send(req.session.user);

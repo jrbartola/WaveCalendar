@@ -61,7 +61,8 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     $scope.currentUser = data;
     $scope.location = data.location;
     // originally filter by current city of user
-    console.log("locatino is " + $scope.location.city);
+    console.log("locatino is " + $scope.location);
+    console.dir($scope.location);
     partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
       $scope.parties = data;
       
@@ -73,21 +74,13 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
   $scope.limit = 4;
 
   filterFactory.get('/api/filters').then(function(data) {
+    // Gets filters 
     $scope.items = data;
   });
 
-  
 
-
-  
-
-  
   $scope.distance = -1; // Holds distance/location filter
   $scope.name = ''; // This will hold the selected item
-  $scope.onItemSelected = function() { // this gets executed when an item is selected
-    //console.log('Chosen: ' + $scope.chosen_);
-
-  };
 
   $scope.addParty = function(party) {
     $scope.parties.push(party);
@@ -158,7 +151,7 @@ typeAhead.directive('typeahead', function($timeout) {
         if (scope.chosen.indexOf(selectedItem) <= -1) {
           scope.chosen.push(selectedItem);
           $timeout(function() {
-            scope.onSelect();
+            // Gets parties
             scope.onChange();
             // Clear value of text box
             $('#tagbox').val("");
@@ -192,6 +185,13 @@ typeAhead.directive('typeahead', function($timeout) {
       scope.setText = function(text, distance) {
         $('#loc-dropdown').html(text + ' <span class="caret"></span>');
         scope.location = distance;
+        $timeout(function() {
+          scope.onChange();
+        }, 200);
+      }
+
+      scope.clearTags = function() {
+        scope.chosen = [];
         $timeout(function() {
           scope.onChange();
         }, 200);

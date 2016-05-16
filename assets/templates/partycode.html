@@ -15,21 +15,18 @@
 		<button type="button" class="btn btn-larger">Create</button>
 	</div>
 </div>
-<div ng-hide="state!=1" class="col-md-8 col-md-offset-2 modal-found">
+<div ng-hide="state!=1" class="container flex modal-found">
 	<div class="row">
-		<div class="col-md-2">
+		<!-- <div class="col-md-2"> -->
 			<img class="top-icon" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
-		</div>
-		<div class="col-md-10">
-	    	<h2>{{ party.title }}</h2>
-		</div>
+<!-- 		</div> -->
+<!-- 		<div class="col-md-10"> -->
+	    	<h2 id="party-title">{{ party.title }}</h2>
+		<!-- </div> -->
 	</div>
 	    
-	<div class="col-md-6">
+	<div class="flex search-half">
 		<div class="media">
-		  <!-- <a class="media-left" href="#">
-		    <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
-		  </a> -->
 		  <div class="media-body">
 		    <h4 class="media-heading">Where</h4>
 		    {{ party.location.street }}
@@ -39,11 +36,11 @@
 		  <h3>From</h3>{{ readableDate(party.time.start) }}
 		  <h3>Until</h3>{{ readableDate(party.time.end) }}
 		</div>
-		<div class="btn-only text-center">
+		<div class="text-center btn-result">
 		  <button type="button" ng-click="onAttend()" class="btn btn-larger">Attend</button>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="flex search-half">
 		<div class="media">
 		  <!-- <a class="media-left" href="#">
 		    <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
@@ -56,7 +53,7 @@
 		  <h3>Tags</h3>{{ party.tags }}
 		  <h3>Ratio</h3>{{ party.ratio.girls }} girls to {{ party.ratio.guys }} guys
 		</div>
-		<div class="btn-only text-center">
+		<div class="text-center btn-result">
 		  <button type="button" ng-click="squareOne()" class="btn btn-larger">Search Again</button>
 		</div>
 	</div>

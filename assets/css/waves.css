@@ -67,7 +67,8 @@ footer {
 
 @media (min-width: 768px) {
   .flex {
-    flex-direction: row; } }
+    flex-direction: row;
+    flex-wrap: nowrap; } }
 .signin {
   padding-top: 25px; }
 
@@ -84,7 +85,7 @@ h1 {
   line-height: 26.4px; }
 
 h2 {
-  padding: 20px;
+  padding: 15px;
   font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
   font-size: 3rem;
   font-style: normal;
@@ -286,7 +287,15 @@ section#create {
   padding-bottom: 20px; }
 
 .top-icon {
-  margin: 25px; }
+  margin: 25px;
+  flex: 1; }
+
+#party-title {
+  flex: 5; }
+
+.search-half {
+  flex: 1;
+  flex-direction: column; }
 
 #codeerror {
   color: red;
