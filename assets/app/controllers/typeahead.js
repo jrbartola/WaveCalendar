@@ -1,24 +1,24 @@
 'use strict';
 
 var typeAhead = angular.module('waveCal');
-var currentUser = {
-  "_id": "56a57f04ffcb285132897740",
-  "name": {
-    "first": "Jesse",
-    "last": "Bartola"
-  },
-  "email": "jrbartola@gmail.com",
-  "password": "pass123",
-  "location": {
-    "city": "Amherst",
-    "state": "MA"
-  },
-  "num_parties": 0,
-  "attended_parties": 0,
-  "rated_parties": 0,
-  "join_date": 1453686532283,
-  "num_logins": 0
-}
+// var currentUser = {
+//   "_id": "56a57f04ffcb285132897740",
+//   "name": {
+//     "first": "Jesse",
+//     "last": "Bartola"
+//   },
+//   "email": "jrbartola@gmail.com",
+//   "password": "pass123",
+//   "location": {
+//     "city": "Amherst",
+//     "state": "MA"
+//   },
+//   "num_parties": 0,
+//   "attended_parties": 0,
+//   "rated_parties": 0,
+//   "join_date": 1453686532283,
+//   "num_logins": 0
+// }
 
 
 // Factory that retrieves stored filter objects from API
@@ -56,7 +56,19 @@ typeAhead.factory('partyFactory', function($http) {
 
 typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFactory) { // DI in action
   
-  $scope.location = currentUser.location; // Replace this eventually with function that retrieves user loc data
+  //Use filterFactory to get the current user from API
+  filterFactory.get('/api/currentuser').then(function(data) {
+    $scope.currentUser = data;
+    $scope.location = data.location;
+    // originally filter by current city of user
+    console.log("locatino is " + $scope.location.city);
+    partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
+      $scope.parties = data;
+      
+      
+    });
+  });
+
   $scope.chosen_ = [];
   $scope.limit = 4;
 
@@ -64,13 +76,10 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     $scope.items = data;
   });
 
+  
 
-  // originally filter by current city of user
-  partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
-    $scope.parties = data;
-    
-    
-  });
+
+  
 
   
   $scope.distance = -1; // Holds distance/location filter

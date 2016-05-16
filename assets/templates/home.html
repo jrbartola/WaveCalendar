@@ -38,12 +38,8 @@
 		  <a class="navbar-brand" href="#">Wave Calendar</a>
 		</div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
+
 		<div class="collapse navbar-collapse">
-		  <!-- <ul class="nav navbar-nav">
-		    <li class="active"><a href="#">Link</a></li>
-		    <li><a href="#">Link</a></li>
-		  </ul> -->
 		  <ul class="nav navbar-nav navbar-right">
 		    <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
 		    <li class="dropdown">
@@ -114,8 +110,16 @@
   		
   		<script type="text/javascript">
   		$(document).ready(function() {
-  			$('.rating').on('hover', function() {
-  				
+  			$('.rating').hover(function() {
+  				var curstar = parseInt($(this).attr('data-party').substring(9,10));
+  				var curparty = $(this).attr('data-party').substring(0,8);
+  				for (var i = curstar; i > 0; i--) {
+  					$('img[data-party=' + curparty + '-' + i + ']').attr('src', '../img/rating_star_gold.png');
+  					console.log('img[data-party=' + curparty + '-' + i + ']');
+  				}
+  				//$(this).attr('src', '../img/rating_star_gold.png');
+  			}, function() {
+  				$(this).attr('src', '../img/rating_star.png');
   			});
   		});
   		</script>
