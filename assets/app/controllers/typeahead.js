@@ -61,8 +61,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     $scope.currentUser = data;
     $scope.location = data.location;
     // originally filter by current city of user
-    console.log("locatino is " + $scope.location);
-    console.dir($scope.location);
+
     partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
       $scope.parties = data;
       
@@ -221,7 +220,7 @@ typeAhead.directive('wavefilter', function($timeout) {
       // insert scope functions here
       scope.centerMap = function(party) {
         var address = party.location.street + ", " + party.location.city + ", " + party.location.zip_code;
-        setCenter(address);
+        setCenter(address, party.title);
       }
     },
     templateUrl: '../templates/wavefilter.html'

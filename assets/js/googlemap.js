@@ -33,9 +33,6 @@ function initialize() {
       title: "You are here!"
     });
 
-    // getAddress(latLong, function(town) {
-    //   console.log(town);
-    // })
   });
 }
 
@@ -54,14 +51,30 @@ function getCoords(address, callback) {
 function dropPin(address, title) {
   
   getCoords(address, function(coords) {
+
+    // Check if marker is in array first
+    var dup = false;
+    for(var marker of markers) {
+      if (marker.title === title) {
+        dup = true;
+        break;
+      }
+    }
+
+    // Only if there are no duplicates
+    if (!dup) {
+      var marker = new google.maps.Marker({
+        map: map,
+        position: new google.maps.LatLng(coords.lat(), coords.lng()),
+        title: title
+      });
+
+      // Add marker to array
+      markers.push(marker);
+    }
     
-    var marker = new google.maps.Marker({
-      map: map,
-      position: new google.maps.LatLng(coords.lat(), coords.lng()),
-      title: title
-    });
-    // Add marker to array
-    markers.push(marker);
+    
+
   });
 }
 
@@ -95,8 +108,10 @@ function getDistance(dest, callback) {
   });
 }
 
-function setCenter(address) {
+function setCenter(address, title) {
   getCoords(address, function(coords) {
+    dropPin(address, title);
+    
     map.setCenter(coords);
   });
 }

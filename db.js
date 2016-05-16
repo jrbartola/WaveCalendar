@@ -146,6 +146,25 @@ function updateLogins(email) {
 	});
 }
 
+// Adjust rating by the party code identifier and user who rated it
+function addRating(user, party, rating, callback) {
+	partyByCode(party, function(newparty) {
+		if (newparty == null) {
+			console.error("Why is newparty null?");
+		} else {
+			// Formula for calculating average based off of current average and # of data in set
+			newparty.rating = ((newparty.rating * newparty.num_ratings) + rating)/(newparty.num_ratings + 1);
+			newparty.num_ratings = newparty.num_ratings + 1;
+			newparty.save();
+
+			// ADD RATING API HERE...
+			return callback(newparty.rating);
+		}
+
+
+	});
+}
+
 
 
 module.exports.addFilter = addFilter;
@@ -157,5 +176,6 @@ module.exports.getUser = getUser;
 module.exports.createUser = createUser;
 module.exports.loginUser = loginUser;
 module.exports.updateLogins = updateLogins;
+module.exports.addRating = addRating;
 
 

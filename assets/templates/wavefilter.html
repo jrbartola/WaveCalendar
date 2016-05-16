@@ -1,14 +1,24 @@
 <div class="wave" ng-repeat="wave in waves track by $index">
-	<div class="media" ng-click="centerMap(waves[$index])">
+	<div class="media">
 	  <div class="media-left media-middle">
-	    <a href="#">
+	    <a href="#" ng-click="centerMap(waves[$index])">
 	      <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="">
 	    </a>
-	    <img class="rating" src="../img/rating_star.png" style="height:8px;width:8px;" alt="" data-party="{{ wave.reg_code }}-1">
-	    <img class="rating" src="../img/rating_star.png" style="height:8px;width:8px;" alt="" data-party="{{ wave.reg_code }}-2">
-	    <img class="rating" src="../img/rating_star.png" style="height:8px;width:8px;" alt="" data-party="{{ wave.reg_code }}-3">
-	    <img class="rating" src="../img/rating_star.png" style="height:8px;width:8px;" alt="" data-party="{{ wave.reg_code }}-4">
-	    <img class="rating" src="../img/rating_star.png" style="height:8px;width:8px;" alt="" data-party="{{ wave.reg_code }}-5">
+	    <!--
+		  <span>☆</span>
+	      <span>☆</span>
+		  <span>☆</span>
+		  <span>☆</span>
+		  <span>☆</span>
+		</div> -->
+		<ul onload="createRating({{ wave.reg_code }})" id="{{ wave.reg_code }}" class="rating">
+			<!-- <li class="c-rating__item" data-index="0"></li>
+			<li class="c-rating__item" data-index="1"></li>
+			<li class="c-rating__item" data-index="2"></li>
+			<li class="c-rating__item" data-index="3"></li>
+			<li class="c-rating__item" data-index="4"></li> -->
+		</ul>
+		
     	
 	  </div>
 	  <div class="media-body">

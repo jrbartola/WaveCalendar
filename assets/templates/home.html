@@ -12,6 +12,8 @@
     	<title>Wave Calendar</title>
 
     	<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
+    	<!-- Normalize CSS -->
+    	<link rel="stylesheet" href="../css/normalize.css">
     	<!-- Bootstrap CSS -->
     	<link rel="stylesheet" href="../css/bootstrap.min.css">
     	<!-- FontAwesome CSS -->
@@ -20,8 +22,11 @@
     	<link rel="stylesheet" href="../css/animate.min.css">
     	<!-- SweetAlert CSS -->
     	<link rel="stylesheet" href="../css/sweetalert.css">
+    	
     	<!-- Custom CSS -->
     	<link rel="stylesheet" href="../css/waves.css">
+    	<!-- Ratings CSS -->
+    	<link rel="stylesheet" href="../css/rating.min.css">
   	</head>
 
   	<body ng-app="waveCal">
@@ -87,7 +92,10 @@
 	    	</div>
 	    </section>
 	  	
-
+	    <div>
+	    	<ul id="rater">
+	    	</ul>
+	    </div>
 
 	    <footer>
 	    	<div class="container">
@@ -110,21 +118,34 @@
   		
   		<script type="text/javascript">
   		$(document).ready(function() {
-  			$('.rating').hover(function() {
-  				var curstar = parseInt($(this).attr('data-party').substring(9,10));
-  				var curparty = $(this).attr('data-party').substring(0,8);
-  				for (var i = curstar; i > 0; i--) {
-  					$('img[data-party=' + curparty + '-' + i + ']').attr('src', '../img/rating_star_gold.png');
-  					console.log('img[data-party=' + curparty + '-' + i + ']');
-  				}
-  				//$(this).attr('src', '../img/rating_star_gold.png');
-  			}, function() {
-  				$(this).attr('src', '../img/rating_star.png');
-  			});
-  		});
+
+  			function createRating(party) {
+  				$.post('/api/partycode', {'code': party}, function(retrieved) {
+  					var el = document.querySelector('#' + party);
+
+					// current rating, or initial rating
+					var currentRating = parseInt(retrieved.rating);
+
+					// max rating, i.e. number of stars you want
+					var maxRating= 5;
+
+					// callback to run after setting the rating
+					var callback = function(rating) {
+						alert(rating);
+					};
+
+					// rating instance
+					var myRating = rating(el, currentRating, maxRating, callback);
+  				});
+  				
+  			}
+  			
+  	  	});
   		</script>
   		<!-- Bootstrap JS -->
   		<script src="../js/bootstrap.min.js"></script>
+  		<!-- Ratings JS -->
+  		<script src="../js/rating.min.js"></script>
   		<!-- Waypoints Plugin --> 
   		<script src="../js/noframework.waypoints.min.js" type="text/javascript"></script>
   		<!-- Sweetalert Plugin --> 

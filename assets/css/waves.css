@@ -27,7 +27,6 @@ section#signup {
   margin: auto; }
 
 ul {
-  display: block;
   list-style-type: none; }
 
 footer {
@@ -111,8 +110,6 @@ h3 {
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
     font-size: 3em;
     color: #99ccff; }
-    .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand.active {
-      color: #0061c2; }
   .navbar-default .navbar-collapse {
     border-color: fade(white, 2%); }
   .navbar-default .navbar-toggle {
@@ -122,7 +119,7 @@ h3 {
       background-color: white; }
     .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
       background-color: white; }
-  .navbar-default .nav li ul.dropdown-menu {
+  .navbar-default .nav li ul:hover {
     background-color: white; }
   .navbar-default .nav li a {
     font-weight: 500;
@@ -130,7 +127,7 @@ h3 {
     letter-spacing: 1px;
     color: #0080ff; }
     .navbar-default .nav li a:hover, .navbar-default .nav li a:focus {
-      background-color: white;
+      background-color: #e0e0e0;
       color: #0080ff;
       outline: none; }
     .navbar-default .nav li a .dropdown-toggle {
@@ -214,9 +211,8 @@ h3 {
     background-color: white; }
 
 .rating {
-  background-image: url("../img/rating_star.png"); }
-  .rating:hover {
-    background-image: url("../img/rating_star.png"); }
+  display: flex;
+  justify-content: center; }
 
 .active {
   font-size: 2rem;
@@ -224,12 +220,7 @@ h3 {
   color: white; }
 
 .media {
-  padding: 20px;
-  /*
-  &:hover {
-  	cursor: pointer;
-  	box-shadow: 5px 5px 5px #888;
-  }*/ }
+  padding: 20px; }
 
 ul.selected-items {
   padding: 0px; }

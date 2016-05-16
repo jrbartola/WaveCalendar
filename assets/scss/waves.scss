@@ -42,7 +42,7 @@ section#signup {
 }
 
 ul {
-	display: block;
+	//display: block;
 	list-style-type: none;
 }
 
@@ -167,7 +167,7 @@ h3 {
         &:focus,
         //&:active,
         &.active {
-        	color: darken($primary-color, 12%);
+        	//color: darken($primary-color, 12%);
         }
 	}
 	.navbar-collapse {
@@ -187,12 +187,11 @@ h3 {
     .nav {
     	li {
 
-    		&.dropdown {
+    		ul {
     			
-    		}
-
-    		ul.dropdown-menu {
-    			background-color: $secondary-color;
+    			&:hover {
+    			    background-color: white;
+    			}
     		}
 
     		a {
@@ -202,7 +201,7 @@ h3 {
     			color: $primary-color;
     			&:hover,
     			&:focus {
-    				background-color: $secondary-color;
+    				background-color: darken($secondary-color, 12%);
     				color: $primary-color;
     				outline: none;
     			}
@@ -269,12 +268,27 @@ h3 {
 
 // Class for rating star buttons 
 .rating {
-	background-image: url('../img/rating_star.png');
-
-	&:hover {
-		background-image: url('../img/rating_star.png');
-	}
+	display: flex;
+	justify-content: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // TypeAhead
 .active {
@@ -287,11 +301,6 @@ h3 {
 
 .media {
 	padding: 20px;
-	/*
-	&:hover {
-		cursor: pointer;
-		box-shadow: 5px 5px 5px #888;
-	}*/
 }
 
 // Selected search tags

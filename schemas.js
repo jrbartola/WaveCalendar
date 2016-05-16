@@ -25,7 +25,7 @@ var userSchema = new Schema({
 	num_parties: { type: Number, default: 0},
 	attended_parties: { type: Number, default: 0},
 	attending: [String],
-	rated_parties: { type: Number, default: 0},
+	rated_parties: {type: Number, default: 0 },
 	join_date: {type: Date, default: Date.now() },
 	num_logins: {type: Number, default: 0 }
 	// ... More to possibly come
