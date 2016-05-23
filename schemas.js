@@ -60,6 +60,7 @@ var partySchema = new Schema({
 var ratingSchema = new Schema({
 	// Email of user
 	user: { type: String, required: true },
+	// Party registration code
 	party: { type: String, required: true },
 	date_posted: { type: Date, default: Date.now() },
 	rating: { type: Number, required: true },

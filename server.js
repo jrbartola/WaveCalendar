@@ -110,13 +110,20 @@ app.post('/api/partycode', function(req, res) {
 });
 
 app.post('/api/rating', function(req, res) {
-	var user = req.session.user._id;
+	var user = req.session.user;
 	var party = req.body.party;
 	var rating = req.body.rating;
 	
-	db.addRating(user, party, rating, function(newRating) {
-		res.json(newRating);
-	});
+	if (rating) {
+		db.addRating(user, party, rating, function(newRating) {
+			res.json(newRating);
+		});
+	} else {
+		db.findRating(user, party, function(r) {
+			res.json(r.rating); 
+		});
+	}
+	
 
 });
 

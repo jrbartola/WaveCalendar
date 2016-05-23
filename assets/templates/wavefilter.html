@@ -13,7 +13,7 @@
 		  <span>☆</span>
 		  <span>☆</span>
 		</div> -->
-		<ul id="{{ wave.reg_code }}" data-rating="{{ wave.rating }}" class="rating">
+		<ul id="{{ wave.reg_code }}" data-rating="findRating(wave.reg_code)" class="rating">
 			<li class="c-rating__item" ng-mouseover="iterate(0, false, wave.reg_code)" ng-click="sendRate(1, wave.reg_code)" ng-mouseleave="iterate(0, true, wave.reg_code)" data-index="0"></li>
 			<li class="c-rating__item" ng-mouseover="iterate(1, false, wave.reg_code)" ng-click="sendRate(2, wave.reg_code)" ng-mouseleave="iterate(1, true, wave.reg_code)" data-index="1"></li>
 			<li class="c-rating__item" ng-mouseover="iterate(2, false, wave.reg_code)" ng-click="sendRate(3, wave.reg_code)" ng-mouseleave="iterate(2, true, wave.reg_code)" data-index="2"></li>

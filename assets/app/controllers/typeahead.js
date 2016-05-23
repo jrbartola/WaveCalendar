@@ -105,7 +105,6 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     clearMarkers();
     partyFactory.post('/api/parties', {'filters': filData, 'location': locData}).then(function(data) {
       
-      // Use $scope.$apply() eventually..
       $.each(data, function(index, value) {
         var address = value.location.street + ", " + value.location.city + ", " + value.location.zip_code;
         
@@ -220,51 +219,40 @@ typeAhead.directive('wavefilter', function($timeout) {
     },
     link: function(scope, elem, attrs) {
       // insert scope functions here
-      scope.createRating = function(party) {
-        $.post('/api/partycode', {'code': party}, function(retrieved) {
-          var el = document.querySelector('#' + party);
 
-          // current rating, or initial rating
-          var currentRating = parseInt(retrieved.rating);
+      scope.findRating = function(party) {
+        $.post('/api/rating', {'party': party}, function(rate) {
+          console.log('rate is ' + rate);
 
-          // max rating, i.e. number of stars you want
-          var maxRating= 5;
-
-          // callback to run after setting the rating
-          var callback = function(rating) {
-            $.post('/api/rating', {'rating': rating, 'party': party}, function(response) {
-
-              console.log(response);
-            });
-          };
-
-          // rating instance
-          var myRating = rating(el, currentRating, maxRating, callback);
+          return rate;
         });
-        
       }
 
       scope.iterate = function(starnum, deselect, party) {
-        console.log('starnum: ' + starnum + "\n");
-        if (deselect) {
+        
           var curRating = parseInt($('#' + party).attr('data-rating'));
-          while (starnum > curRating) {
-            $('#' + party).find('[data-index=' + starnum + ']').removeClass('is-active');
-            starnum--;
+          // for (var i = 5; i > 0; i--) {
+          //   var curStar = $('#' + party).find('[data-index=' + (i - 1) + ']');
+          //   if (i <= curRating) {
+          //     curStar.addClass('is-active');
+          //   } else {
+          //     curStar.removeClass('is-active');
+          //   }
+          // }
+          for (var i = 5; i > 0; i--) {
+            var curStar = $('#' + party).find('[data-index=' + (i - 1) + ']');
+            if ((i <= starnum + 1 && !deselect) || (i <= curRating && deselect)) {
+              curStar.addClass('is-active');
+            } else {
+              curStar.removeClass('is-active');
+            }
           }
-        } else {
-          while (starnum >= 0) {
-            $('#' + party).find('[data-index=' + starnum + ']').addClass('is-active');
-            starnum--;
-          }
-        }
         
       }
 
       scope.sendRate = function(rating, party) {
-        $.post('/api/rating', {'rating': rating, 'party': party}, function(response) {
-
-          console. log(response);
+        $.post('/api/rating', {'rating': parseInt(rating), 'party': party}, function(response) {
+          $('#' + party).attr('data-rating', response);
         });
       }
 

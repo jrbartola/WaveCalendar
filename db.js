@@ -61,6 +61,8 @@ function retrieveParties(callback, filters, location) {
 	
 }
 
+
+
 function partyByCode(code, callback) {
 	schemas.Party.findOne({"reg_code": code}, function(err, party) {
 		if (err) throw err;
@@ -146,27 +148,63 @@ function updateLogins(email) {
 	});
 }
 
+function findRating(user, party, callback) {
+	schemas.Rating.findOne({'user': user.email, 'party': party}, function(err, rate) {
+		if (rate)
+			return callback(rate)
+		return callback(null);
+	});
+}
+
 // Adjust rating by the party code identifier and user who rated it
 function addRating(user, party, rating, callback) {
 	partyByCode(party, function(newparty) {
 		if (newparty == null) {
-			console.error("Why is newparty null?");
+			console.error("Cannot rate a party that does not exist");
 		} else {
-			// Formula for calculating average based off of current average and # of data in set
-			newparty.rating = ((newparty.rating * newparty.num_ratings) + rating)/(newparty.num_ratings + 1);
-			newparty.num_ratings = newparty.num_ratings + 1;
-			newparty.save();
 
-			// Add Rating API
-			var props = {'user': user, 'party': newparty._id, 'rating': rating}
-			var newRate = new schemas.Rating(props);
-			newRate.save(function(err) {
-				if (err) throw err;
-				return callback(newRate.rating);
-			});
+			findRating(user, newparty.reg_code, function(rate) {
+				// If the same user rated the same party then overwrite previous rating
+				if (rate) {
+					console.log('Updating new rating from ' + rate.rating + ' to ' + rating);
+					rate.rating = rating;
+					rate.save(function(err) {
+						if (err) throw err;
+						updateRating(newparty, 0, function(newrating) {
+							return callback(newrating);
+						});
+					});
+
+				} else { // else create a new rating entry
+
+				  	var props = {'user': user.email, 'party': newparty.reg_code, 'rating': rating}
+					var newRate = new schemas.Rating(props);
+					newRate.save(function(err) {
+						if (err) throw err;
+						updateRating(newparty, 1, function(newrating) {
+							return callback(newrating);
+						});
+				  	
+					});
+				}
+			});		
 		}
+	});
+}
 
+function updateRating(party, add, callback) {
+	schemas.Rating.aggregate([{ '$match': { 'party': party.reg_code }},
+	  { '$group': { '_id': null, 'rating': {'$avg': '$rating'}}}], function(err, avg) {
 
+  		schemas.Party.update({'reg_code': party.reg_code}, {'rating': avg[0].rating},
+  		  {'$inc': {'num_ratings': add}}, function(err, newparty) {
+  			if (err) {
+  				console.dir(err);
+  				throw err;
+  			}
+
+  			return callback(avg[0].rating);
+  		});
 	});
 }
 
@@ -181,6 +219,7 @@ module.exports.getUser = getUser;
 module.exports.createUser = createUser;
 module.exports.loginUser = loginUser;
 module.exports.updateLogins = updateLogins;
+module.exports.findRating = findRating;
 module.exports.addRating = addRating;
 
 
