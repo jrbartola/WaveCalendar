@@ -85,6 +85,8 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     $scope.parties.push(party);
   }
 
+  
+
   $scope.getParties = function() {
     // Clear markers when new tags are invoked
     var locData; // Temporary variable sending the current city if that is the current location filter
@@ -218,6 +220,54 @@ typeAhead.directive('wavefilter', function($timeout) {
     },
     link: function(scope, elem, attrs) {
       // insert scope functions here
+      scope.createRating = function(party) {
+        $.post('/api/partycode', {'code': party}, function(retrieved) {
+          var el = document.querySelector('#' + party);
+
+          // current rating, or initial rating
+          var currentRating = parseInt(retrieved.rating);
+
+          // max rating, i.e. number of stars you want
+          var maxRating= 5;
+
+          // callback to run after setting the rating
+          var callback = function(rating) {
+            $.post('/api/rating', {'rating': rating, 'party': party}, function(response) {
+
+              console.log(response);
+            });
+          };
+
+          // rating instance
+          var myRating = rating(el, currentRating, maxRating, callback);
+        });
+        
+      }
+
+      scope.iterate = function(starnum, deselect, party) {
+        console.log('starnum: ' + starnum + "\n");
+        if (deselect) {
+          var curRating = parseInt($('#' + party).attr('data-rating'));
+          while (starnum > curRating) {
+            $('#' + party).find('[data-index=' + starnum + ']').removeClass('is-active');
+            starnum--;
+          }
+        } else {
+          while (starnum >= 0) {
+            $('#' + party).find('[data-index=' + starnum + ']').addClass('is-active');
+            starnum--;
+          }
+        }
+        
+      }
+
+      scope.sendRate = function(rating, party) {
+        $.post('/api/rating', {'rating': rating, 'party': party}, function(response) {
+
+          console. log(response);
+        });
+      }
+
       scope.centerMap = function(party) {
         var address = party.location.street + ", " + party.location.city + ", " + party.location.zip_code;
         setCenter(address, party.title);

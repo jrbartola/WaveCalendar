@@ -157,8 +157,13 @@ function addRating(user, party, rating, callback) {
 			newparty.num_ratings = newparty.num_ratings + 1;
 			newparty.save();
 
-			// ADD RATING API HERE...
-			return callback(newparty.rating);
+			// Add Rating API
+			var props = {'user': user, 'party': newparty._id, 'rating': rating}
+			var newRate = new schemas.Rating(props);
+			newRate.save(function(err) {
+				if (err) throw err;
+				return callback(newRate.rating);
+			});
 		}
 
 

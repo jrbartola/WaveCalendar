@@ -119,26 +119,7 @@
   		<script type="text/javascript">
   		$(document).ready(function() {
 
-  			function createRating(party) {
-  				$.post('/api/partycode', {'code': party}, function(retrieved) {
-  					var el = document.querySelector('#' + party);
-
-					// current rating, or initial rating
-					var currentRating = parseInt(retrieved.rating);
-
-					// max rating, i.e. number of stars you want
-					var maxRating= 5;
-
-					// callback to run after setting the rating
-					var callback = function(rating) {
-						alert(rating);
-					};
-
-					// rating instance
-					var myRating = rating(el, currentRating, maxRating, callback);
-  				});
-  				
-  			}
+  			
   			
   	  	});
   		</script>

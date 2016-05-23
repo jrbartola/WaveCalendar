@@ -58,10 +58,11 @@ var partySchema = new Schema({
 });
 
 var ratingSchema = new Schema({
-	user: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-	party: { type: Schema.Types.ObjectId, required: true, ref: 'Party' },
+	// Email of user
+	user: { type: String, required: true },
+	party: { type: String, required: true },
 	date_posted: { type: Date, default: Date.now() },
-	rating: { type: Number, default: 3},
+	rating: { type: Number, required: true },
 	description: String
 	// ... More to possibly come
 });
