@@ -120,7 +120,7 @@ app.post('/api/rating', function(req, res) {
 		});
 	} else {
 		db.findRating(user, party, function(r) {
-			res.json(r.rating); 
+			res.json(r); 
 		});
 	}
 	

@@ -54,7 +54,7 @@ typeAhead.factory('partyFactory', function($http) {
 });
 
 
-typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFactory) { // DI in action
+typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, partyFactory) { // DI in action
   
   //Use filterFactory to get the current user from API
   filterFactory.get('/api/currentuser').then(function(data) {
@@ -63,8 +63,13 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
     // originally filter by current city of user
 
     partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
-      $scope.parties = data;
-      
+      $scope.parties = [];
+      $.each(data, function(index, party) {
+        // Find rating of each initial party that shows when a user logs in
+        $scope.findRating(party, function(newparty) {
+          $scope.addParty(newparty);
+        });
+      });
       
     });
   });
@@ -81,11 +86,32 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
   $scope.distance = -1; // Holds distance/location filter
   $scope.name = ''; // This will hold the selected item
 
-  $scope.addParty = function(party) {
-    $scope.parties.push(party);
+  $scope.findRating = function(party, callback) {
+    $.post('/api/rating', {'party': party.reg_code}, function(rate) {
+      // Set to 0 if user has not rated this party before
+      if (!rate)
+        rate = 0;
+      else
+        rate = rate.rating;
+
+      party.rating = {'user': rate, 'average': party.rating}
+      return callback(party);
+    });
   }
 
-  
+  $scope.addParty = function(party) {
+    $scope.$apply(function() {
+      $scope.parties.push(party);
+      // Wait 200 ms before filling in the stars
+      $timeout(function() {
+        for (var i = 5; i > 0; i--) {
+          if (i <= party.rating.user)
+           $('#' + party.reg_code).find('[data-index=' + (i - 1) + ']').addClass('is-active');
+        }
+      }, 200);
+      
+    });
+  }
 
   $scope.getParties = function() {
     // Clear markers when new tags are invoked
@@ -112,16 +138,15 @@ typeAhead.controller('TypeaheadCtrl', function($scope, filterFactory, partyFacto
 
           if (locData || (!locData && distance < $scope.distance)) {
             dropPin(address, value.title);
-            $scope.$apply(function() {
-              $scope.parties.push(value);
+              // Poll the db for the user's rating of the individual party
+            $scope.findRating(value, function(newvalue) {
+              $scope.addParty(newvalue);
             });
-            
+                
           }
-          
-          
+
         });
       });
-
 
     });
   };
@@ -220,25 +245,9 @@ typeAhead.directive('wavefilter', function($timeout) {
     link: function(scope, elem, attrs) {
       // insert scope functions here
 
-      scope.findRating = function(party) {
-        $.post('/api/rating', {'party': party}, function(rate) {
-          console.log('rate is ' + rate);
-
-          return rate;
-        });
-      }
-
       scope.iterate = function(starnum, deselect, party) {
         
           var curRating = parseInt($('#' + party).attr('data-rating'));
-          // for (var i = 5; i > 0; i--) {
-          //   var curStar = $('#' + party).find('[data-index=' + (i - 1) + ']');
-          //   if (i <= curRating) {
-          //     curStar.addClass('is-active');
-          //   } else {
-          //     curStar.removeClass('is-active');
-          //   }
-          // }
           for (var i = 5; i > 0; i--) {
             var curStar = $('#' + party).find('[data-index=' + (i - 1) + ']');
             if ((i <= starnum + 1 && !deselect) || (i <= curRating && deselect)) {

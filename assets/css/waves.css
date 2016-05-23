@@ -211,6 +211,7 @@ h3 {
     background-color: white; }
 
 .rating {
+  display: flex;
   justify-content: center; }
 
 .active {

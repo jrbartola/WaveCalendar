@@ -149,7 +149,9 @@ function updateLogins(email) {
 }
 
 function findRating(user, party, callback) {
+	console.log('user is ' + user.email + ', party is ' + party);
 	schemas.Rating.findOne({'user': user.email, 'party': party}, function(err, rate) {
+		console.dir(rate);
 		if (rate)
 			return callback(rate)
 		return callback(null);
