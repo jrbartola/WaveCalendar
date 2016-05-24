@@ -106,7 +106,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
       $timeout(function() {
         for (var i = 5; i > 0; i--) {
           if (i <= party.rating.user)
-           $('#' + party.reg_code).find('[data-index=' + (i - 1) + ']').addClass('is-active');
+           $('#' + party.reg_code + '-rate').find('[data-index=' + (i - 1) + ']').addClass('is-active');
         }
       }, 200);
       
@@ -197,10 +197,12 @@ typeAhead.directive('typeahead', function($timeout) {
       scope.isCurrent = function(index) {
         return scope.current == index;
       };
+
       scope.setCurrent = function(index) {
         
         scope.current = index;
       };
+
       scope.removeItem = function(index) {
         scope.chosen.splice(index, 1);
         $timeout(function() {
@@ -236,10 +238,7 @@ typeAhead.directive('wavefilter', function($timeout) {
       filters: '=',
       waves: '=',
       title: '@',
-      location: '@',
-      street: '@',
-      city: '@',
-      zipCode: '@'
+      location: '@'
 
     },
     link: function(scope, elem, attrs) {
@@ -247,9 +246,9 @@ typeAhead.directive('wavefilter', function($timeout) {
 
       scope.iterate = function(starnum, deselect, party) {
         
-          var curRating = parseInt($('#' + party).attr('data-rating'));
+          var curRating = parseInt($('#' + party + '-rate').attr('data-rating'));
           for (var i = 5; i > 0; i--) {
-            var curStar = $('#' + party).find('[data-index=' + (i - 1) + ']');
+            var curStar = $('#' + party + '-rate').find('[data-index=' + (i - 1) + ']');
             if ((i <= starnum + 1 && !deselect) || (i <= curRating && deselect)) {
               curStar.addClass('is-active');
             } else {
@@ -261,7 +260,7 @@ typeAhead.directive('wavefilter', function($timeout) {
 
       scope.sendRate = function(rating, party) {
         $.post('/api/rating', {'rating': parseInt(rating), 'party': party}, function(response) {
-          $('#' + party).attr('data-rating', response);
+          $('#' + party + '-rate').attr('data-rating', response);
         });
       }
 

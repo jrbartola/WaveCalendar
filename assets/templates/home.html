@@ -72,7 +72,7 @@
 			  				<h2>Upcoming Waves</h2>
 			  			</div>
 			  			<div class="row">
-			  				<wavefilter filters="chosen_" waves="parties" title="title" location="location" street="street" city="city" zip-code="zip_code"/>
+			  				<wavefilter filters="chosen_" waves="parties" title="title" location="location"/>
 			  			</div>
 			    	</div>
 			    	<div class="col-md-8">
@@ -87,14 +87,13 @@
 	    	<div class="container">
 	    		<h1>Ride the Wave</h1>
 	    		<br/>
-	    		<partycode party="party" on-search="getParty()" code="code" state="view" on-attend="attendParty(wave)" square-one="initialView()"></partycode>
+	    		<partycode party="party" on-search="getParty()" code="code" state="view" on-attend="attendParty(wave)" square-one="initialView()" on-create="createWave()" />
 	    		
 	    	</div>
 	    </section>
 	  	
-	    <div>
-	    	<ul id="rater">
-	    	</ul>
+	    <div id="modalcreate">
+	    	<createawave />
 	    </div>
 
 	    <footer>

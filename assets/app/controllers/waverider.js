@@ -106,6 +106,10 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
     
   };
 
+  $scope.createWave = function() {
+    $('#myModal').css('display', 'block');
+  }
+
 });
 
 // Directive for retrieval of party by code
@@ -119,7 +123,8 @@ waveRider.directive('partycode', function($timeout) {
       onSearch: '&',
       state: '=',
       onAttend: '&',
-      squareOne: '&'
+      squareOne: '&',
+      onCreate: '&'
 
     },
     link: function(scope, elem, attrs) {
@@ -175,5 +180,24 @@ waveRider.directive('partycode', function($timeout) {
       };
     },
     templateUrl: '../templates/partycode.html'
+  };
+});
+
+// Directive for create-a-wave Modal
+waveRider.directive('createawave', function($timeout) {
+  
+  return {
+    restrict: 'AEC',
+    scope: {
+      
+
+    },
+    link: function(scope, elem, attrs) {
+      // insert scope functions here
+      scope.closeModal = function() {
+        $('#myModal').css('display', 'none');
+      }
+    },
+    templateUrl: '../templates/createawave.html'
   };
 });

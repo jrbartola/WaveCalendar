@@ -11,11 +11,11 @@
 	  <div class="media-body">
 	    <h4 class="media-heading">{{ wave[title] }}</h4>
 	    <ul>
-	    	<li>Where: {{ wave[location][street] }}</li>
-	    	<li>{{ wave[location].city }}, {{ wave[location][zipCode] }}</li>
+	    	<li>Where: {{ wave[location].street }}</li>
+	    	<li>{{ wave[location].city }}, {{ wave[location].zip_code }}</li>
 	    	<li></li>
 	    </ul>
-	    <ul id="{{ wave.reg_code }}" title="Average rating: {{ wave.rating.average }}/5" data-rating="{{ wave.rating.user }}" class="rating">
+	    <ul id="{{ wave.reg_code }}-rate" title="Average rating: {{ wave.rating.average }}/5" data-rating="{{ wave.rating.user }}" class="rating">
 			<li class="c-rating__item" ng-mouseover="iterate(0, false, wave.reg_code)" ng-click="sendRate(1, wave.reg_code)" ng-mouseleave="iterate(0, true, wave.reg_code)" data-index="0"></li>
 			<li class="c-rating__item" ng-mouseover="iterate(1, false, wave.reg_code)" ng-click="sendRate(2, wave.reg_code)" ng-mouseleave="iterate(1, true, wave.reg_code)" data-index="1"></li>
 			<li class="c-rating__item" ng-mouseover="iterate(2, false, wave.reg_code)" ng-click="sendRate(3, wave.reg_code)" ng-mouseleave="iterate(2, true, wave.reg_code)" data-index="2"></li>

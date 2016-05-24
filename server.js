@@ -23,7 +23,23 @@ app.use(session({
     saveUninitialized: true
 }));
 
+
+
 var auth = function(req, res, next) {
+	//
+	// For testing purposes only!!!
+	//
+	db.loginUser('jrbartola@gmail.com', 'pass123', function(user) {
+		if (!user) {
+			res.json(null);
+		} else {
+			db.updateLogins('jrbartola@gmail.com');
+			req.session.user = user;
+		}
+	});
+	//
+	//
+	//
     if (req.session && req.session.user) {
         return next();
   	} else {
