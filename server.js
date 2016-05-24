@@ -71,10 +71,21 @@ app.get('/api/filters', function(req, res) {
 app.post('/api/users', function(req, res) {
 	var field = req.body.field;
 	var value = req.body.value;
+	var user = req.session.user;
+	var party = req.body.party;
 
-	db.getUser(field, value, function(user) {
-		res.json(user);
-	});
+	// If a party field is passed to the API, add the user to the party's attend list
+	if (party) {
+		// Returns true if user did not attend party yet, returns false if they did
+		db.attendParty(user, party, function(response) {
+			res.json(response);
+		});
+	} else {
+		db.getUser(field, value, function(user) {
+			res.json(user);
+		});
+	}
+	
 });
 
 app.post('/api/register', function(req, res) {

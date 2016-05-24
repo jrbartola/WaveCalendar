@@ -57,7 +57,6 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
           $('.modal-found').removeClass('invisible');
           $scope.view = 1;
           
-          console.log($scope.party);
 
         });
       }
@@ -65,16 +64,29 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
     });
   }
 
-  $scope.attendParty = function() {
-    swal({title: "You're Going!",
-      text: "The creator of the party " +
-      "has been notified of your attendance.", 
-      type: "success", 
-      confirmButtonText: "Okay"
-      },
-      function() {
+  $scope.attendParty = function(wave) {
+
+    $.post('/api/users', {'party': wave}, function(response) {
+      // IF the user isn't already going to the party
+      if (response) {
+        var props = {title: "You're Going!",
+          text: "The creator of the party " +
+          "has been notified of your attendance.", 
+          type: "success", 
+          confirmButtonText: "Okay"}
+      } else {
+        var props = {title: "Uh Oh!",
+          text: "You are already on the guest list " +
+          "for this party.", 
+          type: "error", 
+          confirmButtonText: "Okay"}
+      }
+      // Flash sweet alert with message
+      swal(props, function() {
         $scope.initialView();
       });
+
+    });
   }
 
   $scope.initialView = function() {

@@ -27,7 +27,7 @@ function retrieveParties(callback, filters, location) {
 
 	if (location && filters) {
 		schemas.Party.find({}).
-		where('filters').all(filters).
+		where('filters').all(filters). // Make location.city case insensitive
 		where({'location.city': location}).
 		exec(function(err, parties) {
 			if (err) throw err;
@@ -149,9 +149,7 @@ function updateLogins(email) {
 }
 
 function findRating(user, party, callback) {
-	console.log('user is ' + user.email + ', party is ' + party);
 	schemas.Rating.findOne({'user': user.email, 'party': party}, function(err, rate) {
-		console.dir(rate);
 		if (rate)
 			return callback(rate)
 		return callback(null);
@@ -198,8 +196,8 @@ function updateRating(party, add, callback) {
 	schemas.Rating.aggregate([{ '$match': { 'party': party.reg_code }},
 	  { '$group': { '_id': null, 'rating': {'$avg': '$rating'}}}], function(err, avg) {
 
-  		schemas.Party.update({'reg_code': party.reg_code}, {'rating': avg[0].rating},
-  		  {'$inc': {'num_ratings': add}}, function(err, newparty) {
+  		schemas.Party.update({'reg_code': party.reg_code}, {'rating': avg[0].rating, 
+  		  '$inc': {'num_ratings': add}}, function(err, newparty) {
   			if (err) {
   				console.dir(err);
   				throw err;
@@ -207,6 +205,22 @@ function updateRating(party, add, callback) {
 
   			return callback(avg[0].rating);
   		});
+	});
+}
+
+function attendParty(user, party, callback) {
+	// Check if user is already attending the party
+	schemas.User.findOne({'email': user.email, 'attending': 
+		{ '$in': [party] }}, function(err, matched) {
+		// If the user is already attending the party don't bother to add it again
+		if (matched)
+			return callback(null);
+		schemas.User.update({'email': user.email}, {'$push': {'attending': party}}, function(err, upd) {
+			schemas.Party.update({'reg_code': party}, {'$inc': {'attending': 1}}, function(err1, upd1) {
+				return callback(1);
+			});
+			
+		});
 	});
 }
 
@@ -223,5 +237,5 @@ module.exports.loginUser = loginUser;
 module.exports.updateLogins = updateLogins;
 module.exports.findRating = findRating;
 module.exports.addRating = addRating;
-
+module.exports.attendParty = attendParty;
 

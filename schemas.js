@@ -48,6 +48,7 @@ var partySchema = new Schema({
 	rating: { type: Number, default: 3 },
 	num_ratings: { type: Number, default: 0 },
 	num_guests: Number,
+	attending: { type: Number, default: 0 },
 	location: {
 		street: String,
 		city: String,
