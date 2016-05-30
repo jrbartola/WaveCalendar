@@ -11,6 +11,10 @@ body {
     background-attachment: fixed;
 }
 
+h1, h2, h3, h4, h5, h6 {
+	text-align: center;
+}
+
 section#waves {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), transparent url(../img/ocean.jpg) no-repeat center;
 	height: 600px;
@@ -24,9 +28,7 @@ section#main {
 section#signup {
 	margin-top: 50px;
 	margin-bottom: 50px;
-	h1 {
-		text-align: center;
-	}
+
 	div.container {
 		padding: 50px 50px;
 	}
@@ -78,17 +80,42 @@ footer {
 	}
 }
 
-
+/// Abstract this out eventually
 .flex { 
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	//align-content: space-between;
 }
+
+.flex-row {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	justify-content: space-around;
+	//padding: 5px;
+
+	input.form-control {
+		width: initial;
+	}
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
+
 
 .flex-1 {
 	flex: 1;
+}
+
+.flex-2 {
+	flex: 2;
+}
+
+.flex-3 {
+	flex: 3;
 }
 
 // Media Query for bottom banner flexbox
@@ -260,7 +287,7 @@ h3 {
 // Radio Buttons
 input[type=radio] {
 	transform: scale(1.5);
-	margin-right: 25px;
+	margin-right: 15px;
 }
 
 // Class for rating star buttons 
@@ -339,17 +366,9 @@ section#create {
 	padding-bottom: 50px;
 	background-color: lighten($primary-color, 15%);
 	color: white;
-	div {
-		h1 {
-			text-align: center;
-		}
-	}
 }
 
 .modaldiv {
-	h2, h3 {
-		text-align: center;
-	}
 
 	padding-bottom: 20px;
 	background-color:lighten($primary-color, 20%);
@@ -360,6 +379,10 @@ section#create {
 		-webkit-transition: all ease 0.3s;
 	}
 	
+}
+
+div#myModal {
+	color: black;
 }
 
 .modal-found {
@@ -479,7 +502,8 @@ section#create {
 
 // Create Party Form
 
-table#createParty {
+
+.table {
 	tbody {
 		tr {
 			td, th {
@@ -489,6 +513,7 @@ table#createParty {
 		}
 	}
 }
+
 
 // Preserves the old border-top provied by bootstrap
 .oldstyle {

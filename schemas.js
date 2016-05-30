@@ -41,8 +41,8 @@ var partySchema = new Schema({
 	invite_only: { type: Boolean, default: false },
 	status: String,
 	ratio: {
-		guys: { type: Number, default: 1 },
-		girls: { type: Number, default: 1 }
+		guys: { type: Number, default: 0 },
+		girls: { type: Number, default: 0 }
 	},
 	filters: [String],
 	rating: { type: Number, default: 3 },

@@ -1,0 +1,11 @@
+<td colspan="1">
+  <input type="text" tag-ahead class="form-control" ng-model="tagbox">
+  <div class="item" ng-repeat="filter in filters | limitTo: 4 | filter:tagbox track by $index" ng-click="handleSelection(filter[title])" style="cursor:pointer" ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">
+    <p class="title" type="{{ filter[subtitle] }}">{{filter[title]}}</p>
+  </div>
+</td>
+<td colspan="1">
+	<ul class="selected-items">
+		<li ng-repeat="chose in chosen track by $index">{{ chose }}  <button type="button" class="closed" data-dismiss="alert" aria-label="Close"><span ng-click="removeItem($index)" aria-hidden="true">&times;</span></button></li>
+	</ul>
+</td>

@@ -22,7 +22,10 @@
     	<link rel="stylesheet" href="../css/animate.min.css">
     	<!-- SweetAlert CSS -->
     	<link rel="stylesheet" href="../css/sweetalert.css">
-    	
+    	<!-- DatePicker CSS -->
+    	<link rel="stylesheet" href="../css/bootstrap-datepicker.css">
+    	<!-- TimePicker CSS -->
+    	<link rel="stylesheet" href="../css/jquery.timepicker.css">
     	<!-- Custom CSS -->
     	<link rel="stylesheet" href="../css/waves.css">
     	<!-- Ratings CSS -->
@@ -87,14 +90,190 @@
 	    	<div class="container">
 	    		<h1>Ride the Wave</h1>
 	    		<br/>
-	    		<partycode party="party" on-search="getParty()" code="code" state="view" on-attend="attendParty(wave)" square-one="initialView()" on-create="createWave()" />
+	    		<partycode party="party" on-search="getParty()" code="code" state="view" on-attend="attendParty(wave)" square-one="initialView()" on-create="openModal()" />
 	    		
 	    	</div>
-	    </section>
+	    
 	  	
-	    <div id="modalcreate">
-	    	<createawave />
-	    </div>
+		    <div id="modalcreate">
+		    	<!-- Create A Wave Modal -->
+				<div id="myModal" class="modal-custom">
+				  <div class="modal-content">
+				    <div class="modal-header">
+				      <h2 class="text-center">Create A Wave</h2>
+				    </div>
+				    <form >
+				      <div class="modal-body">
+				        <table id="createParty1" class="table">
+				          <tbody>
+				            <tr>
+				              <th scope="row">
+				                <h4>Title</h4>
+				              </th>
+				              <td colspan="3">
+				                <input id="wavename" ng-model="wave.name" title="Name your party" class="form-control" type="text">
+				              </td>
+				            </tr>
+				            <tr>
+				              <th scope="row">
+				                <h4>Location</h4>
+				              </th>
+				              <td colspan="2">
+				                <input id="location-address" ng-model="wave.address" class="form-control" placeholder="House address" type="text">
+				              </td>
+				              <td colspan="1" style="width:25%">
+				                <!-- WARNING: THIS width:25% KEEPS THE FORM PROPORTIONATE -->
+				                <select id="location-state" ng-model="wave.state" class="form-control">
+				                  <option value="AL">AL</option>
+				                  <option value="AK">AK</option>
+				                  <option value="AZ">AZ</option>
+				                  <option value="AR">AR</option>
+				                  <option value="CA">CA</option>
+				                  <option value="CO">CO</option>
+				                  <option value="CT">CT</option>
+				                  <option value="DE">DE</option>
+				                  <option value="DC">DC</option>
+				                  <option value="FL">FL</option>
+				                  <option value="GA">GA</option>
+				                  <option value="HI">HI</option>
+				                  <option value="ID">ID</option>
+				                  <option value="IL">IL</option>
+				                  <option value="IN">IN</option>
+				                  <option value="IA">IA</option>
+				                  <option value="KS">KS</option>
+				                  <option value="KY">KY</option>
+				                  <option value="LA">LA</option>
+				                  <option value="ME">ME</option>
+				                  <option value="MD">MD</option>
+				                  <option value="MA">MA</option>
+				                  <option value="MI">MI</option>
+				                  <option value="MN">MN</option>
+				                  <option value="MS">MS</option>
+				                  <option value="MO">MO</option>
+				                  <option value="MT">MT</option>
+				                  <option value="NE">NE</option>
+				                  <option value="NV">NV</option>
+				                  <option value="NH">NH</option>
+				                  <option value="NJ">NJ</option>
+				                  <option value="NM">NM</option>
+				                  <option value="NY">NY</option>
+				                  <option value="NC">NC</option>
+				                  <option value="ND">ND</option>
+				                  <option value="OH">OH</option>
+				                  <option value="OK">OK</option>
+				                  <option value="OR">OR</option>
+				                  <option value="PA">PA</option>
+				                  <option value="RI">RI</option>
+				                  <option value="SC">SC</option>
+				                  <option value="SD">SD</option>
+				                  <option value="TN">TN</option>
+				                  <option value="TX">TX</option>
+				                  <option value="UT">UT</option>
+				                  <option value="VT">VT</option>
+				                  <option value="VA">VA</option>
+				                  <option value="WA">WA</option>
+				                  <option value="WV">WV</option>
+				                  <option value="WI">WI</option>
+				                  <option value="WY">WY</option>
+				                </select>
+				              </td>
+				            </tr>
+				            <tr>
+				              <th scope="row">
+				                &nbsp;
+				              </th>
+				              <td colspan="2">
+				                <input id="location-city" ng-model="wave.city" class="form-control" placeholder="City" type="text">
+				              </td>
+				              <td colspan="" style="">
+				                <input id="location-zip" ng-model="wave.zip_code" type="text" class="form-control" placeholder="Zip Code">
+				              </td>
+				              
+				            </tr>
+				            <tr>
+				              <th scope="row">
+				                <h4>Time</h4>
+				              </th>
+				              <div date-pair>
+				                  <td>
+				                  	<input date-picker check-date="validate()" ng-model="date.start" type="text" class="date start form-control " />
+				                  	<input time-picker ng-disabled="!date.start" check-time="validate()" ng-model="time.start" type="text" class="time start form-control" />
+				                  </td>
+				                  <td colspan="">
+				                  	to
+				                  </td>
+				                  <td colspan="">
+					              	<input date-picker ng-disabled="!(date.start &amp;&amp; time.start)" check-date="validate()" ng-model="date.end" type="text" class="date end form-control" />
+					                <input time-picker ng-disabled="!date.end" check-time="validate()" ng-model="time.end" type="text" class="time end form-control" />
+					              </td>
+				              </div>
+				            </tr>
+				          </tbody>
+				      	</table>
+				      	<table id="createParty2" class="table">
+				          <tbody>
+				            <tr ng-init="invite=false" title="Invite-only parties won't show up on the main dashboard!">
+				              <th colspan="1" style="border-top: 1px solid #ddd;" scope="row">
+				                <h4>Invite Status</h4>
+				              </th>
+				              <td colspan="2" style="border-top: 1px solid #ddd;">
+				                <label>
+				                  <input type="radio" ng-model="invite" id="invite-only" ng-value="true">Invite-Only
+				                </label>
+				                
+				              </td>
+				              <td colspan="1" style="border-top: 1px solid #ddd;">
+				                <label>
+				                  <input type="radio" ng-model="invite" id="invite-open" ng-value="false">Open-Invite
+				                </label>
+				              </td>
+				            </tr>
+				            <tr title="{{ checkInvite() }}">
+				              <th colspan="1">
+				              	<h4>Tags</h4>
+				              </th>
+				              <td colspan="2">
+				              	  <select multiple ng-multiple="true" class="form-control" ng-model="filterAdd" >
+				              	  	<option ng-repeat="filter in filters" value="{{ filter.data }}">{{ filter.data }}</option>
+				              	  </select>
+							  </td>
+							  <td colspan="1">
+								<ul class="selected-items flex-col" style="flex-wrap:wrap;">
+									<li ng-repeat="f in filterAdd">{{ f }}</li>
+								</ul>
+							  </td>
+				            </tr>
+				            <tr>
+				              <th colspan="1">
+				              	<h4>Ratio</h4>
+				              </th>
+				              <td colspan="1">
+				              	<input ng-model="noRatio" type="checkbox"> None
+				              </td>
+				              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
+				              <td colspan="1" style="width:30%;">
+				              	<label for="ratio-girls">Girls</label>
+				              	<input ng-disabled="noRatio" ng-model="ratio.girls" id="ratio-girls" type="number" class="form-control" min="1" value="1">
+				              </td>
+				              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
+				              <td colspan="1" style="width:30%;">
+				              	<label for="ratio-guys">Guys</label>
+				              	<input ng-disabled="noRatio" ng-model="ratio.guys" id="ratio-guys" type="number" class="form-control" min="1" value="1">
+				              </td>
+				            </tr>
+				          </tbody>
+				        </table>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" ng-click="closeModal()" style="border:none;" class="btn-larger">Cancel</button>
+				        <button type="button" ng-click="createWave()" style="border:none;" class="btn-larger">Create</button>
+				      </div>
+				    </form>
+				  </div>
+				</div>
+
+		    </div>
+		</section>
 
 	    <footer>
 	    	<div class="container">
@@ -126,6 +305,13 @@
   		<script src="../js/bootstrap.min.js"></script>
   		<!-- Ratings JS -->
   		<script src="../js/rating.min.js"></script>
+  		<!-- DatePicker Plugin -->
+  		<script src="../js/bootstrap-datepicker.js"></script>
+  		<!-- TimePicker Plugin -->
+  		<script src="../js/jquery.timepicker.min.js"></script>
+  		<!-- DatePair Plugin -->
+  		<script src="../js/datepair.min.js"></script>
+  		<script src="../js/jquery.datepair.min.js"></script>
   		<!-- Waypoints Plugin --> 
   		<script src="../js/noframework.waypoints.min.js" type="text/javascript"></script>
   		<!-- Sweetalert Plugin --> 

@@ -3,6 +3,9 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed; }
 
+h1, h2, h3, h4, h5, h6 {
+  text-align: center; }
+
 section#waves {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), transparent url(../img/ocean.jpg) no-repeat center;
   height: 600px;
@@ -14,8 +17,6 @@ section#main {
 section#signup {
   margin-top: 50px;
   margin-bottom: 50px; }
-  section#signup h1 {
-    text-align: center; }
   section#signup div.container {
     padding: 50px 50px; }
 
@@ -55,8 +56,26 @@ footer {
   justify-content: space-between;
   flex-wrap: wrap; }
 
+.flex-row {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around; }
+  .flex-row input.form-control {
+    width: initial; }
+
+.flex-col {
+  display: flex;
+  flex-direction: column; }
+
 .flex-1 {
   flex: 1; }
+
+.flex-2 {
+  flex: 2; }
+
+.flex-3 {
+  flex: 3; }
 
 @media (min-width: 768px) {
   .flex {
@@ -206,7 +225,7 @@ h3 {
 
 input[type=radio] {
   transform: scale(1.5);
-  margin-right: 25px; }
+  margin-right: 15px; }
 
 .rating {
   display: flex;
@@ -259,17 +278,16 @@ section#create {
   padding-bottom: 50px;
   background-color: #4da6ff;
   color: white; }
-  section#create div h1 {
-    text-align: center; }
 
 .modaldiv {
   padding-bottom: 20px;
   background-color: #66b3ff; }
-  .modaldiv h2, .modaldiv h3 {
-    text-align: center; }
   .modaldiv:hover {
     box-shadow: 0px 1px 4px black;
     -webkit-transition: all ease 0.3s; }
+
+div#myModal {
+  color: black; }
 
 .modal-found {
   background-color: #66b3ff;
@@ -362,7 +380,7 @@ section#create {
   padding: 10px 16px;
   color: white; }
 
-table#createParty tbody tr td, table#createParty tbody tr th {
+.table tbody tr td, .table tbody tr th {
   border: none;
   vertical-align: middle; }
 

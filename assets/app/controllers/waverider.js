@@ -14,7 +14,7 @@ waveRider.factory('partyCodeFactory', function($http) {
   }
 });
 
-waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
+waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactory) {
   // Scope view of 0 is the search by code box
   // Scope view of 1 is the resulted party returned by the search
   // Scope view of 2 is the create your party form
@@ -23,6 +23,18 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
   $scope.code = '';
   $scope.party = {};
   $scope.owner = '';
+
+  // Set filters for the registration panel
+  $scope.filters = [];
+  // Chosen filters
+  $scope.chosen = [];
+
+  $.get('/api/filters', function(filters) {
+    $scope.filters = filters;
+  });
+
+  // Set registration panel invite to false
+  $scope.invite = false;
 
   $scope.getParty = function() {
     
@@ -106,8 +118,67 @@ waveRider.controller('WaveRiderCtrl', function($scope, partyCodeFactory) {
     
   };
 
-  $scope.createWave = function() {
+  $scope.checkInvite = function() {
+    if ($scope.invite == true)
+      return "These will only be seen by people with the party registration code"
+    else
+      return "Add tags to help people find your party!"
+  }
+
+  $scope.openModal = function() {
     $('#myModal').css('display', 'block');
+  }
+
+  $scope.closeModal = function() {
+    $('#myModal').fadeOut();
+  }
+
+  $scope.validate = function() {
+    // Check to make sure date & times make chronological sense
+
+    // First see if all fields are filled out so we avoid errors
+    if (!($scope.time && $scope.time.end))
+      return;
+
+    var dStart = new Date($scope.date.start + " " + $scope.time.start);
+    var dEnd = new Date($scope.date.end + " " + $scope.time.end);
+
+    // If the ending date is in wrong order, set both to starting date
+    if (dEnd < dStart) {
+      $timeout(function() {
+        $scope.date.end = $scope.date.start;
+        $('input.date.end').val($scope.date.start);
+        $scope.time.end = $scope.time.start;
+        $('input.time.end').val($scope.time.start);
+      }, 200);
+    }
+
+  }
+
+  
+
+  $scope.createWave = function() {
+    // Props representing the new wave form submission
+    var wave = $scope.wave;
+    var startD = new Date($scope.date.start + " " + $scope.time.start);
+    var endD = new Date($scope.date.end + " " + $scope.time.end);
+    // Check if a ratio was established
+    if ($scope.noRatio == true)
+      var guys = 0, girls = 0;
+    else
+      var guys = ratio.guys, girls = ratio.girls;
+
+    var props = {'title': wave.name, 'location': {'street': wave.street,
+      'city': wave.city, 'zip_code': wave.zip_code}, 'time': {'start': startD, 
+      'end': endD}, 'invite_only': $scope.invite, 'ratio': {'guys': guys, 'girls': girls},
+      'filters': $scope.filterAdd};
+
+    console.dir(props);
+    $.post('/api/create', {'properties': JSON.stringify(props)}, function(resp) {
+      console.log(resp);
+    });
+
+      
   }
 
 });
@@ -183,21 +254,84 @@ waveRider.directive('partycode', function($timeout) {
   };
 });
 
-// Directive for create-a-wave Modal
-waveRider.directive('createawave', function($timeout) {
+// Directive for DatePicker
+waveRider.directive('datePicker', ['$timeout', function($timeout){
+  return {
+    restrict: 'AC',
+    scope: {
+      ngModel: '=',
+      checkDate: '&'
+    },
+    link: function (scope, element) {
+      
+      element.on('change', function() {
+        scope.checkDate();
+      });
+      element.datepicker({
+        startDate: "0d",
+        format: 'mm/dd/yyyy',
+        autoclose: true,
+        todayHighlight: true
+      });
+    }
+  }
+}]);
+
+// Directive for TimePicker
+waveRider.directive('timePicker', ['$timeout', function($timeout) {
+    return {
+        restrict: 'AC',
+        scope: {
+            ngModel: '=',
+            checkTime: '&'
+        },
+        link: function (scope, element) {
+            
+            element.on('change', function() {
+              scope.checkTime();
+            });
+            element.timepicker({
+                timeFormat: 'h:i A',
+                forceRoundTime: true
+            });
+        }
+    };
+}]);
+
+
+
+// Directive for datepair
+waveRider.directive('datePair', [function() {
   
   return {
-    restrict: 'AEC',
-    scope: {
-      
-
-    },
-    link: function(scope, elem, attrs) {
+    restrict: 'AC',
+    link: function(scope, elem) {
       // insert scope functions here
-      scope.closeModal = function() {
-        $('#myModal').css('display', 'none');
-      }
-    },
-    templateUrl: '../templates/createawave.html'
-  };
-});
+      elem.datepair();
+    }
+
+    };
+}]);
+
+
+// Directive for typeahead part 2
+// waveRider.directive('selectahead', ['$timeout', function($timeout) {
+  
+//   return {
+//     restrict: 'AEC',
+//     scope: {
+//       tag: '='
+//     },
+//     link: function(scope, elem, attrs) {
+//       // insert scope functions here
+//       scope.filters = [];
+
+//       $.get('/api/filters', function(filters) {
+//         scope.filters = filters;
+//       });
+
+//     },
+//     template: "<select tag-ahead ng-options='filter.data for filter in filters track by filter' class='form-control' 
+//     ng-model='tagbox'>"
+//   };
+// }]);

@@ -224,6 +224,16 @@ function attendParty(user, party, callback) {
 	});
 }
 
+function createParty(props, callback) {
+	var newWave = new schemas.Party(props);
+	newWave.save(function(err) {
+		if (err) {
+			console.error(err.message);
+			throw err;
+		}
+		return callback(newWave);
+	});
+}
 
 
 module.exports.addFilter = addFilter;
@@ -238,4 +248,4 @@ module.exports.updateLogins = updateLogins;
 module.exports.findRating = findRating;
 module.exports.addRating = addRating;
 module.exports.attendParty = attendParty;
-
+module.exports.createParty = createParty;

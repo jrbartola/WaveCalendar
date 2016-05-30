@@ -150,9 +150,37 @@ app.post('/api/rating', function(req, res) {
 			res.json(r); 
 		});
 	}
-	
-
 });
+
+app.post('/api/create', function(req, res) {
+	var user = req.session.user;
+	var props = JSON.parse(req.body.properties);
+	var reg_code = randomString(8, '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+	console.dir(props);
+	// props = Object.defineProperties(props, {
+	// 	'reg_code': {
+	// 		value: reg_code,
+	// 		writable: true
+	// 	},
+	// 	'owner': {
+	// 		value: ObjectId(user._id),
+	// 		writable: true
+	// 	}
+	// });
+	props.reg_code = reg_code;
+	props.owner = ObjectId(user._id);
+
+	db.createParty(props, function(party) {
+		res.json(party);
+	});
+});
+
+// Taken from stackoverflow, generates a random string
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
 
 http.listen(3002, function() {
 	console.log("Running on port 3002...");
