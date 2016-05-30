@@ -77,9 +77,9 @@ app.get('/profile', auth, function(req, res) {
 
 app.get('/api/currentuser', function(req, res) {
 	if (req.session && req.session.user)
-		res.send(req.session.user);
+		res.json(req.session.user);
 	else
-		res.send(null);
+		res.json(null);
 });
 
 app.get('/api/filters', function(req, res) {

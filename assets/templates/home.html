@@ -66,7 +66,7 @@
 	    <section id="main">
 	    	<div class="container">
 		    	<div class="row">
-			  		<div class="col-md-4" id="wavelist" ng-controller="TypeaheadCtrl">
+			  		<div class="col-md-4 flex-col" id="wavelist" style="height:500px;" ng-controller="TypeaheadCtrl">
 			  			<div class="row">
 			  					
     						<typeahead items="items" prompt="Search for tags.." title="data" subtitle="type" model="name" location="distance" on-select="onItemSelected()" on-change="getParties()" chosen="chosen_" />
@@ -74,7 +74,7 @@
       							
 			  				<h2>Upcoming Waves</h2>
 			  			</div>
-			  			<div class="row">
+			  			<div class="row" style="overflow-y:auto;">
 			  				<wavefilter filters="chosen_" waves="parties" title="title" location="location"/>
 			  			</div>
 			    	</div>

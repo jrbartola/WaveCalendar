@@ -127,10 +127,14 @@ waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactor
 
   $scope.openModal = function() {
     $('#myModal').css('display', 'block');
+    // Prevent users from scrolling using boostrap's built in class
+    $('body').addClass('modal-open');
   }
 
   $scope.closeModal = function() {
     $('#myModal').fadeOut();
+    // Let users resume scrolling
+    $('body').removeClass('modal-open');
   }
 
   $scope.validate = function() {
@@ -166,7 +170,7 @@ waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactor
     if ($scope.noRatio == true)
       var guys = 0, girls = 0;
     else
-      var guys = ratio.guys, girls = ratio.girls;
+      var guys = $scope.ratio.guys, girls = $scope.ratio.girls;
 
     var props = {'title': wave.name, 'location': {'street': wave.address,
       'city': wave.city, 'zip_code': wave.zip_code}, 'time': {'start': startD, 
