@@ -157,16 +157,6 @@ app.post('/api/create', function(req, res) {
 	var props = JSON.parse(req.body.properties);
 	var reg_code = randomString(8, '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 	console.dir(props);
-	// props = Object.defineProperties(props, {
-	// 	'reg_code': {
-	// 		value: reg_code,
-	// 		writable: true
-	// 	},
-	// 	'owner': {
-	// 		value: ObjectId(user._id),
-	// 		writable: true
-	// 	}
-	// });
 	props.reg_code = reg_code;
 	props.owner = ObjectId(user._id);
 

@@ -168,7 +168,7 @@ waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactor
     else
       var guys = ratio.guys, girls = ratio.girls;
 
-    var props = {'title': wave.name, 'location': {'street': wave.street,
+    var props = {'title': wave.name, 'location': {'street': wave.address,
       'city': wave.city, 'zip_code': wave.zip_code}, 'time': {'start': startD, 
       'end': endD}, 'invite_only': $scope.invite, 'ratio': {'guys': guys, 'girls': girls},
       'filters': $scope.filterAdd};
