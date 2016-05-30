@@ -175,7 +175,17 @@ waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactor
 
     console.dir(props);
     $.post('/api/create', {'properties': JSON.stringify(props)}, function(resp) {
-      console.log(resp);
+      if (resp) {
+        swal({title: "All Done!",
+          text: "Your party has been created.", 
+          type: "success", 
+          confirmButtonText: "Okay"}, function() {
+            // Execute after the form has been returned successfully
+            $scope.closeModal();
+            // Reset the form
+            $('.wavemaker').trigger('reset');
+          });
+      }
     });
 
       

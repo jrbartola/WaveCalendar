@@ -71,6 +71,10 @@ app.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
+app.get('/profile', function(req, res) {
+	
+});
+
 app.get('/api/currentuser', function(req, res) {
 	if (req.session && req.session.user)
 		res.send(req.session.user);

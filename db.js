@@ -5,7 +5,7 @@ var schemas = require('./schemas.js');
 
 function retrieveFilters(callback) {
 	// Retrieve all tag entries
-	schemas.Filter.find({}, function(err, filters) {
+	schemas.Filter.find({'pending': {'$ne': true}}, function(err, filters) {
 		if (err) throw err;
 		// Return callback with tags listed
 		return callback(filters);
