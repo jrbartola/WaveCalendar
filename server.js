@@ -28,7 +28,7 @@ app.use(session({
 var auth = function(req, res, next) {
 	//
 	// For testing purposes only!!!
-	//
+	// 
 	db.loginUser('jrbartola@gmail.com', 'pass123', function(user) {
 		if (!user) {
 			res.json(null);
@@ -71,9 +71,9 @@ app.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
-app.get('/profile', function(req, res) {
-	
-});
+app.get('/profile', auth, function(req, res) {
+	res.sendFile(__dirname + "/assets/templates/profile.html");
+}); 
 
 app.get('/api/currentuser', function(req, res) {
 	if (req.session && req.session.user)

@@ -18,7 +18,9 @@
 <div ng-hide="state!=1" class="container flex modal-found">
 	<div class="row">
 		<!-- <div class="col-md-2"> -->
-			<img class="top-icon" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
+			<img class="top-icon" ng-hide="party.status != 'planned'" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
+			<img class="top-icon" ng-hide="party.status != 'over'" src="../img/sleepicon.png" style="height:64px;width:64px;" alt="Icon">
+			<img class="top-icon" ng-hide="party.status != 'ongoing'" src="../img/party_hat.png" style="height:64px;width:64px;" alt="Icon">
 <!-- 		</div> -->
 <!-- 		<div class="col-md-10"> -->
 	    	<h2 id="party-title">{{ party.title }}</h2>
@@ -29,15 +31,17 @@
 		<div class="media">
 		  <div class="media-body">
 		    <h4 class="media-heading">Where</h4>
-		    {{ party.location.street }}
+		    <p>{{ party.location.street }}
 		    {{ party.location.city }},
-		    {{ party.location.zip_code }}
+		    {{ party.location.zip_code }}</p>
 		  </div>
-		  <h3>From</h3>{{ readableDate(party.time.start) }}
-		  <h3>Until</h3>{{ readableDate(party.time.end) }}
+		  <h3>From</h3>
+		  <p>{{ readableDate(party.time.start) }}</p>
+		  <h3>Until</h3>
+		  <p>{{ readableDate(party.time.end) }}</p>
 		</div>
 		<div class="text-center btn-result">
-		  <button type="button" ng-click="onAttend({wave: party.reg_code})" class="btn btn-larger">Attend</button>
+		  <button type="button" ng-disabled="party.status == 'over'" ng-click="onAttend({wave: party.reg_code})" class="btn btn-larger">Attend</button>
 		</div>
 	</div>
 	<div class="flex search-half">
@@ -49,9 +53,12 @@
 		    <h4 class="media-heading">Owner</h4>
 		    {{ party.owner }}
 		  </div>
-		  <h3>Status</h3>{{ party.status }}
-		  <h3>Tags</h3>{{ party.tags }}
-		  <h3>Ratio</h3>{{ party.ratio.girls }} girls to {{ party.ratio.guys }} guys
+		  <h3>Status</h3>
+		  <p>{{ party.status }}</p>
+		  <h3>Filters</h3>
+		  <p>{{ party.filters }}</p>
+		  <h3>Ratio</h3>
+		  <p>{{ party.ratio.girls }} girls to {{ party.ratio.guys }} guys</p>
 		</div>
 		<div class="text-center btn-result">
 		  <button type="button" ng-click="squareOne()" class="btn btn-larger">Search Again</button>

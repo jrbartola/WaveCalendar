@@ -20,6 +20,9 @@ section#signup {
   section#signup div.container {
     padding: 50px 50px; }
 
+section#profile {
+  margin-top: 50px; }
+
 #tagbox {
   border-radius: 0px; }
 
@@ -112,6 +115,12 @@ h3 {
   font-variant: normal;
   font-weight: 500;
   line-height: 16.4px; }
+
+p {
+  font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 10px 0px; }
 
 .navbar-default {
   box-shadow: 1px 1px 15px #888;
@@ -386,5 +395,20 @@ div#myModal {
 
 .oldstyle {
   border-top: 1px solid #ddd; }
+
+.profile-col {
+  width: 262px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px; }
+
+.prof-header {
+  color: #4da6ff; }
+
+.prof-pic {
+  background-color: #f7f7f7;
+  padding: 25px 0px; }
+  .prof-pic img {
+    height: 256px;
+    width: 256px; }
 
 /*# sourceMappingURL=waves.css.map */
