@@ -397,7 +397,6 @@ div#myModal {
   border-top: 1px solid #ddd; }
 
 .profile-col {
-  width: 262px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px; }
 
@@ -405,6 +404,7 @@ div#myModal {
   color: #4da6ff; }
 
 .prof-pic {
+  text-align: center;
   background-color: #f7f7f7;
   padding: 25px 0px; }
   .prof-pic img {

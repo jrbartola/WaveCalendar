@@ -21,6 +21,19 @@ function addFilter(props, callback) {
 	});
 }
 
+function addUsername(email, username, callback) {
+
+	schemas.User.findOne({'username': username}, function(err, duplicate) {
+		if (duplicate) {
+			return callback(false);
+		} else {
+			schemas.User.update({'email': email}, {'username': username}, function(err1) {
+				return callback(true);
+			});
+		}
+	});
+}
+
 function retrieveParties(callback, filters, location) {
 
 	// Filter party entries based on tags
@@ -237,6 +250,7 @@ function createParty(props, callback) {
 
 
 module.exports.addFilter = addFilter;
+module.exports.addUsername = addUsername;
 module.exports.retrieveFilters = retrieveFilters;
 module.exports.retrieveParties = retrieveParties;
 module.exports.partyByCode = partyByCode;

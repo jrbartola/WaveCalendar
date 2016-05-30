@@ -59,6 +59,36 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
   //Use filterFactory to get the current user from API
   filterFactory.get('/api/currentuser').then(function(data) {
     $scope.currentUser = data;
+    if (!$scope.currentUser.username) {
+      swal({title: "You don't have a username yet!",
+        text: "Usernames allow others to identify you. " +
+        "You must also have a username in order to have a profile.",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "Username"}, 
+        function(newusername) { 
+          if (newusername === false)
+            return false;
+          if (newusername === "") { 
+            swal.showInputError("Please enter a username");
+            return false;
+          } else {
+            $.post('/api/users', {'username': newusername}, function(newname) {
+              if (newname.success === true) {
+                swal("Nice!", "Your username is now " + newusername, "success");
+              } else {
+                swal.showInputError("That name is already taken, try another one.");
+                return false;
+              }
+                
+            })
+          }
+          // Execute message if not already taken
+          
+        });
+    }
     $scope.location = data.location;
     // originally filter by current city of user
 

@@ -532,7 +532,7 @@ div#myModal {
 
 // Profile Page CSS
 .profile-col {
-	width: 262px;
+	//width: 262px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
@@ -547,6 +547,8 @@ div#myModal {
 }
 
 .prof-pic {
+	// seems to work for images as well
+	text-align: center;
 	background-color: #f7f7f7;
 	padding: 25px 0px;
 	img {

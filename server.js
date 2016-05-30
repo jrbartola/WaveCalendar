@@ -93,12 +93,20 @@ app.post('/api/users', function(req, res) {
 	var value = req.body.value;
 	var user = req.session.user;
 	var party = req.body.party;
+	var username = req.body.username;
 
 	// If a party field is passed to the API, add the user to the party's attend list
 	if (party) {
 		// Returns true if user did not attend party yet, returns false if they did
 		db.attendParty(user, party, function(response) {
 			res.json(response);
+		});
+	} else if (username) {
+		db.addUsername(user.email, username, function(resp) {
+			if (resp == true)
+				res.json({'success': true})
+			else
+				res.json({'success': false})
 		});
 	} else {
 		db.getUser(field, value, function(user) {
