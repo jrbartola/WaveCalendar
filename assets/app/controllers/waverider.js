@@ -201,7 +201,7 @@ waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactor
 waveRider.directive('partycode', function($timeout) {
   
   return {
-    restrict: 'AEC',
+    restrict: 'AE',
     scope: {
       party: '=',
       code: '=',

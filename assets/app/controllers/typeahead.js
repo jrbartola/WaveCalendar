@@ -186,7 +186,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
 
 typeAhead.directive('typeahead', function($timeout) {
   return {
-    restrict: 'AEC',
+    restrict: 'AE',
     scope: {
       items: '=',
       prompt: '@',
@@ -263,7 +263,7 @@ typeAhead.directive('typeahead', function($timeout) {
 typeAhead.directive('wavefilter', function($timeout) {
   
   return {
-    restrict: 'AEC',
+    restrict: 'AE',
     scope: {
       filters: '=',
       waves: '=',

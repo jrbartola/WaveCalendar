@@ -21,19 +21,19 @@ profile.controller('ProfileCtrl', function($scope) {
 
 
 
-// // Directive for Slick Carousel
-// main.directive('profsidebar', function($timeout) {
+// Directive for Slick Carousel
+profile.directive('slicker', function($timeout) {
   
-//   return {
-//     restrict: 'AEC',
-//     scope: {
-      
+  return {
+    restrict: 'A',
+    scope: {
+      ngModel: '='
 
-//     },
-//     link: function(scope, elem, attrs) {
-//       // insert scope functions here
-      
-//     },
-//     templateUrl: '../templates/profilesidebar.html'
-//   };
-// });
+    },
+    link: function(scope, elem, attrs) {
+      // insert scope functions here
+      elem.slick({slidesToShow: 4,
+        slidesToScroll: 1});
+    }
+  };
+});
