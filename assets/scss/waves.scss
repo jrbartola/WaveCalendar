@@ -84,15 +84,7 @@ footer {
 	}
 }
 
-/// Abstract this out eventually
-
-// Just display flex
-.flex { 
-	display: flex;
-	//flex-direction: column;
-	//justify-content: space-between;
-	//flex-wrap: wrap;
-}
+// Flexbox styling
 
 .flex-row {
 	display: flex;
@@ -143,7 +135,7 @@ footer {
 
 // Media Query for bottom banner flexbox
 @media(min-width:768px) {
-	.flex {
+	.flex-adjust {
 		flex-direction: row;
 		flex-wrap: nowrap;
 	}

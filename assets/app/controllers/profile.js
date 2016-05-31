@@ -7,7 +7,7 @@ profile.controller('ProfileCtrl', function($scope) {
 	//$scope.user = {'username': 'barf'};
 	var username = window.location.pathname.substring(7);
 	$.post('/api/users', {'username': username}, function(resp) {
-		
+
 		$scope.$apply(function() {
 			$scope.user = resp;
 			var jd = new Date($scope.user.join_date);
@@ -21,7 +21,7 @@ profile.controller('ProfileCtrl', function($scope) {
 
 
 
-// // Directive for profile sidebar
+// // Directive for Slick Carousel
 // main.directive('profsidebar', function($timeout) {
   
 //   return {

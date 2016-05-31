@@ -55,9 +55,6 @@ footer {
     flex: 2;
     line-height: 1; }
 
-.flex {
-  display: flex; }
-
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -93,7 +90,7 @@ footer {
   flex: 3; }
 
 @media (min-width: 768px) {
-  .flex {
+  .flex-adjust {
     flex-direction: row;
     flex-wrap: nowrap; } }
 .signin {
