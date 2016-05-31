@@ -98,7 +98,12 @@ app.get('/api/profile/:username', auth, function(req, res) {
 			user.admin = req.session.user.username === username;
 			// Respond with the attending attribute containing the parties
 			user.attending = partydata;
-			res.json(user);
+
+			db.getUserParties(ObjectId(user._id), function(userowned) {
+				user.owned = userowned;
+				res.json(user);
+			});
+			
 		});
 		
 	});

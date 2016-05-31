@@ -110,7 +110,7 @@
 		  		<div class="row text-center prof-recents">
 		  			<h3>Recently Attended</h3>
 		  		</div>
-		  		<div slicker ng-model="slicker" class="prof-carousel flex-adjust flex-sp-ar">
+		  		<div slicker ng-model="slick" class="prof-carousel flex-adjust flex-sp-ar">
 		  			<div ng-repeat="wave in user.attending" class="wavelisting text-center">
 		  				<h4>{{ wave.title }}</h4>
 		  				<img src="../img/WaveIcon.png" ng-hide="wave.status != 'planned'" class="prof-wavelisting" height="96" width="96">
@@ -120,6 +120,9 @@
 		  		</div> <!-- End Slicker -->
 		  		<div id="ownerwaves">
 		  			<!-- Put ng-repeat for List of User-Owned Parties -->
+		  			<div class="prof-ownerwave">
+		  				
+		  			</div>
 		  		</div>
 		  	</div>
 	  	</div>

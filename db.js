@@ -262,9 +262,13 @@ function enumerateAttended(attending, callback) {
 	.exec(function(err, parties) {
 		return callback(parties);
 	});
-
 }
 
+function getUserParties(userid, callback) {
+	schemas.Party.find({'owner': userid}, function(err, parties) {
+		return callback(parties);
+	});
+}
 
 
 
@@ -283,3 +287,4 @@ module.exports.addRating = addRating;
 module.exports.attendParty = attendParty;
 module.exports.createParty = createParty;
 module.exports.enumerateAttended = enumerateAttended;
+module.exports.getUserParties = getUserParties;

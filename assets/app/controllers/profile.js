@@ -4,7 +4,7 @@ var profile = angular.module('waveCal');
 
 profile.controller('ProfileCtrl', function($scope) {
 	
-	//$scope.user = {'username': 'barf'};
+	
 	var username = window.location.pathname.substring(7);
 	$.get('/api/profile/' + username, function(resp) {
 
@@ -34,7 +34,7 @@ profile.directive('slicker', function($timeout) {
       // insert scope functions here
       elem.slick({slidesToShow: 3,
         slidesToScroll: 1
-        });
+      });
     }
   };
 });
