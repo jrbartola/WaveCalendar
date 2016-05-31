@@ -29,6 +29,8 @@
     	<!-- Slick Carousel CSS -->
     	<link rel="stylesheet" href="../css/slick.css">
     	<link rel="stylesheet" href="../css/slick-theme.css">
+    	<!-- Ratings CSS -->
+    	<link rel="stylesheet" href="../css/rating.min.css">
     	<!-- Custom CSS -->
     	<link rel="stylesheet" href="../css/waves.css">
   	</head>
@@ -120,8 +122,23 @@
 		  		</div> <!-- End Slicker -->
 		  		<div id="ownerwaves">
 		  			<!-- Put ng-repeat for List of User-Owned Parties -->
-		  			<div class="prof-ownerwave">
-		  				
+		  			<div ng-repeat="party in user.owned" class="prof-ownerwave flex-row">
+		  				<div class="prof-sidewave text-center">
+		  					<h4>{{ party.title }}</h4>
+		  					<img src="../img/WaveIcon.png" height="112" width="112">
+		  					<ul rater rate="{{ party.rating }}" cur-party="{{ party.reg_code }}" id="{{ party.reg_code }}-rate" class="rating" style="padding:0px;">
+		  					</ul>
+		  				</div>
+		  				<div class"prof-wave-desc">
+		  					<!-- Have the option to put conditional logic here
+		  					If wave already occurred, disallow rating -->
+		  					<div>
+		  						<h4>Location</h4>
+		  						<h5>{{ party.location.street }}</h5>
+		  					</div>
+		  					<div>
+		  					</div>
+		  				</div>
 		  			</div>
 		  		</div>
 		  	</div>
@@ -147,12 +164,15 @@
 		<script src="../js/bootstrap.min.js"></script>
 		<!-- Waypoints Plugin --> 
 		<script src="../js/noframework.waypoints.min.js" type="text/javascript"></script>
+		<!-- Ratings JS -->
+  		<script src="../js/rating.min.js"></script>
 		<!-- Sweetalert Plugin --> 
 		<script src="../js/sweetalert.min.js" type="text/javascript"></script>
 		<!-- Slick Carousel Plugin --> 
 		<script src="../js/slick.min.js" type="text/javascript"></script>
 		<!-- Angular JS -->
 		<script src="../js/angular.min.js" type="text/javascript"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.js"></script>
 		<!-- Main Angular JS App -->
 		<script src="../app/app.js" type="text/javascript"></script>
 		<!-- Profile Controller JS -->

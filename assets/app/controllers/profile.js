@@ -2,6 +2,22 @@
 
 var profile = angular.module('waveCal');
 
+// Let's create an animation for the list of owner's waves
+profile.animation('.prof-ownerwave', [function() {
+  return {
+  	enter: function(element, callback) {
+  	  $(element).slideDown(600);
+  	  // Set display back to flex
+  	  $(element).css('display', 'flex');
+
+  	},
+
+  	leave: function(element, callback) {
+
+  	}
+  }
+}]);
+
 profile.controller('ProfileCtrl', function($scope) {
 	
 	
@@ -37,4 +53,18 @@ profile.directive('slicker', function($timeout) {
       });
     }
   };
+});
+
+// Directive for Profile Rating.js
+profile.directive('rater', function($timeout) {
+  return {
+	  restrict: 'A',
+	  scope: {
+	  	curRating: '@rate',
+	  	curParty: '@'
+	  },
+	  link: function(scope, elem, attrs) {
+	  	rating(elem[0], scope.curRating, 5);
+	  }
+	};
 });

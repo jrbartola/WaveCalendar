@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('waveCal', []);
+angular.module('waveCal', ['ngAnimate']);

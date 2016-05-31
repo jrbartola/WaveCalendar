@@ -88,13 +88,11 @@ footer {
 
 .flex-row {
 	display: flex;
-	//flex: 1;
 	flex-direction: row;
-	justify-content: space-around;
 
-	input.form-control {
-		width: initial;
-	}
+	//input.form-control {
+	//	width: initial;
+	//}
 }
 
 .flex-col {
@@ -572,7 +570,7 @@ div#myModal {
 
 .prof-carousel {
 	padding: 10px 0px;
-
+	margin-bottom: 50px;
 	border: #ddd solid 3px;
 	border-radius: 8px;
 }
@@ -601,3 +599,15 @@ div#myModal {
 #ownerwaves {
 	border: #ddd groove 5px;
 }
+
+.prof-ownerwave {
+	// Add a bottom border after each repeated div
+	border-bottom: #ddd solid 1px;
+	//margin-right: auto;
+	display:none;
+}
+
+.prof-sidewave {
+	flex-basis: 175px;
+}
+
