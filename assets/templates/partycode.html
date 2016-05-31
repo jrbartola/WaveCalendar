@@ -15,7 +15,7 @@
 		<button type="button" ng-click="onCreate()" class="btn btn-larger">Create</button>
 	</div>
 </div>
-<div ng-hide="state!=1" class="container flex modal-found">
+<div ng-hide="state!=1" class="container flex-adjust flex-sp-bt modal-found">
 	<div class="row">
 		<!-- <div class="col-md-2"> -->
 			<img class="top-icon" ng-hide="party.status != 'planned'" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
@@ -27,7 +27,7 @@
 		<!-- </div> -->
 	</div>
 	    
-	<div class="flex search-half">
+	<div class="flex-adjust flex-sp-bt search-half">
 		<div class="media">
 		  <div class="media-body">
 		    <h4 class="media-heading">Where</h4>
@@ -44,7 +44,7 @@
 		  <button type="button" ng-disabled="party.status == 'over'" ng-click="onAttend({wave: party.reg_code})" class="btn btn-larger">Attend</button>
 		</div>
 	</div>
-	<div class="flex search-half">
+	<div class="flex-adjust flex-sp-bt search-half">
 		<div class="media">
 		  <!-- <a class="media-left" href="#">
 		    <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">

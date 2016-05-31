@@ -9,9 +9,10 @@ body {
     background-attachment: fixed;
 }
 
+/*
 h1, h2, h3, h4, h5, h6 {
 	text-align: center;
-}
+}*/
 
 section#waves {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), transparent url(../img/ocean.jpg) no-repeat center;
@@ -51,6 +52,7 @@ ul {
 }
 
 footer {
+	width: 100%;
 	margin-top: 50px;
 	padding: 30px;
 	background-color: $secondary-color;
@@ -83,19 +85,20 @@ footer {
 }
 
 /// Abstract this out eventually
+
+// Just display flex
 .flex { 
 	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	flex-wrap: wrap;
+	//flex-direction: column;
+	//justify-content: space-between;
+	//flex-wrap: wrap;
 }
 
 .flex-row {
 	display: flex;
-	flex: 1;
+	//flex: 1;
 	flex-direction: row;
 	justify-content: space-around;
-	//padding: 5px;
 
 	input.form-control {
 		width: initial;
@@ -107,6 +110,24 @@ footer {
 	flex-direction: column;
 }
 
+// Puts flex items in columns on smaller devices
+.flex-adjust {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.flex-sp-bt {
+	justify-content: space-between;
+}
+
+.flex-sp-ar {
+	justify-content: space-around;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
 
 .flex-1 {
 	flex: 1;
@@ -558,7 +579,8 @@ div#myModal {
 }
 
 .prof-carousel {
-	padding: 10px;
-	border: #ddd groove 5px;
+	padding: 10px 0px;
+
+	border: #ddd solid 3px;
 	border-radius: 8px;
 }

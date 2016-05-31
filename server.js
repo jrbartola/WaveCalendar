@@ -82,8 +82,11 @@ app.get('/users/:profile', auth, function(req, res) {
 			res.sendFile(__dirname + "/assets/templates/profile.html");
 		}
 	});
-	
 }); 
+
+app.get('/profile', auth, function(req, res) {
+	res.redirect('/users/' + req.session.user.username);
+});
 
 app.get('/api/currentuser', function(req, res) {
 	if (req.session && req.session.user)
