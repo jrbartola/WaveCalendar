@@ -112,7 +112,7 @@ function getUser(field, value, callback) {
 
 	} else if (field === 'username') {
 		
-		schemas.User.findOne({'username': value}, function(err, user) {
+		schemas.User.findOne({'username': value}).lean().exec(function(err, user) {
 			if (err) throw err;
 			// Return callback with matched user
 			return callback(user);
@@ -255,17 +255,12 @@ function createParty(props, callback) {
 	});
 }
 
-function enumerateAttended(attending, plist, callback) {
-	// attending is an array of wave reg_codes
-	// plist is the built-up array of actualy wave data
-	var remaining = attending.pop();
-	schemas.Party.findOne({'reg_code': remaining}, function(err, party) {
-		if (err) throw err;
-		plist.push(party);
-		if (attending.length == 0)
-			return callback(plist);
-		enumerateAttended(attending, plist, callback);
-		
+function enumerateAttended(attending, callback) {
+	// Match the waves up with their registration codes
+	schemas.Party.find({'reg_code': { '$in': attending}})
+	.sort({'time.start': 'descending'})
+	.exec(function(err, parties) {
+		return callback(parties);
 	});
 
 }

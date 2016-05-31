@@ -78,6 +78,10 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
             $.post('/api/users', {'username': newusername, 'add': true}, function(newname) {
               if (newname.success === true) {
                 swal("Nice!", "Your username is now " + newusername, "success");
+                $scope.$apply(function() {
+                  $scope.currentUser.username = newusername;
+                });
+                
               } else {
                 swal.showInputError("That name is already taken, try another one.");
                 return false;

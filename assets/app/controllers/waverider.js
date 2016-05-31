@@ -95,7 +95,7 @@ waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactor
       }
       // Flash sweet alert with message
       swal(props, function() {
-        $scope.initialView();
+        //$scope.initialView();
       });
 
     });
@@ -327,25 +327,3 @@ waveRider.directive('datePair', [function() {
     };
 }]);
 
-
-// Directive for typeahead part 2
-// waveRider.directive('selectahead', ['$timeout', function($timeout) {
-  
-//   return {
-//     restrict: 'AEC',
-//     scope: {
-//       tag: '='
-//     },
-//     link: function(scope, elem, attrs) {
-//       // insert scope functions here
-//       scope.filters = [];
-
-//       $.get('/api/filters', function(filters) {
-//         scope.filters = filters;
-//       });
-
-//     },
-//     template: "<select tag-ahead ng-options='filter.data for filter in filters track by filter' class='form-control' 
-//     ng-model='tagbox'>"
-//   };
-// }]);

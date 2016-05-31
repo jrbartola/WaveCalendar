@@ -111,27 +111,15 @@
 		  			<h3>Recently Attended</h3>
 		  		</div>
 		  		<div slicker ng-model="slicker" class="prof-carousel flex-adjust flex-sp-ar">
-		  			<div class="wavelisting text-center">
-		  				<h4>Party</h4>
-		  				<img src="../img/WaveIcon.png" class="prof-wavelisting" height="96" width="96">
+		  			<div ng-repeat="wave in user.attending" class="wavelisting text-center">
+		  				<h4>{{ wave.title }}</h4>
+		  				<img src="../img/WaveIcon.png" ng-hide="wave.status != 'planned'" class="prof-wavelisting" height="96" width="96">
+		  				<img src="../img/party_hat.png" ng-hide="wave.status != 'ongoing'" class="prof-wavelisting" height="96" width="96">
+		  				<img src="../img/SleepIcon.png" ng-hide="wave.status != 'over'" class="prof-wavelisting" height="96" width="96">
 		  			</div>
-		  			<div class="wavelisting text-center">
-		  				<h4>Party2</h4>
-		  				<img src="../img/SleepIcon.png" class="prof-wavelisting" height="96" width="96">
-		  			</div>
-		  			<div class="wavelisting text-center">
-		  				<h4>Party3</h4>
-		  				<img src="../img/party_hat.png" class="prof-wavelisting" height="96" width="96">
-		  			</div>
-		  			<div class="wavelisting text-center">
-		  				<h4>Extravangamigs FEst</h4>
-		  				<img src="../img/WaveIcon.png" class="prof-wavelisting" height="96" width="96">
-		  			</div>
-		  			<div class="wavelisting text-center">
-		  				<h4>Party5</h4>
-		  				<img src="../img/party_hat.png" class="prof-wavelisting" height="96" width="96">
-		  			</div>		
-
+		  		</div> <!-- End Slicker -->
+		  		<div id="ownerwaves">
+		  			<!-- Put ng-repeat for List of User-Owned Parties -->
 		  		</div>
 		  	</div>
 	  	</div>

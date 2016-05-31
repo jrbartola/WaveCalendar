@@ -93,10 +93,12 @@ app.get('/api/profile/:username', auth, function(req, res) {
 
 	db.getUser('username', username, function(user) {
 		// User.attending represents an array of party reg_code's
-		// Pass in an empty array so it gets populated with party data
-		db.enumerateAttended(user.attending, [], function(upuser) {
+		db.enumerateAttended(user.attending, function(partydata) {
+			// If the current user is viewing their own profile, let them edit it
+			user.admin = req.session.user.username === username;
 			// Respond with the attending attribute containing the parties
-			res.json(upuser);
+			user.attending = partydata;
+			res.json(user);
 		});
 		
 	});
@@ -130,18 +132,18 @@ app.post('/api/users', function(req, res) {
 		db.attendParty(user, party, function(response) {
 			res.json(response);
 		});
-	} else /*(username && adduser)*/ {
+	} else if (username && adduser) {
 		db.addUsername(user.email, username, function(resp) {
 			if (resp == true)
 				res.json({'success': true})
 			else
 				res.json({'success': false})
 		});
-	}// else {
-	// 	db.getUser('username', username, function(user) {
-	// 		res.json(user);
-	// 	});
-	// }
+	} else {
+	 	db.getUser(field, value, function(user) {
+	 		res.json(user);
+		});
+	 }
 	
 });
 
