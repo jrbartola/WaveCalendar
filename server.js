@@ -24,7 +24,6 @@ app.use(session({
 }));
 
 
-
 var auth = function(req, res, next) {
 	//
 	// For testing purposes only!!!
@@ -71,8 +70,19 @@ app.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
-app.get('/profile', auth, function(req, res) {
-	res.sendFile(__dirname + "/assets/templates/profile.html");
+app.get('/404', function(req, res) {
+	res.sendFile(__dirname + "/assets/templates/404.html");
+});
+
+app.get('/users/:profile', auth, function(req, res) {
+	db.getUser('username', req.params.profile, function(usr) {
+		if (usr === null) {
+			res.redirect('/404');
+		} else {
+			res.sendFile(__dirname + "/assets/templates/profile.html");
+		}
+	});
+	
 }); 
 
 app.get('/api/currentuser', function(req, res) {
@@ -94,6 +104,7 @@ app.post('/api/users', function(req, res) {
 	var user = req.session.user;
 	var party = req.body.party;
 	var username = req.body.username;
+	var adduser = req.body.add;
 
 	// If a party field is passed to the API, add the user to the party's attend list
 	if (party) {
@@ -101,7 +112,7 @@ app.post('/api/users', function(req, res) {
 		db.attendParty(user, party, function(response) {
 			res.json(response);
 		});
-	} else if (username) {
+	} else if (username && adduser) {
 		db.addUsername(user.email, username, function(resp) {
 			if (resp == true)
 				res.json({'success': true})
@@ -109,7 +120,7 @@ app.post('/api/users', function(req, res) {
 				res.json({'success': false})
 		});
 	} else {
-		db.getUser(field, value, function(user) {
+		db.getUser('username', username, function(user) {
 			res.json(user);
 		});
 	}
@@ -176,6 +187,15 @@ app.post('/api/create', function(req, res) {
 		res.json(party);
 	});
 });
+
+// app.get('*', function(req, res) {
+// 	res.sendFile(__dirname + "/assets/templates/404.html");
+// });
+
+app.use(function(req, res, next) {
+  res.status(404).sendFile(__dirname + "/assets/templates/404.html");
+});
+
 
 // Taken from stackoverflow, generates a random string
 function randomString(length, chars) {

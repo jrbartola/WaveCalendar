@@ -110,6 +110,13 @@ function getUser(field, value, callback) {
 			return callback(user);
 		});
 
+	} else if (field === 'username') {
+		
+		schemas.User.findOne({'username': value}, function(err, user) {
+			if (err) throw err;
+			// Return callback with matched user
+			return callback(user);
+		});
 	} else {
 		// FIX THIS: "field" is taken literally rather than as a variable
 		schemas.User.findOne({field: value}, function(err, user) {

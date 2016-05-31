@@ -411,4 +411,9 @@ div#myModal {
     height: 256px;
     width: 256px; }
 
+.prof-carousel {
+  padding: 10px;
+  border: #ddd groove 5px;
+  border-radius: 8px; }
+
 /*# sourceMappingURL=waves.css.map */

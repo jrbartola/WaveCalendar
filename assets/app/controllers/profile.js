@@ -5,7 +5,9 @@ var profile = angular.module('waveCal');
 profile.controller('ProfileCtrl', function($scope) {
 	
 	//$scope.user = {'username': 'barf'};
-	$.get('/api/currentuser', function(resp) {
+	var username = window.location.pathname.substring(7);
+	$.post('/api/users', {'username': username}, function(resp) {
+		
 		$scope.$apply(function() {
 			$scope.user = resp;
 			var jd = new Date($scope.user.join_date);

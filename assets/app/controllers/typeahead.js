@@ -75,7 +75,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
             swal.showInputError("Please enter a username");
             return false;
           } else {
-            $.post('/api/users', {'username': newusername}, function(newname) {
+            $.post('/api/users', {'username': newusername, 'add': true}, function(newname) {
               if (newname.success === true) {
                 swal("Nice!", "Your username is now " + newusername, "success");
               } else {
