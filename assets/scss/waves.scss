@@ -576,3 +576,23 @@ div#myModal {
 	border: #ddd solid 3px;
 	border-radius: 8px;
 }
+
+// Div that holds "Recently Attended" header
+.prof-recents {
+	h3 {
+		color: lighten($primary-color, 15%);
+	}
+
+	margin-bottom: 10px;
+}
+
+.wavelisting {
+	
+	img {
+		margin: auto;
+	}
+
+	h4 {
+		margin-top: 0px;
+	}
+}

@@ -82,10 +82,25 @@ app.get('/users/:profile', auth, function(req, res) {
 			res.sendFile(__dirname + "/assets/templates/profile.html");
 		}
 	});
-}); 
+});
 
 app.get('/profile', auth, function(req, res) {
 	res.redirect('/users/' + req.session.user.username);
+});
+
+app.get('/api/profile/:username', auth, function(req, res) {
+	var username = req.params.username;
+
+	db.getUser('username', username, function(user) {
+		// User.attending represents an array of party reg_code's
+		// Pass in an empty array so it gets populated with party data
+		db.enumerateAttended(user.attending, [], function(upuser) {
+			// Respond with the attending attribute containing the parties
+			res.json(upuser);
+		});
+		
+	});
+
 });
 
 app.get('/api/currentuser', function(req, res) {
@@ -115,18 +130,18 @@ app.post('/api/users', function(req, res) {
 		db.attendParty(user, party, function(response) {
 			res.json(response);
 		});
-	} else if (username && adduser) {
+	} else /*(username && adduser)*/ {
 		db.addUsername(user.email, username, function(resp) {
 			if (resp == true)
 				res.json({'success': true})
 			else
 				res.json({'success': false})
 		});
-	} else {
-		db.getUser('username', username, function(user) {
-			res.json(user);
-		});
-	}
+	}// else {
+	// 	db.getUser('username', username, function(user) {
+	// 		res.json(user);
+	// 	});
+	// }
 	
 });
 

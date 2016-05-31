@@ -6,7 +6,7 @@ profile.controller('ProfileCtrl', function($scope) {
 	
 	//$scope.user = {'username': 'barf'};
 	var username = window.location.pathname.substring(7);
-	$.post('/api/users', {'username': username}, function(resp) {
+	$.get('/api/profile/' + username, function(resp) {
 
 		$scope.$apply(function() {
 			$scope.user = resp;
@@ -32,8 +32,9 @@ profile.directive('slicker', function($timeout) {
     },
     link: function(scope, elem, attrs) {
       // insert scope functions here
-      elem.slick({slidesToShow: 4,
-        slidesToScroll: 1});
+      elem.slick({slidesToShow: 3,
+        slidesToScroll: 1
+        });
     }
   };
 });

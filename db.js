@@ -255,6 +255,23 @@ function createParty(props, callback) {
 	});
 }
 
+function enumerateAttended(attending, plist, callback) {
+	// attending is an array of wave reg_codes
+	// plist is the built-up array of actualy wave data
+	var remaining = attending.pop();
+	schemas.Party.findOne({'reg_code': remaining}, function(err, party) {
+		if (err) throw err;
+		plist.push(party);
+		if (attending.length == 0)
+			return callback(plist);
+		enumerateAttended(attending, plist, callback);
+		
+	});
+
+}
+
+
+
 
 module.exports.addFilter = addFilter;
 module.exports.addUsername = addUsername;
@@ -270,3 +287,4 @@ module.exports.findRating = findRating;
 module.exports.addRating = addRating;
 module.exports.attendParty = attendParty;
 module.exports.createParty = createParty;
+module.exports.enumerateAttended = enumerateAttended;

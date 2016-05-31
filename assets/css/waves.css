@@ -425,4 +425,14 @@ div#myModal {
   border: #ddd solid 3px;
   border-radius: 8px; }
 
+.prof-recents {
+  margin-bottom: 10px; }
+  .prof-recents h3 {
+    color: #4da6ff; }
+
+.wavelisting img {
+  margin: auto; }
+.wavelisting h4 {
+  margin-top: 0px; }
+
 /*# sourceMappingURL=waves.css.map */
