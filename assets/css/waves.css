@@ -434,13 +434,24 @@ div#myModal {
   margin-top: 0px; }
 
 #ownerwaves {
-  border: #ddd groove 5px; }
+  border: #ddd solid 3px;
+  height: 700px;
+  overflow-y: scroll; }
 
 .prof-ownerwave {
   border-bottom: #ddd solid 1px;
-  display: none; }
+  display: none;
+  transition-duration: 500ms; }
+  .prof-ownerwave:hover {
+    background-color: #ddd; }
 
 .prof-sidewave {
   flex-basis: 175px; }
+
+.def-height-owned {
+  height: 182.66px; }
+
+.def-carousel {
+  height: 150px; }
 
 /*# sourceMappingURL=waves.css.map */

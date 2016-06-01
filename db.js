@@ -265,7 +265,9 @@ function enumerateAttended(attending, callback) {
 }
 
 function getUserParties(userid, callback) {
-	schemas.Party.find({'owner': userid}, function(err, parties) {
+	schemas.Party.find({'owner': userid}).
+	sort({'time.start': 'descending'})
+	.exec(function(err, parties) {
 		return callback(parties);
 	});
 }

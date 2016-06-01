@@ -112,7 +112,7 @@
 		  		<div class="row text-center prof-recents">
 		  			<h3>Recently Attended</h3>
 		  		</div>
-		  		<div slicker ng-model="slick" class="prof-carousel flex-adjust flex-sp-ar">
+		  		<div slicker ng-model="slick" class="prof-carousel flex-adjust flex-sp-ar" ng-class="{'def-carousel': user.attending.length == 0 }">
 		  			<div ng-repeat="wave in user.attending" class="wavelisting text-center">
 		  				<h4>{{ wave.title }}</h4>
 		  				<img src="../img/WaveIcon.png" ng-hide="wave.status != 'planned'" class="prof-wavelisting" height="96" width="96">
@@ -120,12 +120,18 @@
 		  				<img src="../img/SleepIcon.png" ng-hide="wave.status != 'over'" class="prof-wavelisting" height="96" width="96">
 		  			</div>
 		  		</div> <!-- End Slicker -->
-		  		<div id="ownerwaves">
+		  		<div class="row text-center prof-recents">
+		  			<h3>{{ user.username }}'s Waves</h3>
+		  		</div>
+		  		<div id="ownerwaves" ng-class="{'def-height-owned': user.owned.length == 0 }">
+
 		  			<!-- Put ng-repeat for List of User-Owned Parties -->
 		  			<div ng-repeat="party in user.owned" class="prof-ownerwave flex-row">
 		  				<div class="prof-sidewave text-center">
-		  					<h4>{{ party.title }}</h4>
-		  					<img src="../img/WaveIcon.png" height="112" width="112">
+		  					<h4 style="font-weight:600;">{{ party.title }}</h4>
+		  					<img src="../img/WaveIcon.png" ng-hide="party.status != 'planned'" height="112" width="112">
+		  					<img src="../img/party_hat.png" ng-hide="party.status != 'ongoing'" height="112" width="112">
+		  					<img src="../img/SleepIcon.png" ng-hide="party.status != 'over'" height="112" width="112">
 		  					<ul rater rate="{{ party.rating }}" cur-party="{{ party.reg_code }}" id="{{ party.reg_code }}-rate" class="rating" style="padding:0px;">
 		  					</ul>
 		  				</div>
@@ -135,8 +141,20 @@
 		  					<div>
 		  						<h4>Location</h4>
 		  						<h5>{{ party.location.street }}</h5>
+		  						<h5>{{ party.location.city }}, {{ party.location.zip_code }}</h5>
+		  						<br/>
+		  						<h4>Time</h4>
+		  						<h5>{{ readableDate(party.time.start) }}</h5>
+		  						<h5>{{ readableDate(party.time.end) }}</h5>
 		  					</div>
+		  				</div>
+		  				<div class="prof-wave-desc">
 		  					<div>
+		  						<h4>{{ party.attending }} Attendees</h5>
+		  						<br/>
+		  						<h4>Ratio</h5>
+		  						<h5 ng-hide="party.ratio.guys == 0">{{ party.ratio.guys }} guys to {{ party.ratio.girls }} girls</h4>
+		  						<h5 ng-hide="party.ratio.guys != 0">None</h4>
 		  					</div>
 		  				</div>
 		  			</div>

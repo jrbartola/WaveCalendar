@@ -31,6 +31,24 @@ profile.controller('ProfileCtrl', function($scope) {
 		});
 		
 	});
+
+	$scope.readableDate = function(datestring) {
+        // Convert date from nonsense into a readable string
+        var d = new Date(datestring);
+        var hours = d.getHours();
+        var minutes = d.getMinutes();
+        var total;
+
+        if (minutes < 10)
+          minutes = "0" + minutes
+
+        if (hours > 12) // Might show AM instead of PM for 12 o clock
+          total = " " + (hours - 12) + ":" + minutes + " PM"
+        else
+          total = " " + hours + ":" + minutes + " AM"
+
+        return d.toDateString() + total;
+    }
 });
 
 
