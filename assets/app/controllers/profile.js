@@ -6,10 +6,8 @@ var profile = angular.module('waveCal');
 profile.animation('.prof-ownerwave', [function() {
   return {
   	enter: function(element, callback) {
-  	  $(element).animate({height: '196px'}, 500);//slideDown(800)
-  	  //$(element).css('display', 'flex');
-  	  // Set display back to flex
-  	  
+
+  	  $(element).animate({height: '196px'}, 700);
 
   	},
 

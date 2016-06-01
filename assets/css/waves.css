@@ -451,7 +451,11 @@ div#myModal {
     background-color: #ddd; }
 
 .prof-sidewave {
-  flex-basis: 175px; }
+  flex-basis: 175px;
+  margin-right: auto; }
+
+.prof-wave-desc {
+  margin: auto; }
 
 .def-carousel {
   height: 150px; }
