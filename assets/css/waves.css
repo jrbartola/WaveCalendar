@@ -444,16 +444,14 @@ div#myModal {
 
 .prof-ownerwave {
   border-bottom: #ddd solid 1px;
-  display: none;
-  transition-duration: 500ms; }
+  display: flex;
+  height: 0px;
+  transition: background-color 500ms; }
   .prof-ownerwave:hover {
     background-color: #ddd; }
 
 .prof-sidewave {
   flex-basis: 175px; }
-
-.def-height-owned {
-  height: 182.66px; }
 
 .def-carousel {
   height: 150px; }

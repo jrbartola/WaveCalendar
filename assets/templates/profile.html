@@ -85,7 +85,7 @@
 	  								<p>Date Joined: </p>
 	  							</th>
 	  							<td>
-	  								<p>{{ user.join_date }}</p>
+	  								<p style="text-align:center;">{{ user.join_date }}</p>
 	  							</td>
 	  						</tr>
 	  						<tr class="oldstyle">
@@ -123,7 +123,7 @@
 		  		<div class="row text-center prof-recents">
 		  			<h3>{{ user.username }}'s Waves</h3>
 		  		</div>
-		  		<div id="ownerwaves" ng-class="{'def-height-owned': user.owned.length == 0 }">
+		  		<div id="ownerwaves">
 
 		  			<!-- Put ng-repeat for List of User-Owned Parties -->
 		  			<div ng-repeat="party in user.owned" class="prof-ownerwave flex-row">
@@ -135,7 +135,7 @@
 		  					<ul rater rate="{{ party.rating }}" cur-party="{{ party.reg_code }}" id="{{ party.reg_code }}-rate" class="rating" style="padding:0px;">
 		  					</ul>
 		  				</div>
-		  				<div class"prof-wave-desc">
+		  				<div class="prof-wave-desc">
 		  					<!-- Have the option to put conditional logic here
 		  					If wave already occurred, disallow rating -->
 		  					<div>

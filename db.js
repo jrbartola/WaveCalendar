@@ -272,6 +272,16 @@ function getUserParties(userid, callback) {
 	});
 }
 
+// There is probably a better way to do this
+// Runs every time a user logs in, updates party statuses in 
+// database by checking if the end time is past the current date
+function updatePartyStatuses() {
+	var curDate = new Date();
+	schemas.Party.update({'time.end': {'$lt': curDate}}, { '$set': { 'status': 'over'}}, {multi: true}).exec();
+	schemas.Party.update({'$and': [ {'time.start': {'$lt': curDate}}, {'time.end': 
+	  {'$gt': curDate}} ]}, { '$set': {'status': 'ongoing'}}, {multi: true}).exec();
+}
+
 
 
 module.exports.addFilter = addFilter;
@@ -290,3 +300,4 @@ module.exports.attendParty = attendParty;
 module.exports.createParty = createParty;
 module.exports.enumerateAttended = enumerateAttended;
 module.exports.getUserParties = getUserParties;
+module.exports.updatePartyStatuses = updatePartyStatuses;

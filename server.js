@@ -32,6 +32,7 @@ var auth = function(req, res, next) {
 		if (!user) {
 			res.json(null);
 		} else {
+			db.updatePartyStatuses();
 			db.updateLogins('jrbartola@gmail.com');
 			req.session.user = user;
 		}
@@ -58,6 +59,7 @@ app.post('/login', function(req, res) {
 		if (!user) {
 			res.json(null);
 		} else {
+			db.updatePartyStatuses();
 			db.updateLogins(email);
 			req.session.user = user;
 			res.json(user);
