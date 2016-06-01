@@ -96,8 +96,7 @@ app.get('/api/profile/:username', auth, function(req, res) {
 	db.getUser('username', username, function(user) {
 		// User.attending represents an array of party reg_code's
 		db.enumerateAttended(user.attending, function(partydata) {
-			// If the current user is viewing their own profile, let them edit it
-			user.admin = req.session.user.username === username;
+			
 			// Respond with the attending attribute containing the parties
 			user.attending = partydata;
 

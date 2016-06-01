@@ -319,7 +319,7 @@ input[type=radio] {
 	justify-content: center;
 }
 
-.rating-over {
+.rating-disabled {
 	pointer-events: none;
 }
 
@@ -604,6 +604,7 @@ div#myModal {
 // Div that holds the list of owner waves
 #ownerwaves {
 	border: #ddd solid 3px;
+	border-radius: 3px;
 	height: 700px;
 	overflow-y: scroll;
 }
@@ -635,4 +636,8 @@ div#myModal {
 
 .def-carousel {
 	height: 150px;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
 }

@@ -20,12 +20,18 @@ profile.animation('.prof-ownerwave', [function() {
 
 profile.controller('ProfileCtrl', function($scope, $rootScope, dataService) {
 
+	$scope.admin = false;
+	var username = window.location.pathname.substring(7);
 
 	dataService.updateCurrentUser(function(cu) {
-		$rootScope.currentUser = cu;
+		$scope.$apply(function() {
+			$rootScope.currentUser = cu;
+			// If the current user is viewing their own profile, let them edit it
+			$scope.admin = cu.username === username;
+		});
+		
 	});
 	
-	var username = window.location.pathname.substring(7);
 	$.get('/api/profile/' + username, function(resp) {
 
 		$scope.$apply(function() {
@@ -90,8 +96,10 @@ profile.directive('rater', function($timeout, $rootScope) {
 	  		$.post('/api/rating', {'rating': parseInt(rating), 'party': scope.curParty, 'user': JSON.stringify($rootScope.currentUser)}, function(response) {
           		if (response == null) {
             		swal('No can do!', 'You must attend this party before you can rate it!', 'error');
+            		scope[scope.curParty].setRating(scope.curRating, false);
           		} else {
             		scope[scope.curParty].setRating(response, false);
+            		scope.curRating = response;
           		}
           
         	});

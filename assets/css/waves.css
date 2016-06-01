@@ -255,7 +255,7 @@ input[type=radio] {
   display: flex;
   justify-content: center; }
 
-.rating-over {
+.rating-disabled {
   pointer-events: none; }
 
 .active {
@@ -444,6 +444,7 @@ div#myModal {
 
 #ownerwaves {
   border: #ddd solid 3px;
+  border-radius: 3px;
   height: 700px;
   overflow-y: scroll; }
 
@@ -464,5 +465,8 @@ div#myModal {
 
 .def-carousel {
   height: 150px; }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important; }
 
 /*# sourceMappingURL=waves.css.map */

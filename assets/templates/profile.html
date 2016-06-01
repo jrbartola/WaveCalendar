@@ -35,7 +35,7 @@
     	<link rel="stylesheet" href="../css/waves.css">
   	</head>
 
-  	<body ng-app="waveCal">
+  	<body ng-app="waveCal" ng-controller="ProfileCtrl" ng-cloak>
 	  <nav class="navbar navbar-default">
 		<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -52,7 +52,7 @@
 
 		<div class="collapse navbar-collapse">
 		  <ul class="nav navbar-nav navbar-right">
-		    <!-- <li><a href="#"><i class="fa fa-user"></i> Profile</a></li> -->
+		    <li ng-cloak ng-show="!admin"><a href="/profile"><i class="fa fa-user"></i> Profile</a></li>
 		    <li class="dropdown">
 		      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i> Settings <span class="caret"></span></a>
 		      <ul class="dropdown-menu">
@@ -66,7 +66,7 @@
 		</div><!-- /.container-fluid -->
 	  </nav>
 
-	  <section id="profile" ng-controller="ProfileCtrl">
+	  <section id="profile">
 	  	<div class="container">
 		  	<div class="col-md-4 profile-col">
 		  		<div class="prof-header">
@@ -132,7 +132,7 @@
 		  					<img src="../img/WaveIcon.png" ng-hide="party.status != 'planned'" height="112" width="112">
 		  					<img src="../img/party_hat.png" ng-hide="party.status != 'ongoing'" height="112" width="112">
 		  					<img src="../img/SleepIcon.png" ng-hide="party.status != 'over'" height="112" width="112">
-		  					<ul rater rate="{{ party.rating }}" ng-class="{'rating-disabled': party.status == 'over'}" cur-party="{{ party.reg_code }}" id="{{ party.reg_code }}-rate" class="rating" style="padding:0px;">
+		  					<ul rater rate="{{ party.rating }}" ng-class="{'rating-disabled': currentUser.attending.indexOf(party.reg_code) < 0}" cur-party="{{ party.reg_code }}" id="{{ party.reg_code }}-rate" class="rating" style="padding:0px;">
 		  					</ul>
 		  				</div>
 		  				<div class="prof-wave-desc">
