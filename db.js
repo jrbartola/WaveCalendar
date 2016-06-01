@@ -249,13 +249,14 @@ function attendParty(user, party, callback) {
 	});
 }
 
-function createParty(props, callback) {
+function createParty(user, props, callback) {
 	var newWave = new schemas.Party(props);
 	newWave.save(function(err) {
 		if (err) {
 			console.error(err.message);
 			throw err;
 		}
+		schemas.User.update({'email': user.email}, {'$inc': {'num_parties': 1 }}).exec();
 		return callback(newWave);
 	});
 }

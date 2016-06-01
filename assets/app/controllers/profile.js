@@ -18,8 +18,12 @@ profile.animation('.prof-ownerwave', [function() {
 }]);
 
 
-profile.controller('ProfileCtrl', function($scope) {
-	
+profile.controller('ProfileCtrl', function($scope, $rootScope, dataService) {
+
+
+	dataService.updateCurrentUser(function(cu) {
+		$rootScope.currentUser = cu;
+	});
 	
 	var username = window.location.pathname.substring(7);
 	$.get('/api/profile/' + username, function(resp) {
@@ -74,7 +78,7 @@ profile.directive('slicker', function($timeout) {
 });
 
 // Directive for Profile Rating.js
-profile.directive('rater', function($timeout) {
+profile.directive('rater', function($timeout, $rootScope) {
   return {
 	  restrict: 'A',
 	  scope: {
@@ -82,7 +86,16 @@ profile.directive('rater', function($timeout) {
 	  	curParty: '@'
 	  },
 	  link: function(scope, elem, attrs) {
-	  	rating(elem[0], scope.curRating, 5);
+	  	scope[scope.curParty] = rating(elem[0], scope.curRating, 5, function(rating) {
+	  		$.post('/api/rating', {'rating': parseInt(rating), 'party': scope.curParty, 'user': JSON.stringify($rootScope.currentUser)}, function(response) {
+          		if (response == null) {
+            		swal('No can do!', 'You must attend this party before you can rate it!', 'error');
+          		} else {
+            		scope[scope.curParty].setRating(response, false);
+          		}
+          
+        	});
+	  	});
 	  }
 	};
 });

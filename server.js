@@ -213,7 +213,7 @@ app.post('/api/create', function(req, res) {
 	props.reg_code = reg_code;
 	props.owner = ObjectId(user._id);
 
-	db.createParty(props, function(party) {
+	db.createParty(user, props, function(party) {
 		res.json(party);
 	});
 });
