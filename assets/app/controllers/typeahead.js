@@ -20,6 +20,27 @@ var typeAhead = angular.module('waveCal');
 //   "num_logins": 0
 // }
 
+typeAhead.service('dataService', function() {
+  var currentUser = {};
+
+  var updateCurrentUser = function(callback) {
+    $.get('/api/currentuser', function(response) {
+      currentUser = response;
+      return callback(response);
+    });
+  }
+
+  var getCurrentUser = function() {
+    return currentUser;
+  }
+
+  return {
+    updateCurrentUser: updateCurrentUser,
+    getCurrentUser: getCurrentUser
+  };
+
+});
+
 
 // Factory that retrieves stored filter objects from API
 typeAhead.factory('filterFactory', function($http) {
@@ -54,12 +75,14 @@ typeAhead.factory('partyFactory', function($http) {
 });
 
 
-typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, partyFactory) { // DI in action
+typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, filterFactory, partyFactory, dataService) { // DI in action
   
-  //Use filterFactory to get the current user from API
-  filterFactory.get('/api/currentuser').then(function(data) {
-    $scope.currentUser = data;
-    if (!$scope.currentUser.username) {
+  // Use dataservice to get user data from API
+  dataService.updateCurrentUser(function(cu) {
+    $rootScope.currentUser = cu;
+    $scope.location = cu.location;
+
+    if (!$rootScope.currentUser.username) {
       swal({title: "You don't have a username yet!",
         text: "Usernames allow others to identify you. " +
         "You must also have a username in order to have a profile.",
@@ -78,23 +101,29 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
             $.post('/api/users', {'username': newusername, 'add': true}, function(newname) {
               if (newname.success === true) {
                 swal("Nice!", "Your username is now " + newusername, "success");
-                $scope.$apply(function() {
-                  $scope.currentUser.username = newusername;
-                });
+                
+                  // Refresh data
+                  dataService.updateCurrentUser(function(cu2) {
+                    $scope.$apply(function() {
+                      $rootScope.currentUser = cu2;
+                    });
+                    
+                  });
                 
               } else {
                 swal.showInputError("That name is already taken, try another one.");
                 return false;
               }
                 
-            })
-          }
-          // Execute message if not already taken
-          
-        });
+            });
+          } 
+      });
     }
-    $scope.location = data.location;
-    // originally filter by current city of user
+  
+  
+
+    
+  // originally filter by current city of user
 
     partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
       $scope.parties = [];
@@ -106,10 +135,11 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
       });
       
     });
+  // });
   });
 
   $scope.chosen_ = [];
-  $scope.limit = 4;
+  //$scope.limit = 4;
 
   filterFactory.get('/api/filters').then(function(data) {
     // Gets filters 
@@ -121,7 +151,7 @@ typeAhead.controller('TypeaheadCtrl', function($scope, $timeout, filterFactory, 
   $scope.name = ''; // This will hold the selected item
 
   $scope.findRating = function(party, callback) {
-    $.post('/api/rating', {'party': party.reg_code}, function(rate) {
+    $.post('/api/rating', {'party': party.reg_code, 'user': JSON.stringify($rootScope.currentUser)}, function(rate) {
       // Set to 0 if user has not rated this party before
       if (!rate)
         rate = 0;
@@ -264,7 +294,7 @@ typeAhead.directive('typeahead', function($timeout) {
 });
 
 // Directive for list of waves
-typeAhead.directive('wavefilter', function($timeout) {
+typeAhead.directive('wavefilter', function($timeout, $rootScope) {
   
   return {
     restrict: 'AE',
@@ -293,8 +323,13 @@ typeAhead.directive('wavefilter', function($timeout) {
       }
 
       scope.sendRate = function(rating, party) {
-        $.post('/api/rating', {'rating': parseInt(rating), 'party': party}, function(response) {
-          $('#' + party + '-rate').attr('data-rating', response);
+        $.post('/api/rating', {'rating': parseInt(rating), 'party': party, 'user': JSON.stringify($rootScope.currentUser)}, function(response) {
+          if (response == null) {
+            swal('No can do!', 'You must attend this party before you can rate it!', 'error');
+          } else {
+            $('#' + party + '-rate').attr('data-rating', response);
+          }
+          
         });
       }
 

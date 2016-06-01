@@ -113,10 +113,13 @@ app.get('/api/profile/:username', auth, function(req, res) {
 });
 
 app.get('/api/currentuser', function(req, res) {
-	if (req.session && req.session.user)
-		res.json(req.session.user);
-	else
+	if (req.session && req.session.user) {
+		db.getUser('username', req.session.user.username, function(usr) {
+			res.json(usr);
+		});
+	} else {
 		res.json(null);
+	}
 });
 
 app.get('/api/filters', function(req, res) {
@@ -187,7 +190,7 @@ app.post('/api/partycode', function(req, res) {
 });
 
 app.post('/api/rating', function(req, res) {
-	var user = req.session.user;
+	var user = JSON.parse(req.body.user);
 	var party = req.body.party;
 	var rating = req.body.rating;
 	

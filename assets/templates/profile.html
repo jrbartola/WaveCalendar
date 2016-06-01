@@ -114,7 +114,7 @@
 		  		</div>
 		  		<div slicker ng-model="slick" class="prof-carousel flex-adjust flex-sp-ar" ng-class="{'def-carousel': user.attending.length == 0 }">
 		  			<div ng-repeat="wave in user.attending" class="wavelisting text-center">
-		  				<h4>{{ wave.title }}</h4>
+		  				<h4 style="font-weight:600;">{{ wave.title }}</h4>
 		  				<img src="../img/WaveIcon.png" ng-hide="wave.status != 'planned'" class="prof-wavelisting" height="96" width="96">
 		  				<img src="../img/party_hat.png" ng-hide="wave.status != 'ongoing'" class="prof-wavelisting" height="96" width="96">
 		  				<img src="../img/SleepIcon.png" ng-hide="wave.status != 'over'" class="prof-wavelisting" height="96" width="96">
@@ -132,7 +132,7 @@
 		  					<img src="../img/WaveIcon.png" ng-hide="party.status != 'planned'" height="112" width="112">
 		  					<img src="../img/party_hat.png" ng-hide="party.status != 'ongoing'" height="112" width="112">
 		  					<img src="../img/SleepIcon.png" ng-hide="party.status != 'over'" height="112" width="112">
-		  					<ul rater rate="{{ party.rating }}" cur-party="{{ party.reg_code }}" id="{{ party.reg_code }}-rate" class="rating" style="padding:0px;">
+		  					<ul rater rate="{{ party.rating }}" ng-class="{'rating-disabled': party.status == 'over'}" cur-party="{{ party.reg_code }}" id="{{ party.reg_code }}-rate" class="rating" style="padding:0px;">
 		  					</ul>
 		  				</div>
 		  				<div class="prof-wave-desc">

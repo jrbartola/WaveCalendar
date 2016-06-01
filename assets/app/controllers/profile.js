@@ -17,6 +17,7 @@ profile.animation('.prof-ownerwave', [function() {
   }
 }]);
 
+
 profile.controller('ProfileCtrl', function($scope) {
 	
 	

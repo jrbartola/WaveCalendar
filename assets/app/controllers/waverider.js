@@ -14,11 +14,17 @@ waveRider.factory('partyCodeFactory', function($http) {
   }
 });
 
-waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactory) {
+waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, partyCodeFactory, dataService) {
   // Scope view of 0 is the search by code box
   // Scope view of 1 is the resulted party returned by the search
   // Scope view of 2 is the create your party form
   // Scope view of 3 is the finished party creation message/modal
+  // dataService.updateCurrentUser(function(cu) {
+  //   $scope.$apply(function() {
+  //     $scope.currentUser = cu;
+  //   });
+    
+  // });
   $scope.view = 0;
   $scope.code = '';
   $scope.party = {};
@@ -95,6 +101,12 @@ waveRider.controller('WaveRiderCtrl', function($timeout, $scope, partyCodeFactor
       }
       // Flash sweet alert with message
       swal(props, function() {
+
+        dataService.updateCurrentUser(function(cu) {
+          $scope.$apply(function() {
+            $rootScope.currentUser = cu;
+          });
+        });
         //$scope.initialView();
       });
 

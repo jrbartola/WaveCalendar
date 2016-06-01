@@ -137,7 +137,10 @@ p {
   .navbar-default .navbar-brand {
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
     font-size: 3em;
-    color: #99ccff; }
+    color: #99ccff;
+    transition: color 0.5s; }
+    .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:active {
+      color: #0061c2; }
   .navbar-default .navbar-collapse {
     border-color: fade(white, 2%); }
   .navbar-default .navbar-toggle {
@@ -153,9 +156,11 @@ p {
     font-weight: 500;
     font-size: 2rem;
     letter-spacing: 1px;
-    color: #0080ff; }
+    color: #0080ff;
+    transition: background-color 0.5s; }
     .navbar-default .nav li a:hover, .navbar-default .nav li a:focus {
       background-color: #e0e0e0;
+      border-radius: 3px;
       color: #0080ff;
       outline: none; }
     .navbar-default .nav li a .dropdown-toggle {
@@ -250,6 +255,9 @@ input[type=radio] {
   display: flex;
   justify-content: center; }
 
+.rating-over {
+  pointer-events: none; }
+
 .active {
   font-size: 2rem;
   background-color: #0080ff;
@@ -301,9 +309,6 @@ section#create {
 .modaldiv {
   padding-bottom: 20px;
   background-color: #66b3ff; }
-  .modaldiv:hover {
-    box-shadow: 0px 1px 4px black;
-    -webkit-transition: all ease 0.3s; }
 
 div#myModal {
   color: black; }

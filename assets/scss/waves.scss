@@ -202,11 +202,11 @@ p {
 		font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
 		font-size: 3em;
 		color: lighten($primary-color, 30%);
+		transition: color 0.5s;
         &:hover,
         &:focus,
-        //&:active,
-        &.active {
-        	//color: darken($primary-color, 12%);
+        &:active, {
+        	color: darken($primary-color, 12%);
         }
 	}
 	.navbar-collapse {
@@ -238,9 +238,11 @@ p {
     			font-size: 2rem;
     			letter-spacing: 1px;
     			color: $primary-color;
+    			transition: background-color 0.5s;
     			&:hover,
     			&:focus {
     				background-color: darken($secondary-color, 12%);
+    				border-radius: 3px;
     				color: $primary-color;
     				outline: none;
     			}
@@ -315,6 +317,10 @@ input[type=radio] {
 .rating {
 	display: flex;
 	justify-content: center;
+}
+
+.rating-over {
+	pointer-events: none;
 }
 
 // TypeAhead
@@ -396,8 +402,8 @@ section#create {
 	//border: 1px solid darken($primary-color, 30%);
 	
 	&:hover {
-		box-shadow: 0px 1px 4px black;
-		-webkit-transition: all ease 0.3s;
+		//box-shadow: 0px 1px 4px black;
+		//-webkit-transition: all ease 0.3s;
 	}
 	
 }

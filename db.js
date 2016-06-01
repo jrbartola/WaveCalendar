@@ -176,11 +176,16 @@ function findRating(user, party, callback) {
 	});
 }
 
+
+
 // Adjust rating by the party code identifier and user who rated it
 function addRating(user, party, rating, callback) {
 	partyByCode(party, function(newparty) {
-		if (newparty == null) {
-			console.error("Cannot rate a party that does not exist");
+		// Check if the party exists or if the user is allowed to trate the party
+		if (newparty == null || user.attending.indexOf(newparty.reg_code) < 0) {
+			console.log(user.attending + ' does not have ' + newparty.reg_code);
+			console.error("Party doesn't exist/User has insufficient priviledges");
+			return callback(null);
 		} else {
 
 			findRating(user, newparty.reg_code, function(rate) {
