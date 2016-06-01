@@ -408,6 +408,9 @@ div#myModal {
   border: none;
   vertical-align: middle; }
 
+.valid-err {
+  border-color: red; }
+
 .oldstyle {
   border-top: 1px solid #ddd; }
 

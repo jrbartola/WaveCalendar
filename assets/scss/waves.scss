@@ -541,6 +541,11 @@ div#myModal {
 	}
 }
 
+// Color for form validation errors
+.valid-err {
+	border-color: red;
+}
+
 
 // Preserves the old border-top provied by bootstrap
 .oldstyle {

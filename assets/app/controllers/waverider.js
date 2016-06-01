@@ -27,7 +27,10 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, par
   // });
   $scope.view = 0;
   $scope.code = '';
-  $scope.party = {};
+  // Searched party or created party variable
+  $scope.party = {noRatio: true, invite: false, date: {start: '', end: ''},
+    time: {start: '', end: ''}};
+
   $scope.owner = '';
 
   // Set filters for the registration panel
@@ -40,7 +43,6 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, par
   });
 
   // Set registration panel invite to false
-  $scope.invite = false;
 
   $scope.getParty = function() {
     
@@ -121,6 +123,7 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, par
       $('.modal-inside').children().removeClass('invisible');
 
       $scope.$apply(function() {
+        $scope.party = {};
         $scope.code = '';
         $scope.view = 0;
       });
@@ -171,13 +174,47 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, par
 
   }
 
-  
+  $scope.validateForm = function() {
+    var leftOut = [];
+
+    if ($scope.party.name == undefined)
+      leftOut.push('name');
+    if ($scope.party.address == undefined)
+      leftOut.push('address');
+    if ($scope.party.state == undefined)
+      leftOut.push('state');
+    if ($scope.party.city == undefined)
+      leftOut.push('city');
+    if ($scope.party.zip_code == undefined)
+      leftOut.push('zip_code')
+    if ($scope.party.date.start === '')
+      leftOut.push('date.start')
+    if ($scope.party.time.start === '')
+      leftOut.push('time.start')
+    if ($scope.party.date.end === '')
+      leftOut.push('date.end')
+    if ($scope.party.time.end === '')
+      leftOut.push('time.end')
+    if ($scope.party.date.start === '')
+      leftOut.push('date.start')
+
+    for (var i = 0; i < leftOut.length; i++) {
+      // Loop through and add the red form validation borders to missing fields
+      $("[ng-model='party." + leftOut[i] + "']").addClass('valid-err');
+    }
+
+    return leftOut.length == 0;
+  }
 
   $scope.createWave = function() {
+    // Make sure all fields are filled out
+    if (!$scope.validateForm())
+      return;
+
     // Props representing the new wave form submission
     var wave = $scope.wave;
-    var startD = new Date($scope.date.start + " " + $scope.time.start);
-    var endD = new Date($scope.date.end + " " + $scope.time.end);
+    var startD = new Date(wave.date.start + " " + wave.time.start);
+    var endD = new Date(wave.date.end + " " + wave.time.end);
     // Check if a ratio was established
     if ($scope.noRatio == true)
       var guys = 0, girls = 0;

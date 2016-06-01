@@ -111,7 +111,7 @@
 				                <h4>Title</h4>
 				              </th>
 				              <td colspan="3">
-				                <input id="wavename" ng-model="wave.name" title="Name your party" class="form-control" type="text">
+				                <input id="wavename" ng-model="party.name" title="Name your party" class="form-control" type="text">
 				              </td>
 				            </tr>
 				            <tr>
@@ -119,11 +119,11 @@
 				                <h4>Location</h4>
 				              </th>
 				              <td colspan="2">
-				                <input id="location-address" ng-model="wave.address" class="form-control" placeholder="House address" type="text">
+				                <input id="location-address" ng-model="party.address" class="form-control" placeholder="House address" type="text">
 				              </td>
 				              <td colspan="1" style="width:25%">
 				                <!-- WARNING: THIS width:25% KEEPS THE FORM PROPORTIONATE -->
-				                <select id="location-state" ng-model="wave.state" class="form-control">
+				                <select id="location-state" ng-model="party.state" class="form-control">
 				                  <option value="AL">AL</option>
 				                  <option value="AK">AK</option>
 				                  <option value="AZ">AZ</option>
@@ -183,10 +183,10 @@
 				                &nbsp;
 				              </th>
 				              <td colspan="2">
-				                <input id="location-city" ng-model="wave.city" class="form-control" placeholder="City" type="text">
+				                <input id="location-city" ng-model="party.city" class="form-control" placeholder="City" type="text">
 				              </td>
 				              <td colspan="" style="">
-				                <input id="location-zip" ng-model="wave.zip_code" type="text" class="form-control" placeholder="Zip Code">
+				                <input id="location-zip" ng-model="party.zip_code" type="text" class="form-control" placeholder="Zip Code">
 				              </td>
 				              
 				            </tr>
@@ -196,15 +196,15 @@
 				              </th>
 				              <div date-pair>
 				                  <td>
-				                  	<input date-picker check-date="validate()" ng-model="date.start" type="text" class="date start form-control " />
-				                  	<input time-picker ng-disabled="!date.start" check-time="validate()" ng-model="time.start" type="text" class="time start form-control" />
+				                  	<input date-picker check-date="validate()" ng-model="party.date.start" type="text" class="date start form-control " />
+				                  	<input time-picker ng-disabled="!party.date.start" check-time="validate()" ng-model="party.time.start" type="text" class="time start form-control" />
 				                  </td>
 				                  <td colspan="">
 				                  	to
 				                  </td>
 				                  <td colspan="">
-					              	<input date-picker ng-disabled="!(date.start &amp;&amp; time.start)" check-date="validate()" ng-model="date.end" type="text" class="date end form-control" />
-					                <input time-picker ng-disabled="!date.end" check-time="validate()" ng-model="time.end" type="text" class="time end form-control" />
+					              	<input date-picker ng-disabled="!(party.date.start &amp;&amp; party.time.start)" check-date="validate()" ng-model="party.date.end" type="text" class="date end form-control" />
+					                <input time-picker ng-disabled="!party.date.end" check-time="validate()" ng-model="party.time.end" type="text" class="time end form-control" />
 					              </td>
 				              </div>
 				            </tr>
@@ -212,19 +212,19 @@
 				      	</table>
 				      	<table id="createParty2" class="table">
 				          <tbody>
-				            <tr ng-init="invite=false" title="Invite-only parties won't show up on the main dashboard!">
+				            <tr ng-init="party.invite=false" title="Invite-only parties won't show up on the main dashboard!">
 				              <th colspan="1" style="border-top: 1px solid #ddd;" scope="row">
 				                <h4>Invite Status</h4>
 				              </th>
 				              <td colspan="2" style="border-top: 1px solid #ddd;">
 				                <label>
-				                  <input type="radio" ng-model="invite" id="invite-only" ng-value="true">Invite-Only
+				                  <input type="radio" ng-model="party.invite" id="invite-only" ng-value="true">Invite-Only
 				                </label>
 				                
 				              </td>
 				              <td colspan="1" style="border-top: 1px solid #ddd;">
 				                <label>
-				                  <input type="radio" ng-model="invite" id="invite-open" ng-value="false">Open-Invite
+				                  <input type="radio" ng-model="party.invite" id="invite-open" ng-value="false">Open-Invite
 				                </label>
 				              </td>
 				            </tr>
@@ -248,17 +248,17 @@
 				              	<h4>Ratio</h4>
 				              </th>
 				              <td colspan="1">
-				              	<input ng-model="noRatio" type="checkbox"> None
+				              	<input ng-init="party.noRatio=true" ng-checked="true" ng-model="noRatio" type="checkbox"> None
 				              </td>
 				              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
 				              <td colspan="1" style="width:30%;">
 				              	<label for="ratio-girls">Girls</label>
-				              	<input ng-disabled="noRatio" ng-model="ratio.girls" id="ratio-girls" type="number" class="form-control" min="1" value="1">
+				              	<input ng-disabled="party.noRatio" ng-model="party.ratio.girls" id="ratio-girls" type="number" class="form-control" min="1" value="1">
 				              </td>
 				              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
 				              <td colspan="1" style="width:30%;">
 				              	<label for="ratio-guys">Guys</label>
-				              	<input ng-disabled="noRatio" ng-model="ratio.guys" id="ratio-guys" type="number" class="form-control" min="1" value="1">
+				              	<input ng-disabled="party.noRatio" ng-model="party.ratio.guys" id="ratio-guys" type="number" class="form-control" min="1" value="1">
 				              </td>
 				            </tr>
 				          </tbody>
