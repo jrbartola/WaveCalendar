@@ -188,8 +188,10 @@ p {
   color: white;
   background-color: #0080ff;
   border-color: #0080ff;
-  border-radius: 0px; }
-  .btn-norm:hover, .btn-norm:focus, .btn-norm:active, .btn-norm.active,
+  border-radius: 2px;
+  transition: background-color 0.5s;
+  letter-spacing: 1px; }
+  .btn-norm:hover, .btn-norm:focus, .btn-norm.active,
   .btn-norm .open .dropdown-toggle {
     color: white;
     background-color: #0066cc;
@@ -214,10 +216,12 @@ p {
   color: white;
   background-color: #0080ff;
   border-color: #0080ff;
-  border-radius: 0px;
+  border-radius: 2px;
+  transition: background-color 0.5s;
+  letter-spacing: 1px;
   padding: 10px 25px;
   font-size: 16px; }
-  .btn-larger:hover, .btn-larger:focus, .btn-larger:active, .btn-larger.active,
+  .btn-larger:hover, .btn-larger:focus, .btn-larger.active,
   .btn-larger .open .dropdown-toggle {
     color: white;
     background-color: #0066cc;
