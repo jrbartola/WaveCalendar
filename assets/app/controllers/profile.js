@@ -18,14 +18,21 @@ profile.animation('.prof-ownerwave', [function() {
 }]);
 
 
-profile.controller('ProfileCtrl', function($scope, $rootScope, dataService) {
+profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataService) {
 
+	// Default the admin value to false until found otherwise
 	$scope.admin = false;
+	$scope.edit = false;
+	$scope.changed = false;
+	$scope.settingsModal = {'display': 'none'};
 	var username = window.location.pathname.substring(7);
 
 	dataService.updateCurrentUser(function(cu) {
 		$scope.$apply(function() {
 			$rootScope.currentUser = cu;
+			$rootScope.currentUser.new = {'location': {'city': cu.location.city,
+		      'state': cu.location.state }, 'username': cu.username, 'email': cu.email};
+
 			// If the current user is viewing their own profile, let them edit it
 			$scope.admin = cu.username === username;
 		});
@@ -59,6 +66,69 @@ profile.controller('ProfileCtrl', function($scope, $rootScope, dataService) {
 
         return d.toDateString() + total;
     }
+
+    $scope.openSettings = function() {
+    	$scope.settingsModal = {'display': 'block'};
+    	$('body').addClass('modal-open');
+    	$timeout(function() {
+    		$('#slick-settings').slick({slidesToShow: 3});
+    	}, 80);
+    	
+    }
+
+    $scope.closeSettings = function() {
+    	$scope.settingsModal= {'display': 'none'};
+    	$('body').removeClass('modal-open');
+    }
+
+    $scope.removeParty = function(party) {
+    	$.post('/api/parties/remove', {'party': party}, function(resp) {
+    		dataService.updateCurrentUser(function(cu) {
+				$scope.$apply(function() {
+					$rootScope.currentUser = cu;
+				});
+			});
+    	});
+    }
+
+    // Function that monitors account settings changes
+    $scope.formChange = function(field) {
+    	if (!$rootScope.currentUser)
+    		return false;
+    	if (field === 'state' || field === 'city') {
+    		return $rootScope.currentUser.location[field] != $rootScope.currentUser.new.location[field];
+    	} else {
+    		return $rootScope.currentUser[field] != $rootScope.currentUser.new[field];
+    	}
+    }
+
+    $scope.confirmChanges = function() {
+    	swal({title: 'Are you sure?',
+    		  text: 'Type your password to confirm these changes',
+    		  type: 'input',
+    		  showCancelButton: true,
+    		  closeOnConfirm: false
+    		}, function(pass) {
+    			if (pass === '' || pass != $rootScope.currentUser.password) {
+    				swal.showInputError("Incorrect password");
+    				return false;
+    			}
+
+    			swal("All done!", "Your changes have been saved", "success");
+    		});
+    }
+
+    $scope.checkChanges = function() {
+    	var cu = $rootScope.currentUser;
+    	if (!cu)
+    		return true;
+    	return (cu.location.city === cu.new.location.city &&
+    		cu.location.state === cu.new.location.state &&
+    		cu.username === cu.new.username &&
+    		cu.email === cu.new.email && (!cu.new.password_orig || 
+    			cu.new.password_orig === '') && (!cu.new.password_confirm ||
+    			cu.new.password_confirm === ''));
+    }
 });
 
 
@@ -76,9 +146,12 @@ profile.directive('slicker', function($timeout) {
     },
     link: function(scope, elem, attrs) {
       // insert scope functions here
-      elem.slick({slidesToShow: 3,
-        slidesToScroll: 1
-      });
+      $timeout(function() {
+      	elem.slick({slidesToShow: 3,
+        	slidesToScroll: 1
+      	});
+      }, 300);
+      
     }
   };
 });

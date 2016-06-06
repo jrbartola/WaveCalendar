@@ -114,8 +114,14 @@ function getUser(field, value, callback) {
 		
 		schemas.User.findOne({'username': value}).lean().exec(function(err, user) {
 			if (err) throw err;
-			// Return callback with matched user
-			return callback(user);
+			schemas.Party.find({'owner': user._id}).lean().exec(function(err1, parties) {
+				if (err1) throw err1;
+				// Add the user's parties to its properties
+				user.waves = parties;
+				// Return callback with matched user
+				return callback(user);
+			});
+			
 		});
 	} else {
 		// FIX THIS: "field" is taken literally rather than as a variable
@@ -261,6 +267,18 @@ function createParty(user, props, callback) {
 	});
 }
 
+function removeParty(user, party, callback) {
+	schemas.Party.findOne({'owner': user_.id, 'reg_code': party.reg_code}, function(err, toremove) {
+		if (toremove != null) {
+			toremove.remove();
+			return callback(true);
+		}
+
+		return callback(null);
+
+	});
+}
+
 function enumerateAttended(attending, callback) {
 	// Match the waves up with their registration codes
 	schemas.Party.find({'reg_code': { '$in': attending}})
@@ -304,6 +322,7 @@ module.exports.findRating = findRating;
 module.exports.addRating = addRating;
 module.exports.attendParty = attendParty;
 module.exports.createParty = createParty;
+module.exports.removeParty = removeParty;
 module.exports.enumerateAttended = enumerateAttended;
 module.exports.getUserParties = getUserParties;
 module.exports.updatePartyStatuses = updatePartyStatuses;

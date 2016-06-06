@@ -544,7 +544,16 @@ div#myModal {
 // Color for form validation errors
 .valid-err {
 	border-color: red;
+	outline: 0;
 }
+
+// Color for form changes
+.valid-change, .valid-change:focus {
+	border-color: #d8c817;
+	outline: 0;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px #d8c817;
+}
+
 
 
 // Preserves the old border-top provied by bootstrap
@@ -617,9 +626,6 @@ div#myModal {
 .prof-ownerwave {
 	// Add a bottom border after each repeated div
 	border-bottom: #ddd solid 1px;
-	//margin-right: auto;
-	// Set display to none so animation works
-	//display:none;
 	display: flex;
 	height: 0px;
 	transition: background-color 500ms;
@@ -645,4 +651,21 @@ div#myModal {
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+}
+
+// Account Settings Modal
+#slick-settings {
+	// Made the width smaller so we fit the buttons on modal
+	width: 85%;
+	margin: auto;
+	margin-bottom: 25px;
+}
+
+.owner-wave {
+	
+}
+
+.form-adjust {
+	padding-top: 20px;
+	border-top: 1px solid #e5e5e5;
 }

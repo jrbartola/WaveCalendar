@@ -57,7 +57,7 @@
 		      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i> Settings <span class="caret"></span></a>
 		      <ul class="dropdown-menu">
 		        <li><a href="#">Edit Profile</a></li>
-		        <li><a href="#">Account</a></li>
+		        <li><a ng-click="openSettings()" href="#">Account</a></li>
 		        <li><a href="/logout">Log out</a></li>
 		      </ul>
 		    </li>
@@ -112,7 +112,7 @@
 		  		<div class="row text-center prof-recents">
 		  			<h3>Recently Attended</h3>
 		  		</div>
-		  		<div slicker ng-model="slick" class="prof-carousel flex-adjust flex-sp-ar" ng-class="{'def-carousel': user.attending.length == 0 }">
+		  		<div slicker ng-model="slick.attending" class="prof-carousel flex-adjust flex-sp-ar" ng-class="{'def-carousel': user.attending.length == 0 }">
 		  			<div ng-repeat="wave in user.attending" class="wavelisting text-center">
 		  				<h4 style="font-weight:600;">{{ wave.title }}</h4>
 		  				<img src="../img/WaveIcon.png" ng-hide="wave.status != 'planned'" class="prof-wavelisting" height="96" width="96">
@@ -162,6 +162,130 @@
 		  	</div>
 	  	</div>
 	  </section>
+
+	  <div id="settingsModal" ng-style="settingsModal" class="modal-custom">
+		<div class="modal-content">
+		  <div class="modal-header">
+		    <h2 class="text-center">{{ currentUser.username }}'s Account Settings</h2>
+		  </div>
+		  <div class="modal-body">
+		  	<div class="manage-header">
+		  		<h3 class="pull-left" style="margin-bottom:30px;">Manage Waves</h3>
+		  		<div style="padding-top:20px;text-align:right;">
+		  			<a href ng-click="edit=!edit"><i class="fa fa-pencil fa-2" style="font-size: 20px;" aria-hidden="true"></i></a>
+		  		</div>
+		  		
+		  	</div>
+		  	
+		  	<div id="slick-settings" slicker-none ng-model="slick.settings" class="prof-carousel flex-adjust flex-sp-ar" ng-class="{'def-carousel': currentUser.waves.length == 0 }">
+		  		<div ng-repeat="wave in currentUser.waves" class="wavelisting text-center owner-wave">
+	  				<h4 style="font-weight:600;">{{ wave.title }}</h4>
+	  				<img src="../img/WaveIcon.png" ng-hide="wave.status != 'planned'" class="prof-wavelisting" height="96" width="96">
+	  				<img src="../img/party_hat.png" ng-hide="wave.status != 'ongoing'" class="prof-wavelisting" height="96" width="96">
+	  				<img src="../img/SleepIcon.png" ng-hide="wave.status != 'over'" class="prof-wavelisting" height="96" width="96">
+	  			</div>
+		  	</div> <!-- End Slicker -->
+
+		  	<div class="form-adjust">
+		  		<table class="table">
+		  			<tbody>
+		  				<tr>
+		  					<th>
+		  						<h3>Location</h3>
+		  					</th>
+		  					<td colspan="">
+		  						<input type="text" ng-model="currentUser.new.location.city" ng-class="{'valid-change': formChange('city') }" class="form-control">
+		  					</td>
+		  					<td>
+		  						<select ng-model="currentUser.new.location.state" class="form-control" ng-class="{'valid-change': formChange('state') }">
+				                  <option value="AL">AL</option>
+				                  <option value="AK">AK</option>
+				                  <option value="AZ">AZ</option>
+				                  <option value="AR">AR</option>
+				                  <option value="CA">CA</option>
+				                  <option value="CO">CO</option>
+				                  <option value="CT">CT</option>
+				                  <option value="DE">DE</option>
+				                  <option value="DC">DC</option>
+				                  <option value="FL">FL</option>
+				                  <option value="GA">GA</option>
+				                  <option value="HI">HI</option>
+				                  <option value="ID">ID</option>
+				                  <option value="IL">IL</option>
+				                  <option value="IN">IN</option>
+				                  <option value="IA">IA</option>
+				                  <option value="KS">KS</option>
+				                  <option value="KY">KY</option>
+				                  <option value="LA">LA</option>
+				                  <option value="ME">ME</option>
+				                  <option value="MD">MD</option>
+				                  <option value="MA">MA</option>
+				                  <option value="MI">MI</option>
+				                  <option value="MN">MN</option>
+				                  <option value="MS">MS</option>
+				                  <option value="MO">MO</option>
+				                  <option value="MT">MT</option>
+				                  <option value="NE">NE</option>
+				                  <option value="NV">NV</option>
+				                  <option value="NH">NH</option>
+				                  <option value="NJ">NJ</option>
+				                  <option value="NM">NM</option>
+				                  <option value="NY">NY</option>
+				                  <option value="NC">NC</option>
+				                  <option value="ND">ND</option>
+				                  <option value="OH">OH</option>
+				                  <option value="OK">OK</option>
+				                  <option value="OR">OR</option>
+				                  <option value="PA">PA</option>
+				                  <option value="RI">RI</option>
+				                  <option value="SC">SC</option>
+				                  <option value="SD">SD</option>
+				                  <option value="TN">TN</option>
+				                  <option value="TX">TX</option>
+				                  <option value="UT">UT</option>
+				                  <option value="VT">VT</option>
+				                  <option value="VA">VA</option>
+				                  <option value="WA">WA</option>
+				                  <option value="WV">WV</option>
+				                  <option value="WI">WI</option>
+				                  <option value="WY">WY</option>
+				                </select>
+		  					</td>
+		  				</tr>
+		  				<tr>
+		  					<th>
+		  						<h3>Credentials</h3>
+		  					</th>
+		  					<td>
+		  						<input type="text" class="form-control" ng-model="currentUser.new.username" placeholder="Username" ng-class="{'valid-change': formChange('username') }">
+		  					</td>
+		  					<td>
+		  						<input type="email" class="form-control" placeholder="Email Address" ng-model="currentUser.new.email" ng-class="{'valid-change': formChange('email') }">
+		  					</td>
+		  				</tr>
+		  				<tr>
+		  					<th>
+		  						<h3>Password</h3>
+		  					</th>
+		  					<td>
+		  						<input type="password" placeholder="New Password" class="form-control" ng-class="{'valid-change': currentUser.new.password_orig &amp;&amp; currentUser.new.password_orig != '' }" ng-model="currentUser.new.password_orig">
+		  					</td>
+		  					<td>
+		  						<input type="password" placeholder="Confirm Password" class="form-control" ng-class="{'valid-change': currentUser.new.password_confirm &amp;&amp; currentUser.new.password_confirm != '' }" ng-model="currentUser.new.password_confirm">
+		  					</td>
+		  				</tr>
+
+
+		  			</tbody>
+		  		</table>
+		  	</div>
+		  </div>
+		  <div class="modal-footer">
+		  	<button type="button" ng-disabled="checkChanges()" style="border:none;" ng-click="confirmChanges()" class="btn-larger">Save</button>
+		  	<button type="button" style="border:none;" ng-click="closeSettings()" class="btn-larger">Cancel</button>
+		  </div>
+		</div>
+	  </div>
 
 	  <footer style="/*position:absolute;bottom:0;*/">
     	<div class="container">

@@ -179,6 +179,18 @@ app.post('/api/parties', function(req, res) {
 	
 });
 
+app.post('/api/parties/remove', function(req, res) {
+	var party = req.body.party;
+	var user = req.session.user;
+
+	db.removeParty(user, party, function(removed) {
+		if (removed)
+			res.json({'success': true});
+		else
+			res.json({'success': false});
+	});
+});
+
 app.post('/api/partycode', function(req, res) {
 	var code = req.body.code;
 
