@@ -169,7 +169,16 @@ app.post('/api/register', function(req, res) {
 	});
 });
 
-app.post('/api/parties', function(req, res) {
+app.get('/api/party/:code', function(req, res) {
+	var code = req.params.code;
+
+	db.partyByCode(code, function(party) {
+		res.json(party);
+	});
+	
+});
+
+app.post('/api/party/location', function(req, res) {
 	var location = req.body.location;
 	var filters = req.body.filters;
 
@@ -179,7 +188,20 @@ app.post('/api/parties', function(req, res) {
 	
 });
 
-app.post('/api/parties/remove', function(req, res) {
+app.post('/api/party/create', function(req, res) {
+	var user = req.session.user;
+	var props = JSON.parse(req.body.properties);
+	var reg_code = randomString(8, '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+	console.dir(props);
+	props.reg_code = reg_code;
+	props.owner = ObjectId(user._id);
+
+	db.createParty(user, props, function(party) {
+		res.json(party);
+	});
+});
+
+app.post('/api/party/remove', function(req, res) {
 	var party = req.body.party;
 	var user = req.session.user;
 
@@ -191,14 +213,7 @@ app.post('/api/parties/remove', function(req, res) {
 	});
 });
 
-app.post('/api/partycode', function(req, res) {
-	var code = req.body.code;
 
-	db.partyByCode(code, function(party) {
-		res.json(party);
-	});
-	
-});
 
 app.post('/api/rating', function(req, res) {
 	var user = JSON.parse(req.body.user);
@@ -216,29 +231,12 @@ app.post('/api/rating', function(req, res) {
 	}
 });
 
-app.post('/api/create', function(req, res) {
-	var user = req.session.user;
-	var props = JSON.parse(req.body.properties);
-	var reg_code = randomString(8, '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-	console.dir(props);
-	props.reg_code = reg_code;
-	props.owner = ObjectId(user._id);
-
-	db.createParty(user, props, function(party) {
-		res.json(party);
-	});
-});
-
-// app.get('*', function(req, res) {
-// 	res.sendFile(__dirname + "/assets/templates/404.html");
-// });
-
 app.use(function(req, res, next) {
   res.status(404).sendFile(__dirname + "/assets/templates/404.html");
 });
 
 
-// Taken from stackoverflow, generates a random string
+// generates a random string
 function randomString(length, chars) {
     var result = '';
     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];

@@ -106,7 +106,7 @@ typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, fil
     
   // originally filter by current city of user
 
-    partyFactory.post('/api/parties', {'location': $scope.location.city}).then(function(data) {
+    partyFactory.post('/api/party/location', {'location': $scope.location.city}).then(function(data) {
       $scope.parties = [];
       $.each(data, function(index, party) {
         // Find rating of each initial party that shows when a user logs in
@@ -174,7 +174,7 @@ typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, fil
 
     $scope.parties = [];
     clearMarkers();
-    partyFactory.post('/api/parties', {'filters': filData, 'location': locData}).then(function(data) {
+    partyFactory.post('/api/party/location', {'filters': filData, 'location': locData}).then(function(data) {
       
       $.each(data, function(index, value) {
         var address = value.location.street + ", " + value.location.city + ", " + value.location.zip_code;

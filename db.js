@@ -114,13 +114,21 @@ function getUser(field, value, callback) {
 		
 		schemas.User.findOne({'username': value}).lean().exec(function(err, user) {
 			if (err) throw err;
-			schemas.Party.find({'owner': user._id}).lean().exec(function(err1, parties) {
-				if (err1) throw err1;
-				// Add the user's parties to its properties
-				user.waves = parties;
-				// Return callback with matched user
+
+			if (user) {
+				schemas.Party.find({'owner': user._id}).lean().exec(function(err1, parties) {
+					if (err1) throw err1;
+					// Add the user's parties to its properties
+					user.waves = parties;
+					// Return callback with matched user
+					return callback(user);
+				});
+			} else {
 				return callback(user);
-			});
+			}
+
+			
+			
 			
 		});
 	} else {

@@ -541,17 +541,25 @@ div#myModal {
 	}
 }
 
-// Color for form validation errors
-.valid-err {
-	border-color: red;
-	outline: 0;
-}
 
 // Color for form changes
 .valid-change, .valid-change:focus {
 	border-color: #d8c817;
 	outline: 0;
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px #d8c817;
+}
+
+// Color for form validation errors
+.valid-err, .valid-err:focus {
+	border-color: red;
+	outline: 0;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px red;
+}
+
+
+// For pencil editing on profile settings
+.pencil-edit {
+	color: #d8c817;
 }
 
 

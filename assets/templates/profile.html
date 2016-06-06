@@ -172,7 +172,7 @@
 		  	<div class="manage-header">
 		  		<h3 class="pull-left" style="margin-bottom:30px;">Manage Waves</h3>
 		  		<div style="padding-top:20px;text-align:right;">
-		  			<a href ng-click="edit=!edit"><i class="fa fa-pencil fa-2" style="font-size: 20px;" aria-hidden="true"></i></a>
+		  			<a href  ng-click="edit=!edit"><i class="fa fa-pencil fa-2" ng-class="{'pencil-edit': edit }" style="font-size: 20px;" aria-hidden="true"></i></a>
 		  		</div>
 		  		
 		  	</div>
@@ -257,10 +257,10 @@
 		  						<h3>Credentials</h3>
 		  					</th>
 		  					<td>
-		  						<input type="text" class="form-control" ng-model="currentUser.new.username" placeholder="Username" ng-class="{'valid-change': formChange('username') }">
+		  						<input type="text" class="form-control" ng-model="currentUser.new.username" ng-change="checkField('username', currentUser.new.username)" placeholder="Username" ng-class="{ 'valid-err': credChanged.username==true || currentUser.new.username === '', 'valid-change': formChange('username') }">
 		  					</td>
 		  					<td>
-		  						<input type="email" class="form-control" placeholder="Email Address" ng-model="currentUser.new.email" ng-class="{'valid-change': formChange('email') }">
+		  						<input type="email" class="form-control" placeholder="Email Address" ng-change="checkField('email', currentUser.new.email)" ng-model="currentUser.new.email" ng-class="{ 'valid-err': credChanged.email==true || currentUser.new.email === '', 'valid-change': formChange('email') }">
 		  					</td>
 		  				</tr>
 		  				<tr>

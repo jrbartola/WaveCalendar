@@ -10,6 +10,12 @@ waveRider.factory('partyCodeFactory', function($http) {
         return $http.post(url, data).then(function(resp) {
           return resp.data;
         });
+    },
+
+    get: function(url) {
+      return $http.get(url).then(function(resp) {
+        return resp.data;
+      });
     }
   }
 });
@@ -47,7 +53,7 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, par
   $scope.getParty = function() {
     
 
-    partyCodeFactory.post('/api/partycode', {'code': $scope.code}).then(function(data) {
+    partyCodeFactory.get('/api/party/' + $scope.code).then(function(data) {
       // Set current party
     	$scope.party = data;
 
@@ -227,7 +233,7 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, par
       'filters': $scope.filterAdd};
 
     console.dir(props);
-    $.post('/api/create', {'properties': JSON.stringify(props)}, function(resp) {
+    $.post('/api/party/create', {'properties': JSON.stringify(props)}, function(resp) {
       if (resp) {
         swal({title: "All Done!",
           text: "Your party has been created.", 

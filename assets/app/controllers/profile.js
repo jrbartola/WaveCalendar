@@ -24,6 +24,8 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
 	$scope.admin = false;
 	$scope.edit = false;
 	$scope.changed = false;
+	$scope.credChanged = {'username': false, 'email': false};
+
 	$scope.settingsModal = {'display': 'none'};
 	var username = window.location.pathname.substring(7);
 
@@ -82,7 +84,7 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     }
 
     $scope.removeParty = function(party) {
-    	$.post('/api/parties/remove', {'party': party}, function(resp) {
+    	$.post('/api/party/remove', {'party': party}, function(resp) {
     		dataService.updateCurrentUser(function(cu) {
 				$scope.$apply(function() {
 					$rootScope.currentUser = cu;
@@ -128,6 +130,25 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     		cu.email === cu.new.email && (!cu.new.password_orig || 
     			cu.new.password_orig === '') && (!cu.new.password_confirm ||
     			cu.new.password_confirm === ''));
+    }
+
+    $scope.checkField = function(field, value) {
+    	// Eventually add support for the location.city field...
+    	$.post('/api/users', {'field': field, 'value': value}, function(resp) {
+    		//console.log("resp was " + resp);
+    		$scope.$apply(function() {
+
+    			if (resp === null || $rootScope.currentUser[field] === $rootScope.currentUser.new[field]) {
+    				$scope.credChanged[field] = false;
+    			} else {
+    				$scope.credChanged[field] = true;
+    			}
+    			
+    			
+    		});
+    		
+    	});
+
     }
 });
 
