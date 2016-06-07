@@ -200,7 +200,7 @@ p {
 	border-radius: 0px;
 	.navbar-brand {
 		font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
-		font-size: 3em;
+		font-size: 3.1rem;
 		color: lighten($primary-color, 30%);
 		transition: color 0.5s;
         &:hover,
@@ -213,15 +213,26 @@ p {
 		border-color: fade(white, 2%);
 	}
 	.navbar-toggle {
+		transition: color 0.3s ease-in, background-color 0.3s ease-in;
 		background-color: $primary-color;
 		border-color: $primary-color;
 		.icon-bar {
+			transition: background-color 0.3s ease-in;
 			background-color: white;
 		}
-		&:hover,
 		&:focus {
-			background-color: $secondary-color;
+			background-color: $primary-color;
+			color: white;
 		}
+		&:hover,
+		&:active {
+			.icon-bar {
+				background-color: $primary-color;
+			}
+			background-color: $secondary-color;
+			color: $primary-color;
+		}
+
 	}
     .nav {
     	li {
@@ -656,7 +667,7 @@ div#myModal {
 .prof-ownerwave {
 	// Add a bottom border after each repeated div
 	border-bottom: #ddd solid 1px;
-	display: flex;
+	//display: flex;
 	height: 0px;
 	transition: background-color 500ms;
 

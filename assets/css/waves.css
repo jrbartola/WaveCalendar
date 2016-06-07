@@ -136,7 +136,7 @@ p {
   border-radius: 0px; }
   .navbar-default .navbar-brand {
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
-    font-size: 3em;
+    font-size: 3.1rem;
     color: #99ccff;
     transition: color 0.5s; }
     .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:active {
@@ -144,12 +144,20 @@ p {
   .navbar-default .navbar-collapse {
     border-color: fade(white, 2%); }
   .navbar-default .navbar-toggle {
+    transition: color 0.3s ease-in, background-color 0.3s ease-in;
     background-color: #0080ff;
     border-color: #0080ff; }
     .navbar-default .navbar-toggle .icon-bar {
+      transition: background-color 0.3s ease-in;
       background-color: white; }
-    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-      background-color: white; }
+    .navbar-default .navbar-toggle:focus {
+      background-color: #0080ff;
+      color: white; }
+    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:active {
+      background-color: white;
+      color: #0080ff; }
+      .navbar-default .navbar-toggle:hover .icon-bar, .navbar-default .navbar-toggle:active .icon-bar {
+        background-color: #0080ff; }
   .navbar-default .nav li ul:hover {
     background-color: white; }
   .navbar-default .nav li a {
@@ -475,7 +483,6 @@ div#myModal {
 
 .prof-ownerwave {
   border-bottom: #ddd solid 1px;
-  display: flex;
   height: 0px;
   transition: background-color 500ms; }
   .prof-ownerwave:hover {

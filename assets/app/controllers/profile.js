@@ -115,6 +115,7 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     $scope.closeSettings = function() {
     	$scope.settingsModal= {'display': 'none'};
     	$scope.party = $scope.newParty = {};
+    	$scope.edit = false;
     	$('body').removeClass('modal-open');
     }
 
@@ -140,10 +141,10 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     	}
     }
 
-    $scope.confirmChanges = function(section) {
+    $scope.confirmChanges = function(wavez) {
 
     	// Saves changed user account information
-    	if (section === 'profile') {
+    	if (wavez === false) {
 
     		swal({title: 'Are you sure?',
     		  text: 'Type your password to confirm these changes',
@@ -172,7 +173,7 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     		});
 
     	// Saves a paticular wave's edited information
-    	} else if (section === 'waves') {
+    	} else if (wavez === true) {
 
     		swal({title: 'Are you sure?',
     		  text: 'Type your password to confirm these changes',
