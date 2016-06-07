@@ -243,9 +243,12 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
 	    				
 	    			});
     			});
-		
     		});
+    }
 
+    $scope.checkWaveEdit = function(field) {
+    	// Return true if the user has modified the fields
+    	return $scope.newParty[field] != $scope.party[field];
     }
 
 });
