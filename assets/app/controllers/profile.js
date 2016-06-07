@@ -105,6 +105,8 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     	$timeout(function() {
     		try {
     			$('#slick-settings').slick({slidesToShow: 3});
+    		} catch(err) {
+    			// Do nothing with this error
     		}
     	}, 80);
     	
@@ -127,6 +129,7 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     }
 
     // Function that monitors account settings changes
+    // Returns true if the field passed in has been changed
     $scope.formChange = function(field) {
     	if (!$rootScope.currentUser)
     		return false;
@@ -137,13 +140,12 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     	}
     }
 
-    $scope.confirmChanges = function() {
-    	swal({title: 'Are you sure?',
-    		  text: 'Type your password to confirm these changes',
-    		  type: 'input',
-    		  showCancelButton: true,
-    		  closeOnConfirm: false
-    		}, function(pass) {
+    $scope.confirmChanges = function(section) {
+    	var swalCallback;
+
+    	if (section === 'profile') {
+    		
+    		swalCallback = function(pass) {
     			if (pass === '' || pass != $rootScope.currentUser.password) {
     				swal.showInputError("Incorrect password");
     				return false;
@@ -163,21 +165,61 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
 	    			});
     			});
 		
-    		});
+    		}
+    	} else if (section === 'waves') {
+    		swalCallback = function(pass) {
+    			if (pass === '' || pass != $rootScope.currentUser.password) {
+    				swal.showInputError("Incorrect password");
+    				return false;
+    			}
+
+    			// TODO: UPDATE PARTY FUNCTION
+    			$.post('/api/party/update', {'user_id': $rootScope.currentUser._id, 
+    				'props': JSON.stringify($rootScope.currentUser.new)}, function(response) {
+    				 console.log(response);
+
+    				 swal({title: "All done!",
+    				  text: "Your changes have been saved",
+    				  type: "success",
+	    			}, function() {
+    					window.location.href = "/profile"
+						console.log("changed url");
+	    				
+	    			});
+    			});
+		
+    		}
+    	}
+
+    	// Execute the sweetalert after we situate the callback
+    	swal({title: 'Are you sure?',
+    		  text: 'Type your password to confirm these changes',
+    		  type: 'input',
+    		  showCancelButton: true,
+    		  closeOnConfirm: false
+    		}, swalCallback(pass));
+    	
     }
 
-    $scope.checkChanges = function() {
-    	var cu = $rootScope.currentUser;
-    	if (!cu)
-    		return true;
-    	return (cu.location.city === cu.new.location.city &&
-    		cu.location.state === cu.new.location.state &&
-    		cu.username === cu.new.username &&
-    		cu.email === cu.new.email && (!cu.new.password_orig || 
-    			cu.new.password_orig === '') && (!cu.new.password_confirm ||
-    			cu.new.password_confirm === ''));
+    // Returns true if the data hasn't been changed
+    $scope.checkChanges = function(section) {
+    	if (section === 'profile') {
+    		var cu = $rootScope.currentUser;
+	    	if (!cu)
+	    		return true;
+	    	return (cu.location.city === cu.new.location.city &&
+	    		cu.location.state === cu.new.location.state &&
+	    		cu.username === cu.new.username &&
+	    		cu.email === cu.new.email && (!cu.new.password_orig || 
+	    			cu.new.password_orig === '') && (!cu.new.password_confirm ||
+	    			cu.new.password_confirm === ''));
+    	} else if (section === 'waves') {
+    		// TODO:
+    	}
+    	
     }
 
+    // Makes sure no two users have the same email/username
     $scope.checkField = function(field, value) {
     	// Eventually add support for the location.city field...
     	$.post('/api/users', {'field': field, 'value': value}, function(resp) {
@@ -205,14 +247,14 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     	$scope.newParty = {'title': p.title, 'invite_only': p.invite_only, 'filters': p.filters,
           'ratio': {'girls': p.ratio.girls, 'guys': p.ratio.guys}};
 
-    	$scope.party.noRatio = wave.ratio.girls == 0 && wave.ratio.guys == 0;
+    	$scope.party.noRatio = $scope.newParty.noRatio = wave.ratio.girls == 0 && wave.ratio.guys == 0;
     }
 
     $scope.showEditing = function() {
     	// Toggles the editing in settings
     	$scope.edit = !$scope.edit;
     	// Reset the party scope variable
-    	$scope.party = {};
+    	$scope.party = $scope.newParty = {};
 
     }
 
@@ -254,7 +296,23 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
 
     $scope.checkWaveEdit = function(field) {
     	// Return true if the user has modified the fields
-    	return $scope.newParty[field] != $scope.party[field];
+    	var p = $scope.party, np = $scope.newParty;
+
+    	if (!p || !np || !p.filters || !np.filters || !p.ratio || !np.ratio)
+    		return false;
+
+    	
+
+    	if (field === 'filters') {
+    		return p.filters.sort().toString() != np.filters.sort().toString();
+    	} else if (field === 'ratio') {
+    		return p.ratio.girls != np.ratio.girls || p.ratio.guys != np.ratio.guys || p.noRatio != np.noRatio;
+    	}
+    	
+    	// Else check if the other fields were changed from their original value
+    	return np[field] != p[field];
+
+
     }
 
 });

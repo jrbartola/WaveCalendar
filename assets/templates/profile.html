@@ -289,7 +289,7 @@
 		                <h4>Title</h4>
 		              </th>
 		              <td colspan="2">
-		                <input ng-disabled="!partyExists()" ng-model="newParty.title" title="Party Title" class="form-control" type="text">
+		                <input ng-class="{'valid-change': checkWaveEdit('title') }" ng-disabled="!partyExists()" ng-model="newParty.title" title="Party Title" class="form-control" type="text">
 		              </td>
 		              <td>
 		              	<a href ng-click="scrapWave(party)"><i class="fa fa-trash fa-2 trash-wave" style="font-size: 20px;" aria-hidden="true"></i></a>
@@ -305,13 +305,13 @@
 		              </th>
 		              <td colspan="2" style="border-top: 1px solid #ddd;">
 		                <label>
-		                  <input ng-disabled="!partyExists()" type="radio" ng-model="newParty.invite_only" id="invite-only" ng-value="true">Invite-Only
+		                  <input ng-class="{'valid-change': checkWaveEdit('invite_only') }" ng-disabled="!partyExists()" type="radio" ng-model="newParty.invite_only" id="invite-only" ng-value="true">Invite-Only
 		                </label>
 		                
 		              </td>
 		              <td colspan="1" style="border-top: 1px solid #ddd;">
 		                <label>
-		                  <input ng-disabled="!partyExists()" type="radio" ng-model="newParty.invite_only" id="invite-open" ng-value="false">Open-Invite
+		                  <input ng-class="{'valid-change': checkWaveEdit('invite_only') }" ng-disabled="!partyExists()" type="radio" ng-model="newParty.invite_only" id="invite-open" ng-value="false">Open-Invite
 		                </label>
 		              </td>
 		            </tr>
@@ -320,12 +320,12 @@
 		              	<h4>Filters</h4>
 		              </th>
 		              <td colspan="2">
-		              	  <select ng-disabled="!partyExists()" multiple ng-multiple="true" class="form-control" ng-model="newParty.filters" >
+		              	  <select ng-disabled="!partyExists()" multiple ng-multiple="true" class="form-control" ng-model="newParty.filters" ng-class="{'valid-change': checkWaveEdit('filters') }">
 		              	  	<option ng-repeat="filter in filters" value="{{ filter.data }}">{{ filter.data }}</option>
 		              	  </select>
 					  </td>
 					  <td colspan="1">
-						<ul style="height:75px;overflow-y:scroll;" class="selected-items flex-col">
+						<ul style="height:75px;overflow-y:scroll;" ng-class="{'valid-change': checkWaveEdit('filters') }"class="selected-items flex-col">
 							<li style="padding:0px" ng-repeat="f in newParty.filters">{{ f }}</li>
 						</ul>
 					  </td>
@@ -335,17 +335,17 @@
 		              	<h4>Ratio</h4>
 		              </th>
 		              <td colspan="1">
-		              	<input ng-disabled="!partyExists()" ng-init="party.noRatio=true" ng-checked="newParty.ratio.girls == 0 &amp;&amp; newParty.ratio.guys == 0" ng-model="party.noRatio" type="checkbox"> None
+		              	<input ng-disabled="!partyExists()" ng-init="party.noRatio=true" ng-checked="newParty.ratio.girls == 0 &amp;&amp; newParty.ratio.guys == 0" ng-class="{'valid-change': checkWaveEdit('ratio') }" ng-model="newParty.noRatio" type="checkbox"> None
 		              </td>
 		              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
 		              <td colspan="1" style="width:30%;">
 		              	<label for="ratio-girls">Girls</label>
-		              	<input ng-disabled="!partyExists() || party.noRatio" ng-model="newParty.ratio.girls" id="ratio-girls" type="number" class="form-control" min="1" value="1">
+		              	<input ng-disabled="!partyExists() || newParty.noRatio" ng-model="newParty.ratio.girls" ng-class="{'valid-change': checkWaveEdit('ratio') }" id="ratio-girls" type="number" class="form-control" min="1" value="1">
 		              </td>
 		              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
 		              <td colspan="1" style="width:30%;">
 		              	<label for="ratio-guys">Guys</label>
-		              	<input ng-disabled="!partyExists() || party.noRatio" ng-model="newParty.ratio.guys" id="ratio-guys" type="number" class="form-control" min="1" value="1">
+		              	<input ng-disabled="!partyExists() || newParty.noRatio" ng-model="newParty.ratio.guys" ng-class="{'valid-change': checkWaveEdit('ratio') }" id="ratio-guys" type="number" class="form-control" min="1" value="1">
 		              </td>
 		            </tr>
 		          </tbody>
@@ -353,7 +353,8 @@
 		  	</div>
 		  </div>
 		  <div class="modal-footer">
-		  	<button type="button" ng-disabled="checkChanges()" style="border:none;" ng-click="confirmChanges()" class="btn-larger">Save</button>
+		  	<button type="button" ng-disabled="checkChanges('profile')" style="border:none;" ng-click="confirmChanges('profile')" class="btn-larger">Save</button>
+		  	<button type="button" ng-disabled="checkChanges('waves')" style="border:none;" ng-click="confirmChanges('waves')" class="btn-larger">Save</button>
 		  	<button type="button" style="border:none;" ng-click="closeSettings()" class="btn-larger">Cancel</button>
 		  </div>
 		</div>
