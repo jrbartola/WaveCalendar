@@ -255,6 +255,14 @@ p {
     color: #0080ff;
     background-color: white; }
 
+.btn-cancel {
+  color: #0080ff;
+  background-color: white;
+  border-color: #0080ff; }
+  .btn-cancel:hover, .btn-cancel:active, .btn-cancel:focus {
+    color: #0080ff;
+    background-color: #e0e0e0; }
+
 input[type=radio] {
   transform: scale(1.5);
   margin-right: 15px; }

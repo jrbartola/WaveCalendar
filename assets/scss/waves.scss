@@ -318,6 +318,19 @@ p {
 	font-size: 16px;
 }
 
+.btn-cancel {
+	color: $primary-color;
+	background-color: $secondary-color; // aka white
+	border-color: $primary-color;
+	&:hover,
+	&:active,
+	&:focus {
+		color: $primary-color;
+		background-color: darken(white, 12%);
+
+	}
+}
+
 // Radio Buttons
 input[type=radio] {
 	transform: scale(1.5);
