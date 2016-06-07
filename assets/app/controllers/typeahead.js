@@ -231,9 +231,11 @@ typeAhead.directive('typeahead', function($timeout) {
         scope.selected = true;
         
       };
+      
+      // A location of 0 tells the controller to search within current city
+      scope.location = 0;
       // Set location box dialogue
-      scope.location = "Within my city";
-      $('#loc-dropdown').html(scope.location + ' <span class="caret"></span>');
+      $('#loc-dropdown').html("Within my city" + ' <span class="caret"></span>');
 
       scope.chosen = [];
       scope.current = 0;

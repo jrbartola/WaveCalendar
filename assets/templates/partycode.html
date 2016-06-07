@@ -41,7 +41,7 @@
 		  <p>{{ readableDate(party.time.end) }}</p>
 		</div>
 		<div class="text-center btn-result">
-		  <button type="button" ng-disabled="party.status == 'over'" ng-click="onAttend({wave: party.reg_code})" class="btn btn-larger">Attend</button>
+		  <button type="button" ng-disabled="party.status == 'over'" ng-click="onAttend({wave: party})" class="btn btn-larger">Attend</button>
 		</div>
 	</div>
 	<div class="flex-adjust flex-sp-bt search-half">

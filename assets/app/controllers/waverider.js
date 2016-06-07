@@ -92,7 +92,16 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, par
 
   $scope.attendParty = function(wave) {
 
-    $.post('/api/users', {'party': wave}, function(response) {
+    if (wave.status === 'over') {
+      swal({title: "Uh Oh!",
+        text: "We're sorry. This party has ended.",
+        type: "error",
+        confirmButtonText: "Okay"});
+
+      return;
+    }
+
+    $.post('/api/users', {'party': wave.reg_code}, function(response) {
       // IF the user isn't already going to the party
       if (response) {
         var props = {title: "You're Going!",
