@@ -103,13 +103,16 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     	$scope.settingsModal = {'display': 'block'};
     	$('body').addClass('modal-open');
     	$timeout(function() {
-    		$('#slick-settings').slick({slidesToShow: 3});
+    		try {
+    			$('#slick-settings').slick({slidesToShow: 3});
+    		}
     	}, 80);
     	
     }
 
     $scope.closeSettings = function() {
     	$scope.settingsModal= {'display': 'none'};
+    	$scope.party = $scope.newParty = {};
     	$('body').removeClass('modal-open');
     }
 
@@ -206,12 +209,15 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     }
 
     $scope.showEditing = function() {
+    	// Toggles the editing in settings
     	$scope.edit = !$scope.edit;
+    	// Reset the party scope variable
     	$scope.party = {};
 
     }
 
     $scope.partyExists = function() {
+    	// Returns true if the party exists
     	return !$.isEmptyObject($scope.party);
     }
 
