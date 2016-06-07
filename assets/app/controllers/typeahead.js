@@ -20,7 +20,21 @@ var typeAhead = angular.module('waveCal');
 //   "num_logins": 0
 // }
 
+typeAhead.animation('.wave', [function() {
+  return {
+    enter: function(element, callback) {
 
+      $(element).animate({height: '155px'}, 700);
+
+    },
+
+    leave: function(element, callback) {
+      $(element).animate({height: '0px'}, 500, function() {
+        $(element).remove();
+      });
+    }
+  }
+}]);
 
 
 // Factory that retrieves stored filter objects from API
@@ -317,6 +331,11 @@ typeAhead.directive('wavefilter', function($timeout, $rootScope) {
       }
 
       scope.centerMap = function(party) {
+        // Timeout to prevent reaching query limit error
+        $('.media-left.media-middle').css('pointer-events', 'none');
+        $timeout(function() {
+          $('.media-left.media-middle').css('pointer-events', 'auto');
+        }, 1500);
         var address = party.location.street + ", " + party.location.city + ", " + party.location.zip_code;
         setCenter(address, party.title);
       }

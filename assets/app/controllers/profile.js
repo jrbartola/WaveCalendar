@@ -17,32 +17,6 @@ profile.animation('.prof-ownerwave', [function() {
   }
 }]);
 
-// Animation that controls the display of credentials/wave editing panel
-// profile.animation('.form-adjust', [function() {
-//   return {
-//   	addClass: function(element, className, callback) {
-//   		$(element).animate({height: '0px'}, 700, function() {
-//   			$(element).css('display','none');
-//   		});
-//   	  	console.log('added');
-//   	  	console.log(className);
-
-//   	},
-
-//   	removeClass: function(element, className, callback) {
-// 		$(element).animate({height: '205px'}, 700, function() {
-// 			$(element).css('display','block');
-// 		});
-// 		console.log('remove');
-// 		console.log(className);
-//   	},
-
-//   	setClass: function(element, className, callback) {
-//   		console.log("setting " + className);
-//   	}
-//   }
-// }]);
-
 
 profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataService) {
 
