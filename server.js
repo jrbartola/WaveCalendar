@@ -212,6 +212,17 @@ app.post('/api/party/create', function(req, res) {
 	});
 });
 
+app.post('/api/party/update', function(req, res) {
+	var user = req.session.user;
+	var reg_code = req.body.reg_code;
+	var props = JSON.parse(req.body.props);
+
+	db.updateParty(user, reg_code, props, function(updated) {
+		res.json(updated);
+	});
+	
+});
+
 app.post('/api/party/remove', function(req, res) {
 	var reg_code = req.body.reg_code;
 	var user = req.session.user;

@@ -322,6 +322,9 @@ function updatePartyStatuses() {
 	  {'$gt': curDate}} ]}, { '$set': {'status': 'ongoing'}}, {multi: true}).exec();
 }
 
+function updateParty(user, reg_code, props, callback) {
+	
+}
 
 
 module.exports.addFilter = addFilter;
