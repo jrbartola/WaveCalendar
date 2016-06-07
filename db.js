@@ -161,6 +161,14 @@ function createUser(props, callback) {
 	
 }
 
+function updateUser(id, props, callback) {
+	schemas.User.findByIdAndUpdate(id, {'$set': {'location': props.location, 
+	  'username': props.username, 'email': props.email}}, {'new': true}, function(err, updated) {
+
+	  	return callback(updated);
+	});
+}
+
 function loginUser(email, password, callback) {
 	// TODO: Replace plaintext password with bcrypt or some other module (that works :( )
 	schemas.User.findOne({'email': email, 'password': password}, function(err, user) {
@@ -275,8 +283,8 @@ function createParty(user, props, callback) {
 	});
 }
 
-function removeParty(user, party, callback) {
-	schemas.Party.findOne({'owner': user_.id, 'reg_code': party.reg_code}, function(err, toremove) {
+function removeParty(user, reg_code, callback) {
+	schemas.Party.findOne({'owner': user._id, 'reg_code': reg_code}, function(err, toremove) {
 		if (toremove != null) {
 			toremove.remove();
 			return callback(true);
@@ -324,6 +332,7 @@ module.exports.partyByCode = partyByCode;
 module.exports.addParty = addParty;
 module.exports.getUser = getUser;
 module.exports.createUser = createUser;
+module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
 module.exports.updateLogins = updateLogins;
 module.exports.findRating = findRating;

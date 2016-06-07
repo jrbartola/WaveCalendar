@@ -17,6 +17,32 @@ profile.animation('.prof-ownerwave', [function() {
   }
 }]);
 
+// Animation that controls the display of credentials/wave editing panel
+// profile.animation('.form-adjust', [function() {
+//   return {
+//   	addClass: function(element, className, callback) {
+//   		$(element).animate({height: '0px'}, 700, function() {
+//   			$(element).css('display','none');
+//   		});
+//   	  	console.log('added');
+//   	  	console.log(className);
+
+//   	},
+
+//   	removeClass: function(element, className, callback) {
+// 		$(element).animate({height: '205px'}, 700, function() {
+// 			$(element).css('display','block');
+// 		});
+// 		console.log('remove');
+// 		console.log(className);
+//   	},
+
+//   	setClass: function(element, className, callback) {
+//   		console.log("setting " + className);
+//   	}
+//   }
+// }]);
+
 
 profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataService) {
 
@@ -50,6 +76,10 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
 		});
 		
 	});
+
+	$.get('/api/filters', function(f) {
+    	$scope.filters = f;
+    });
 
 	$scope.readableDate = function(datestring) {
         // Convert date from nonsense into a readable string
@@ -116,7 +146,20 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     				return false;
     			}
 
-    			swal("All done!", "Your changes have been saved", "success");
+    			$.post('/api/user/update', {'user_id': $rootScope.currentUser._id, 
+    				'props': JSON.stringify($rootScope.currentUser.new)}, function(response) {
+    				 console.log(response);
+
+    				 swal({title: "All done!",
+    				  text: "Your changes have been saved",
+    				  type: "success",
+	    			}, function() {
+    					window.location.href = "/profile"
+						console.log("changed url");
+	    				
+	    			});
+    			});
+		
     		});
     }
 
@@ -150,6 +193,61 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     	});
 
     }
+
+    $scope.editWave = function(wave) {
+    	if ($scope.edit === false)
+    		return;	
+    	$scope.party = wave;
+    	var p = $scope.party;
+    	$scope.newParty = {'title': p.title, 'invite_only': p.invite_only, 'filters': p.filters,
+          'ratio': {'girls': p.ratio.girls, 'guys': p.ratio.guys}};
+
+    	$scope.party.noRatio = wave.ratio.girls == 0 && wave.ratio.guys == 0;
+    }
+
+    $scope.showEditing = function() {
+    	$scope.edit = !$scope.edit;
+    	$scope.party = {};
+
+    }
+
+    $scope.partyExists = function() {
+    	return !$.isEmptyObject($scope.party);
+    }
+
+    $scope.scrapWave = function(party) {
+    	if (!$scope.partyExists())
+    		return;
+
+    	swal({title: 'Are you sure you want to delete ' + $scope.party.title + '?',
+    		  text: 'This party will be erased from your list of created ' +
+    		  'waves. Type your password to confirm these changes',
+    		  type: 'input',
+    		  showCancelButton: true,
+    		  closeOnConfirm: false
+    		}, function(pass) {
+    			if (pass === '' || pass != $rootScope.currentUser.password) {
+    				swal.showInputError("Incorrect password");
+    				return false;
+    			}
+
+    			$.post('/api/party/remove', {'reg_code': party.reg_code}, function(resp) {
+    				console.log(resp);
+
+    				swal({title: "All done!",
+    				  text: "Your party has been removed from our database",
+    				  type: "success",
+	    			}, function() {
+    					window.location.href = "/profile"
+						console.log("changed url");
+	    				
+	    			});
+    			});
+		
+    		});
+
+    }
+
 });
 
 

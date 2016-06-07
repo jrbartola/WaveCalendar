@@ -556,11 +556,33 @@ div#myModal {
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px red;
 }
 
+.pencil {
+	
+	transition: all 0.3s ease-in-out;
+
+	&:hover, &:focus {
+		transform: scale(1.1);
+		color: #d8c817;
+	}
+}
 
 // For pencil editing on profile settings
 .pencil-edit {
-	color: #d8c817;
+	color: #d8b827;
 }
+
+// For trash can on profile settings
+.trash-wave {
+	
+	transition: all 0.3s ease-in-out;
+
+	&:hover, &:focus {
+		transform: scale(1.1);
+		color: #f12713;;
+	}
+	
+}
+
 
 
 
@@ -674,6 +696,45 @@ div#myModal {
 }
 
 .form-adjust {
+	transition: height 0.5s;
+	overflow-y: hidden;
+	height: 205px;
 	padding-top: 20px;
 	border-top: 1px solid #e5e5e5;
+}
+
+.form-adjust.ng-hide-add,
+.form-adjust.ng-hide-remove {
+	transition: height 0s ease-in;
+}
+
+.form-adjust.ng-hide-add-active,
+.form-adjust.ng-hide-remove-active {
+	transition: height 0.5s ease-in;
+}
+
+.form-adjust.ng-hide {
+	height: 0px;
+}
+
+.wave-edit {
+	transition: height 0.5s;
+	overflow-y: hidden;
+	height: 310px;
+	border-top: 1px solid #e5e5e5;
+	padding-top: 10px;
+}
+
+.wave-edit.ng-hide-add,
+.wave-edit.ng-hide-remove {
+	transition: height 0s ease-in;
+}
+
+.wave-edit.ng-hide-add-active,
+.wave-edit.ng-hide-remove-active {
+	transition: height 0.5s ease-in;
+}
+
+.wave-edit.ng-hide {
+	height: 0px;
 }

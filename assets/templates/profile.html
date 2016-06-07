@@ -172,13 +172,13 @@
 		  	<div class="manage-header">
 		  		<h3 class="pull-left" style="margin-bottom:30px;">Manage Waves</h3>
 		  		<div style="padding-top:20px;text-align:right;">
-		  			<a href  ng-click="edit=!edit"><i class="fa fa-pencil fa-2" ng-class="{'pencil-edit': edit }" style="font-size: 20px;" aria-hidden="true"></i></a>
+		  			<a href  ng-click="showEditing()"><i class="fa fa-pencil fa-2 pencil" ng-class="{'pencil-edit': edit }" style="font-size: 20px;" aria-hidden="true"></i></a>
 		  		</div>
 		  		
 		  	</div>
 		  	
 		  	<div id="slick-settings" slicker-none ng-model="slick.settings" class="prof-carousel flex-adjust flex-sp-ar" ng-class="{'def-carousel': currentUser.waves.length == 0 }">
-		  		<div ng-repeat="wave in currentUser.waves" class="wavelisting text-center owner-wave">
+		  		<div ng-repeat="wave in currentUser.waves" ng-click="editWave(wave)" class="wavelisting text-center owner-wave">
 	  				<h4 style="font-weight:600;">{{ wave.title }}</h4>
 	  				<img src="../img/WaveIcon.png" ng-hide="wave.status != 'planned'" class="prof-wavelisting" height="96" width="96">
 	  				<img src="../img/party_hat.png" ng-hide="wave.status != 'ongoing'" class="prof-wavelisting" height="96" width="96">
@@ -186,7 +186,7 @@
 	  			</div>
 		  	</div> <!-- End Slicker -->
 
-		  	<div class="form-adjust">
+		  	<div class="form-adjust" ng-show="edit==false">
 		  		<table class="table">
 		  			<tbody>
 		  				<tr>
@@ -258,9 +258,11 @@
 		  					</th>
 		  					<td>
 		  						<input type="text" class="form-control" ng-model="currentUser.new.username" ng-change="checkField('username', currentUser.new.username)" placeholder="Username" ng-class="{ 'valid-err': credChanged.username==true || currentUser.new.username === '', 'valid-change': formChange('username') }">
+		  						<span ng-show="credChanged.username==true" style="color:red;padding-top:3px;">Username taken</span>
 		  					</td>
 		  					<td>
 		  						<input type="email" class="form-control" placeholder="Email Address" ng-change="checkField('email', currentUser.new.email)" ng-model="currentUser.new.email" ng-class="{ 'valid-err': credChanged.email==true || currentUser.new.email === '', 'valid-change': formChange('email') }">
+		  						<span ng-show="credChanged.email==true" style="color:red;">Email taken</span>
 		  					</td>
 		  				</tr>
 		  				<tr>
@@ -277,6 +279,76 @@
 
 
 		  			</tbody>
+		  		</table>
+		  	</div>
+		  	<div class="wave-edit" ng-hide="edit==false">
+		  		<table class="table">
+		  		  <tbody>
+		            <tr>
+		              <th scope="row">
+		                <h4>Title</h4>
+		              </th>
+		              <td colspan="2">
+		                <input ng-disabled="!partyExists()" ng-model="newParty.title" title="Party Title" class="form-control" type="text">
+		              </td>
+		              <td>
+		              	<a href ng-click="scrapWave(party)"><i class="fa fa-trash fa-2 trash-wave" style="font-size: 20px;" aria-hidden="true"></i></a>
+		              </td>
+		            </tr>
+		          </tbody>
+		      	</table>
+		      	<table class="table">
+		          <tbody>
+		            <tr ng-init="party.invite=false" title="Invite-only parties won't show up on the main dashboard!">
+		              <th colspan="1" style="border-top: 1px solid #ddd;" scope="row">
+		                <h4>Invite Status</h4>
+		              </th>
+		              <td colspan="2" style="border-top: 1px solid #ddd;">
+		                <label>
+		                  <input ng-disabled="!partyExists()" type="radio" ng-model="newParty.invite_only" id="invite-only" ng-value="true">Invite-Only
+		                </label>
+		                
+		              </td>
+		              <td colspan="1" style="border-top: 1px solid #ddd;">
+		                <label>
+		                  <input ng-disabled="!partyExists()" type="radio" ng-model="newParty.invite_only" id="invite-open" ng-value="false">Open-Invite
+		                </label>
+		              </td>
+		            </tr>
+		            <tr title="{{ checkInvite() }}">
+		              <th colspan="1">
+		              	<h4>Filters</h4>
+		              </th>
+		              <td colspan="2">
+		              	  <select ng-disabled="!partyExists()" multiple ng-multiple="true" class="form-control" ng-model="newParty.filters" >
+		              	  	<option ng-repeat="filter in filters" value="{{ filter.data }}">{{ filter.data }}</option>
+		              	  </select>
+					  </td>
+					  <td colspan="1">
+						<ul style="height:75px;overflow-y:scroll;" class="selected-items flex-col">
+							<li style="padding:0px" ng-repeat="f in newParty.filters">{{ f }}</li>
+						</ul>
+					  </td>
+		            </tr>
+		            <tr>
+		              <th colspan="1">
+		              	<h4>Ratio</h4>
+		              </th>
+		              <td colspan="1">
+		              	<input ng-disabled="!partyExists()" ng-init="party.noRatio=true" ng-checked="newParty.ratio.girls == 0 &amp;&amp; newParty.ratio.guys == 0" ng-model="party.noRatio" type="checkbox"> None
+		              </td>
+		              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
+		              <td colspan="1" style="width:30%;">
+		              	<label for="ratio-girls">Girls</label>
+		              	<input ng-disabled="!partyExists() || party.noRatio" ng-model="newParty.ratio.girls" id="ratio-girls" type="number" class="form-control" min="1" value="1">
+		              </td>
+		              <!-- WIDTH STYLES ARE VERY IMPORTANT HERE -->
+		              <td colspan="1" style="width:30%;">
+		              	<label for="ratio-guys">Guys</label>
+		              	<input ng-disabled="!partyExists() || party.noRatio" ng-model="newParty.ratio.guys" id="ratio-guys" type="number" class="form-control" min="1" value="1">
+		              </td>
+		            </tr>
+		          </tbody>
 		  		</table>
 		  	</div>
 		  </div>

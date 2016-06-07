@@ -156,6 +156,17 @@ app.post('/api/users', function(req, res) {
 	
 });
 
+app.post('/api/user/update', function(req, res) {
+	var user_id = req.body.user_id;
+	var props = JSON.parse(req.body.props);
+
+	db.updateUser(user_id, props, function(updated) {
+		req.session.user = updated;
+		res.json(updated);
+
+	});
+});
+
 app.post('/api/register', function(req, res) {
 	// Registration form data in JSON format
 	var formprops = req.body.props;
@@ -202,10 +213,10 @@ app.post('/api/party/create', function(req, res) {
 });
 
 app.post('/api/party/remove', function(req, res) {
-	var party = req.body.party;
+	var reg_code = req.body.reg_code;
 	var user = req.session.user;
 
-	db.removeParty(user, party, function(removed) {
+	db.removeParty(user, reg_code, function(removed) {
 		if (removed)
 			res.json({'success': true});
 		else
