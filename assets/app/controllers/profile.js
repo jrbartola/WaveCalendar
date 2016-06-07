@@ -141,11 +141,17 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     }
 
     $scope.confirmChanges = function(section) {
-    	var swalCallback;
 
+    	// Saves changed user account information
     	if (section === 'profile') {
-    		
-    		swalCallback = function(pass) {
+
+    		swal({title: 'Are you sure?',
+    		  text: 'Type your password to confirm these changes',
+    		  type: 'input',
+    		  showCancelButton: true,
+    		  closeOnConfirm: false,
+    		  inputType: 'password'
+    		}, function(pass) {
     			if (pass === '' || pass != $rootScope.currentUser.password) {
     				swal.showInputError("Incorrect password");
     				return false;
@@ -160,48 +166,47 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
     				  type: "success",
 	    			}, function() {
     					window.location.href = "/profile"
-						console.log("changed url");
-	    				
+						
 	    			});
     			});
-		
-    		}
+    		});
+
+    	// Saves a paticular wave's edited information
     	} else if (section === 'waves') {
-    		swalCallback = function(pass) {
+
+    		swal({title: 'Are you sure?',
+    		  text: 'Type your password to confirm these changes',
+    		  type: 'input',
+    		  showCancelButton: true,
+    		  closeOnConfirm: false,
+    		  inputType: 'password'
+    		}, function(pass) {
     			if (pass === '' || pass != $rootScope.currentUser.password) {
     				swal.showInputError("Incorrect password");
     				return false;
     			}
 
-    			// TODO: UPDATE PARTY FUNCTION
-    			$.post('/api/party/update', {'user_id': $rootScope.currentUser._id, 
-    				'props': JSON.stringify($rootScope.currentUser.new)}, function(response) {
+    			if ($scope.newParty.noRatio === true)
+    				$scope.newParty.ratio = {'guys': 0, 'girls': 0}
+
+    			$.post('/api/party/update', {'props': JSON.stringify($scope.newParty), 
+    				'reg_code': $scope.party.reg_code}, function(response) {
     				 console.log(response);
 
-    				 swal({title: "All done!",
-    				  text: "Your changes have been saved",
+    				swal({title: "All done!",
+    				  text: "Your party has been updated.",
     				  type: "success",
 	    			}, function() {
     					window.location.href = "/profile"
-						console.log("changed url");
-	    				
+						
 	    			});
     			});
-		
-    		}
+    		});
     	}
-
-    	// Execute the sweetalert after we situate the callback
-    	swal({title: 'Are you sure?',
-    		  text: 'Type your password to confirm these changes',
-    		  type: 'input',
-    		  showCancelButton: true,
-    		  closeOnConfirm: false
-    		}, swalCallback(pass));
-    	
     }
 
     // Returns true if the data hasn't been changed
+    // This function is used to enable/disable the save button
     $scope.checkChanges = function(section) {
     	if (section === 'profile') {
     		var cu = $rootScope.currentUser;
@@ -214,7 +219,13 @@ profile.controller('ProfileCtrl', function($timeout, $scope, $rootScope, dataSer
 	    			cu.new.password_orig === '') && (!cu.new.password_confirm ||
 	    			cu.new.password_confirm === ''));
     	} else if (section === 'waves') {
-    		// TODO:
+    		var p = $scope.party, np = $scope.newParty;
+    		if (!p || !np || !p.filters || !p.ratio)
+    			return true;
+    		return (p.title === np.title && p.invite_only === np.invite_only &&
+    			p.filters.sort().toString() === np.filters.sort().toString() &&
+    			p.ratio.girls === np.ratio.girls && p.ratio.guys === np.ratio.guys &&
+    			p.noRatio === np.noRatio);
     	}
     	
     }

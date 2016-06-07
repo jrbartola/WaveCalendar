@@ -323,7 +323,12 @@ function updatePartyStatuses() {
 }
 
 function updateParty(user, reg_code, props, callback) {
-	
+	schemas.Party.findOneAndUpdate({'owner': user._id, 'reg_code': reg_code}, 
+		{'$set': {'title': props.title, 'invite_only': props.invite_only,
+		'filters': props.filters, 'ratio': props.ratio}}, {new: true}, function(upd) {
+			// Return the updated party
+			return callback(upd);
+		});
 }
 
 
@@ -346,3 +351,4 @@ module.exports.removeParty = removeParty;
 module.exports.enumerateAttended = enumerateAttended;
 module.exports.getUserParties = getUserParties;
 module.exports.updatePartyStatuses = updatePartyStatuses;
+module.exports.updateParty = updateParty;
