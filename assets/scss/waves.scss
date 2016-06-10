@@ -310,12 +310,14 @@ p {
 .btn-norm {
 	@include button_var(white, $primary-color, $primary-color);
 	//border-radius: 0;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
 .btn-larger {
 	@include button_var(white, $primary-color, $primary-color);
 	padding: 10px 25px;
 	font-size: 16px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
 .btn-cancel {
@@ -329,6 +331,7 @@ p {
 		background-color: darken(white, 12%);
 
 	}
+	font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
 }
 
 // Radio Buttons
@@ -416,7 +419,7 @@ ul {
 
 section#create {
 
-	margin-top: 75px;
+	margin-top: 25px;
 	padding-top: 50px;
 	margin-bottom: 75px;
 	padding-bottom: 50px;
