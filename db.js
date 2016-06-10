@@ -42,6 +42,7 @@ function retrieveParties(callback, filters, location) {
 		schemas.Party.find({}).
 		where('filters').all(filters). // Make location.city case insensitive
 		where({'location.city': location}).
+		sort({'time.start': -1}).
 		exec(function(err, parties) {
 			if (err) throw err;
 			// Return callback with parties listed
@@ -50,6 +51,7 @@ function retrieveParties(callback, filters, location) {
 	} else if (filters) {
 		schemas.Party.find({}).
 		where('filters').all(filters).
+		sort({'time.start': -1}).
 		exec(function(err, parties) {
 			if (err) throw err;
 			// Return callback with parties listed
@@ -58,6 +60,7 @@ function retrieveParties(callback, filters, location) {
 	} else if (location) {
 		schemas.Party.find({}).
 		where({'location.city': location}).
+		sort({'time.start': -1}).
 		exec(function(err, parties) {
 			if (err) throw err;
 			// Return callback with parties listed
@@ -65,6 +68,7 @@ function retrieveParties(callback, filters, location) {
 		});
 	} else {
 		schemas.Party.find({}).
+		sort({'time.start': -1}).
 		exec(function(err, parties) {
 			if (err) throw err;
 			// Return callback with parties listed

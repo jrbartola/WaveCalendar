@@ -20,6 +20,7 @@ function initialize() {
   	var mapProp = {
   		center: latLong,
   		zoom: 15,
+      scrollwheel: false,
   		mapTypeId: google.maps.MapTypeId.ROADMAP
   	};
 

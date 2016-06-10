@@ -24,6 +24,7 @@
 <!-- 		</div> -->
 <!-- 		<div class="col-md-10"> -->
 	    	<h2 id="party-title">{{ party.title }}</h2>
+	    	<a href="/users/{{ party.owner }}"><h3 style="padding-left:15px;">{{ party.owner }}</h3></a>
 		<!-- </div> -->
 	</div>
 	    
@@ -49,10 +50,10 @@
 		  <!-- <a class="media-left" href="#">
 		    <img class="media-object" src="../img/waveicon.png" style="height:64px;width:64px;" alt="Icon">
 		  </a> -->
-		  <div class="media-body">
+		  <!-- <div class="media-body">
 		    <h4 class="media-heading">Owner</h4>
 		    {{ party.owner }}
-		  </div>
+		  </div> -->
 		  <h3>Status</h3>
 		  <p>{{ party.status }}</p>
 		  <h3>Filters</h3>
