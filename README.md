@@ -29,7 +29,3 @@ Once registered, users are able to:
 * Rate a wave and view it's average rating
 * Create a username and a profile, where they can see other waves as well as their own waves
 * Manage their account; delete waves, change their registered location, deactivate their account
-* 
-
-
-# Much more to come!
