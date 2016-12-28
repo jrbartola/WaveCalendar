@@ -28,4 +28,4 @@ Once registered, users are able to:
 * Make the wave invite-only; in this case it won't show up in the public results and the owner will have to personally give users the registration code and confirm their attendance
 * Rate a wave and view it's average rating
 * Create a username and a profile, where they can see other waves as well as their own waves
-* Manage their account; delete waves, change their registered location, deactivate their account
+* Manage their account, delete waves, change their registered location, deactivate their account
