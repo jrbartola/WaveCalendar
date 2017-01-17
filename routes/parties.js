@@ -1,5 +1,7 @@
 'use strict'
 
+/* Party API routing functions */
+
 exports.createPartyData = function(req, res) {
 	var user = req.session.user;
 	var props = JSON.parse(req.body.properties);

@@ -93,13 +93,7 @@ app.get('/404', function(req, res) {
 });
 
 
-
-// Duplicate-- we don't need this. Change the url route on the
-// home page from /profile to /profile/<currentuser>
-
-// app.get('/profile', auth, function(req, res) {
-// 	res.redirect('/users/' + req.session.user.username);
-// });
+/* User API routes */
 
 app.get('/api/user/:username', auth, users.getUserData);
 

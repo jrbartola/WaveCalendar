@@ -1,5 +1,7 @@
 'use strict'
 
+/* User API routing functions */
+
 // Retrieve user by field and specified value of that field
 exports.getUserData = function(req, res) {
 	var username = req.params.username;

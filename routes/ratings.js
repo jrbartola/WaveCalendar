@@ -1,8 +1,9 @@
 'use strict'
 
+/* Rating API routing functions */
+
 // TODO: Review this function. Maybe we can abstract
 // this into a user-based query?
-
 exports.getRatingData = function(req, res) {
 	var username = req.params.username;
 	var party = req.params.partycode;
