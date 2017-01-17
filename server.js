@@ -16,11 +16,9 @@ var filters = require('./routes/filters');
 
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 
-// set static directory
+// Setup our static directory
 app.use(express.static(__dirname + '/assets'));
 
 app.use(session({
@@ -56,13 +54,6 @@ var auth = function(req, res, next) {
 app.get('/', auth, function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/home.html");
 });
-
-
-
-
-
-
-
 
 app.post('/login', function(req, res) {
 	var email = req.body.email;
@@ -108,6 +99,15 @@ app.get('/users/:profile', auth, function(req, res) {
 
 app.get('/api/user/:username', auth, users.getUserData);
 
+app.post('/api/user', users.createUserData);
+
+app.put('/api/user/:username', users.updateUserData);
+
+
+/* TODO: Figure out what this route is used for. This looks extremely
+   questionable; we already have a POST route for user
+*/
+
 app.post('/api/user/:username', function(req, res) {
 	//var field = req.body.field;
 	var value = req.body.value;
@@ -137,7 +137,6 @@ app.post('/api/user/:username', function(req, res) {
 	
 });
 
-app.put('/api/user/:username', users.updateUserData);
 
 
 // We don't need this either. Just reroute all requests to
@@ -157,7 +156,7 @@ app.get('/api/filters', filters.getFilterData);
 
 
 
-app.post('/api/user', users.createUserData);
+
 
 app.get('/api/party/:code', function(req, res) {
 	var code = req.params.code;
@@ -214,23 +213,11 @@ app.post('/api/party/remove', function(req, res) {
 	});
 });
 
+/* Rating API routes */
 
+app.get('/api/rating/:partycode/:username', ratings.getRatingData);
 
-app.post('/api/rating', function(req, res) {
-	var user = JSON.parse(req.body.user);
-	var party = req.body.party;
-	var rating = req.body.rating;
-	
-	if (rating) {
-		db.addRating(user, party, rating, function(newRating) {
-			res.json(newRating);
-		});
-	} else {
-		db.findRating(user, party, function(r) {
-			res.json(r); 
-		});
-	}
-});
+app.post('/api/rating', ratings.createRatingData);
 
 app.use(function(req, res, next) {
   res.status(404).sendFile(__dirname + "/assets/templates/404.html");
