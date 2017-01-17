@@ -44,6 +44,7 @@ var partySchema = new Schema({
 		guys: { type: Number, default: 0 },
 		girls: { type: Number, default: 0 }
 	},
+	// Fix this- should use a inner join instead of array
 	filters: [String],
 	rating: { type: Number, default: 3 },
 	num_ratings: { type: Number, default: 0 },
@@ -90,6 +91,3 @@ module.exports.Party = Party;
 module.exports.Rating = Rating;
 module.exports.Filter = Filter;
 module.exports.Mongoose = mongoose;
-
-//
-//{created_by: "Admin", added_on: Date.now, data: "Lit", pending: false}
