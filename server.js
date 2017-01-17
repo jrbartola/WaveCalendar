@@ -51,8 +51,20 @@ var auth = function(req, res, next) {
 	}  
 };
 
+/* Main URI Routing */
+
 app.get('/', auth, function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/home.html");
+});
+
+app.get('/users/:profile', auth, function(req, res) {
+	db.getUser('username', req.params.profile, function(usr) {
+		if (usr === null) {
+			res.redirect('/404');
+		} else {
+			res.sendFile(__dirname + "/assets/templates/profile.html");
+		}
+	});
 });
 
 app.post('/login', function(req, res) {
@@ -80,15 +92,7 @@ app.get('/404', function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/404.html");
 });
 
-app.get('/users/:profile', auth, function(req, res) {
-	db.getUser('username', req.params.profile, function(usr) {
-		if (usr === null) {
-			res.redirect('/404');
-		} else {
-			res.sendFile(__dirname + "/assets/templates/profile.html");
-		}
-	});
-});
+
 
 // Duplicate-- we don't need this. Change the url route on the
 // home page from /profile to /profile/<currentuser>
@@ -152,21 +156,17 @@ app.post('/api/user/:username', function(req, res) {
 // 	}
 // });
 
+/* Filter API routes */
+
 app.get('/api/filters', filters.getFilterData);
 
 
 
+/* Party API routes */
 
+app.get('/api/party/:partycode', getPartyData);
 
-app.get('/api/party/:code', function(req, res) {
-	var code = req.params.code;
-
-	db.getParty(code, function(party) {
-		res.json(party);
-	});
-	
-});
-
+// TODO: find a way to consolidate this endpoint into a GET request
 app.post('/api/party/location', function(req, res) {
 	var location = req.body.location;
 	var filters = req.body.filters;
@@ -177,47 +177,21 @@ app.post('/api/party/location', function(req, res) {
 	
 });
 
-app.post('/api/party/create', function(req, res) {
-	var user = req.session.user;
-	var props = JSON.parse(req.body.properties);
-	var reg_code = randomString(8, '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-	console.dir(props);
-	props.reg_code = reg_code;
-	props.owner = ObjectId(user._id);
+app.post('/api/party', parties.createPartyData);
 
-	db.createParty(user, props, function(party) {
-		res.json(party);
-	});
-});
+app.put('/api/party/:partycode', parties.updatePartyData);
 
-app.post('/api/party/update', function(req, res) {
-	var user = req.session.user;
-	var reg_code = req.body.reg_code;
-	var props = JSON.parse(req.body.props);
+app.delete('/api/party/:partycode', parties.removePartyData);
 
-	db.updateParty(user, reg_code, props, function(updated) {
-		res.json(updated);
-	});
-	
-});
 
-app.post('/api/party/remove', function(req, res) {
-	var reg_code = req.body.reg_code;
-	var user = req.session.user;
-
-	db.removeParty(user, reg_code, function(removed) {
-		if (removed)
-			res.json({'success': true});
-		else
-			res.json({'success': false});
-	});
-});
 
 /* Rating API routes */
 
 app.get('/api/rating/:partycode/:username', ratings.getRatingData);
 
 app.post('/api/rating', ratings.createRatingData);
+
+
 
 app.use(function(req, res, next) {
   res.status(404).sendFile(__dirname + "/assets/templates/404.html");
@@ -232,5 +206,5 @@ function randomString(length, chars) {
 }
 
 http.listen(3002, function() {
-	console.log("Running on port 3002...");
+	console.log("Running Wave Calendar port 3002...");
 });
