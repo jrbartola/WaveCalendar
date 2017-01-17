@@ -8,6 +8,12 @@ var session = require('express-session');
 var db = require('./db.js');
 var ObjectId = require('mongoose').Types.ObjectId;
 
+/* Enumerate our API routes */
+var users = require('./routes/users');
+var ratings = require('./routes/ratings');
+var parties = require('./routes/parties');
+var filters = require('./routes/filters');
+
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
 // app.use(passport.initialize());
@@ -51,6 +57,13 @@ app.get('/', auth, function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/home.html");
 });
 
+
+
+
+
+
+
+
 app.post('/login', function(req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
@@ -93,45 +106,10 @@ app.get('/users/:profile', auth, function(req, res) {
 // 	res.redirect('/users/' + req.session.user.username);
 // });
 
-app.get('/api/profile/:username', auth, function(req, res) {
-	var username = req.params.username;
+app.get('/api/user/:username', auth, users.getUserData);
 
-	db.getUser('username', username, function(user) {
-		// User.attending represents an array of party reg_code's
-		db.enumerateAttended(user.attending, function(partydata) {
-			
-			// Respond with the attending attribute containing the parties
-			user.attending = partydata;
-
-			db.getUserParties(ObjectId(user._id), function(userowned) {
-				user.owned = userowned;
-				res.json(user);
-			});
-			
-		});
-		
-	});
-
-});
-
-app.get('/api/currentuser', function(req, res) {
-	if (req.session && req.session.user) {
-		db.getUser('username', req.session.user.username, function(usr) {
-			res.json(usr);
-		});
-	} else {
-		res.json(null);
-	}
-});
-
-app.get('/api/filters', function(req, res) {
-	db.retrieveFilters(function(filters) {
-		res.json(filters);
-	});
-});
-
-app.post('/api/users', function(req, res) {
-	var field = req.body.field;
+app.post('/api/user/:username', function(req, res) {
+	//var field = req.body.field;
 	var value = req.body.value;
 	var user = req.session.user;
 	var party = req.body.party;
@@ -159,29 +137,27 @@ app.post('/api/users', function(req, res) {
 	
 });
 
-app.post('/api/user/update', function(req, res) {
-	var user_id = req.body.user_id;
-	var props = JSON.parse(req.body.props);
+app.put('/api/user/:username', users.updateUserData);
 
-	db.updateUser(user_id, props, function(updated) {
-		req.session.user = updated;
-		res.json(updated);
 
-	});
-});
+// We don't need this either. Just reroute all requests to
+// /api/currentuser to /api/user/<currentuser>
 
-app.post('/api/register', function(req, res) {
-	// Registration form data in JSON format
-	var formprops = req.body.props;
+// app.get('/api/currentuser', function(req, res) {
+// 	if (req.session && req.session.user) {
+// 		db.getUser('username', req.session.user.username, function(usr) {
+// 			res.json(usr);
+// 		});
+// 	} else {
+// 		res.json(null);
+// 	}
+// });
 
-	db.createUser(formprops, function(newUser) {
-		if (newUser == null) {
-			res.json(null);
-		} else {
-			res.json(newUser);
-		}
-	});
-});
+app.get('/api/filters', filters.getFilterData);
+
+
+
+app.post('/api/user', users.createUserData);
 
 app.get('/api/party/:code', function(req, res) {
 	var code = req.params.code;
