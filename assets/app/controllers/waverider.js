@@ -2,25 +2,7 @@
 
 var waveRider = angular.module('waveCal');
 
-// Factory that retrieves stored party objects from API based on codes
-waveRider.factory('partyCodeFactory', function($http) {
-  return {
-    post: function(url, data) {
-      
-        return $http.post(url, data).then(function(resp) {
-          return resp.data;
-        });
-    },
-
-    get: function(url) {
-      return $http.get(url).then(function(resp) {
-        return resp.data;
-      });
-    }
-  }
-});
-
-waveRider.controller('WaveRiderCtrl', function($rootScope, $timeout, $scope, partyCodeFactory, dataService) {
+waveRider.controller('WaveRiderCtrl', function($rootScope, $scope, $http, currentuserService) {
   // Scope view of 0 is the search by code box
   // Scope view of 1 is the resulted party returned by the search
   // Scope view of 2 is the create your party form

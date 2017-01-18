@@ -5,7 +5,6 @@ var app = express();
 var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var db = require('./db.js');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 /* Enumerate our API routes */
@@ -159,7 +158,7 @@ app.get('/api/filters', filters.getFilterData);
 
 /* Party API routes */
 
-app.get('/api/party/:partycode', getPartyData);
+app.get('/api/party/:partycode', parties.getPartyData);
 
 // TODO: find a way to consolidate this endpoint into a GET request
 app.post('/api/party/location', function(req, res) {

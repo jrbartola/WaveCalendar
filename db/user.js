@@ -4,8 +4,7 @@
 
 var schemas = require('./schemas.js');
 
-
-function addUsername(email, username, callback) {
+exports.addUsername = function(email, username, callback) {
 
 	schemas.User.findOne({'username': username}, function(err, duplicate) {
 		if (duplicate) {
@@ -19,7 +18,7 @@ function addUsername(email, username, callback) {
 }
 
 // Retrieve user by field and specified value of that field
-function getUser(field, value, callback) {
+exports.getUser = function(field, value, callback) {
 	if (field === 'email') {
 		
 		schemas.User.findOne({'email': value}, function(err, user) {
@@ -55,7 +54,7 @@ function getUser(field, value, callback) {
 	
 }
 
-function createUser(props, callback) {
+exports.createUser = function(props, callback) {
 	getUser('email', props.email, function(user) {
 		
 		// Make sure there is no user with the same email
@@ -74,7 +73,7 @@ function createUser(props, callback) {
 	
 }
 
-function updateUser(id, props, callback) {
+exports.updateUser = function(id, props, callback) {
 	schemas.User.findByIdAndUpdate(id, {'$set': {'location': props.location, 
 	  'username': props.username, 'email': props.email}}, {'new': true}, function(err, updated) {
 
@@ -88,7 +87,7 @@ function updateUser(id, props, callback) {
 
 /* These two functions seem to be related... get rid of one */
 
-function loginUser(email, password, callback) {
+exports.loginUser = function(email, password, callback) {
 	// TODO: Replace plaintext password with bcrypt or some other module (that works :( )
 	schemas.User.findOne({'email': email, 'password': password}, function(err, user) {
 		if (err) throw err;
@@ -96,7 +95,7 @@ function loginUser(email, password, callback) {
 	});
 }
 
-function updateLogins(email) {
+exports.updateLogins = function(email) {
 	schemas.User.findOne({'email': email}, function(err, user) {
 		if (err) throw err;
 
@@ -109,7 +108,7 @@ function updateLogins(email) {
 	});
 }
 
-function attendParty(user, party, callback) {
+exports.attendParty = function(user, party, callback) {
 	// Check if user is already attending the party
 	schemas.User.findOne({'email': user.email, 'attending': 
 		{ '$in': [party] }}, function(err, matched) {

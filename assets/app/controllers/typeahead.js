@@ -38,13 +38,15 @@ typeAhead.animation('.wave', [function() {
 
 
 
-typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, dataService) { // DI in action
+typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $http, $timeout, currentuserService) { // DI in action
   
   // Use currentuserService to get user data from API
   currentuserService.updateCurrentUser(function(cu) {
     $rootScope.currentUser = cu;
     $scope.location = cu.location;
 
+    // If the client does not currently have a registered username,
+    // prompt them to create one
     if (!$rootScope.currentUser.username) {
       swal({title: "You don't have a username yet!",
         text: "Usernames allow others to identify you. " +
@@ -88,9 +90,9 @@ typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, dat
     
   // originally filter by current city of user
 
-    partyFactory.post('/api/party/location', {'location': $scope.location.city}).then(function(data) {
+    $http.post('/api/party/location', {'location': $scope.location.city}).then(function(data) {
       $scope.parties = [];
-      $.each(data, function(index, party) {
+      $.each(data.data, function(index, party) {
         // Find rating of each initial party that shows when a user logs in
         $scope.findRating(party, function(newparty) {
           $scope.addParty(newparty);
@@ -98,23 +100,22 @@ typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, dat
       });
       
     });
-  // });
   });
 
-  $scope.chosen_ = [];
-  //$scope.limit = 4;
-
-  filterFactory.get('/api/filters').then(function(data) {
-    // Gets filters 
-    $scope.items = data;
-  });
-
-
+  $scope.chosen_ = []; // Contains selected filters
   $scope.distance = -1; // Holds distance/location filter
   $scope.name = ''; // This will hold the selected item
 
+  $http.get('/api/filters').then(function(resp) {
+    // Gets filters 
+    $scope.items = resp.data;
+  });
+
+
+  
+
   $scope.findRating = function(party, callback) {
-    $.post('/api/rating', {'party': party.reg_code, 'user': JSON.stringify($rootScope.currentUser)}, function(rate) {
+    $http.get('/api/rating/' + party.reg_code + '/' + $rootScope.currentUser.username).then(function(rate) {
       // Set to 0 if user has not rated this party before
       if (!rate)
         rate = 0;
@@ -156,7 +157,7 @@ typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, dat
 
     $scope.parties = [];
     clearMarkers();
-    partyFactory.post('/api/party/location', {'filters': filData, 'location': locData}).then(function(data) {
+    $http.post('/api/party/location', {'filters': filData, 'location': locData}).then(function(data) {
       
       $.each(data, function(index, value) {
         var address = value.location.street + ", " + value.location.city + ", " + value.location.zip_code;
