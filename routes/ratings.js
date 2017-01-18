@@ -1,5 +1,7 @@
 'use strict'
 
+var rating = require('../db/rating');
+
 /* Rating API routing functions */
 
 // TODO: Review this function. Maybe we can abstract
@@ -8,7 +10,7 @@ exports.getRatingData = function(req, res) {
 	var username = req.params.username;
 	var party = req.params.partycode;
 
-	db.findRating(user, party, function(rate) {
+	rating.findRating(user, party, function(rate) {
 		res.json(rate); 
 	});
 };
@@ -18,7 +20,7 @@ exports.createRatingData = function(req, res) {
 	var party = req.body.party;
 	var rating = req.body.rating;
 	
-	db.addRating(user, party, rating, function(newRating) {
+	rating.addRating(user, party, rating, function(newRating) {
 		res.json(newRating);
 	});
 };

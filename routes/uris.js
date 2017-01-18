@@ -1,18 +1,21 @@
 'use strict'
 
+var user = require('../db/user');
+var party = require('../db/party');
+
 /* WaveCalendar URI routing functions */
 
 exports.auth = function(req, res, next) {
 	//
 	// For testing purposes only!!!
 	// 
-	db.loginUser('jrbartola@gmail.com', 'pass123', function(user) {
-		if (!user) {
+	user.loginUser('jrbartola@gmail.com', 'pass123', function(usr) {
+		if (!usr) {
 			res.json(null);
 		} else {
-			db.updatePartyStatuses();
-			db.updateLogins('jrbartola@gmail.com');
-			req.session.user = user;
+			party.updatePartyStatuses();
+			user.updateLogins('jrbartola@gmail.com');
+			req.session.user = usr;
 		}
 	});
 	//
@@ -29,20 +32,20 @@ exports.loginUserData = function(req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
 
-	db.loginUser(email, password, function(user) {
-		if (!user) {
+	user.loginUser(email, password, function(usr) {
+		if (!usr) {
 			res.json(null);
 		} else {
-			db.updatePartyStatuses();
-			db.updateLogins(email);
-			req.session.user = user;
-			res.json(user);
+			party.updatePartyStatuses();
+			user.updateLogins(email);
+			req.session.user = usr;
+			res.json(usr);
 		}
 	});
 };
 
 exports.retrieveProfileData = function(req, res) {
-	db.getUser('username', req.params.profile, function(usr) {
+	user.getUser('username', req.params.profile, function(usr) {
 		if (usr === null) {
 			res.redirect('/404');
 		} else {

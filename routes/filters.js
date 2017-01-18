@@ -1,9 +1,11 @@
 'use strict'
 
+var filter = require('../db/filter');
+
 /* Filter API routing functions */
 
 exports.getFilterData = function(req, res) {
-	db.retrieveFilters(function(filters) {
+	filter.retrieveFilters(function(filters) {
 		res.json(filters);
 	});
 };

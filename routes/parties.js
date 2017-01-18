@@ -1,5 +1,7 @@
 'use strict'
 
+var party = require('../db/party');
+
 /* Party API routing functions */
 
 exports.createPartyData = function(req, res) {
@@ -10,7 +12,7 @@ exports.createPartyData = function(req, res) {
 	props.reg_code = reg_code;
 	props.owner = ObjectId(user._id);
 
-	db.createParty(user, props, function(party) {
+	party.createParty(user, props, function(party) {
 		res.json(party);
 	});
 };
@@ -18,7 +20,7 @@ exports.createPartyData = function(req, res) {
 exports.getPartyData = function(req, res) {
 	var code = req.params.partycode;
 
-	db.getParty(partycode, function(party) {
+	party.getParty(partycode, function(party) {
 		res.json(party);
 	});
 	
@@ -28,7 +30,7 @@ exports.getPartyByLocationData = function(req, res) {
 	var location = req.body.location;
 	var filters = req.body.filters;
 
-	db.retrieveParties(function(parties) {
+	party.retrieveParties(function(parties) {
 		res.json(parties);
 	}, filters, location);
 	
@@ -40,7 +42,7 @@ exports.updatePartyData = function(req, res) {
 	var reg_code = req.params.partycode;
 	var props = JSON.parse(req.body.props);
 
-	db.updateParty(user, reg_code, props, function(updated) {
+	party.updateParty(user, reg_code, props, function(updated) {
 		res.json(updated);
 	});
 	
@@ -51,7 +53,7 @@ exports.removePartyData = function(req, res) {
 	// Again, why do I need user here?
 	var user = req.session.user;
 
-	db.removeParty(user, reg_code, function(removed) {
+	party.removeParty(user, reg_code, function(removed) {
 		if (removed)
 			res.json({'success': true});
 		else
