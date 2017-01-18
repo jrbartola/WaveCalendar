@@ -40,8 +40,8 @@ typeAhead.animation('.wave', [function() {
 
 typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, dataService) { // DI in action
   
-  // Use dataservice to get user data from API
-  dataService.updateCurrentUser(function(cu) {
+  // Use currentuserService to get user data from API
+  currentuserService.updateCurrentUser(function(cu) {
     $rootScope.currentUser = cu;
     $scope.location = cu.location;
 

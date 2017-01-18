@@ -2,13 +2,13 @@
 
 var app = angular.module('waveCal', ['ngAnimate'])
 
-app.service('dataService', function() {
-  var currentUser = {};
+app.service('currentuserService', function($http) {
+  var currentUser = null;
 
   var updateCurrentUser = function(callback) {
-    $.get('/api/currentuser', function(response) {
-      currentUser = response;
-      return callback(response);
+    $http.get('/api/currentuser').then(function(response) {
+      currentUser = response.data;
+      return callback(currentUser);
     });
   }
 
