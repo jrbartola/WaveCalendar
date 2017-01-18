@@ -8,6 +8,7 @@ var session = require('express-session');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 /* Enumerate our API routes */
+var uriRoute = require('./routes/uris');
 var userRoute = require('./routes/users');
 var ratingRoute = require('./routes/ratings');
 var partyRoute = require('./routes/parties');
@@ -28,7 +29,7 @@ app.use(session({
 }));
 
 
-var auth = userRoute.auth;
+var auth = uriRoute.auth;
 
 /* Main URI Routing */
 
@@ -39,9 +40,9 @@ app.get('/', auth, function(req, res) {
 
 // TODO: Fix the following two routes so they are not encapsulated in
 // the userRoutes module.
-app.get('/users/:profile', auth, userRoute.retrieveProfileData);
+app.get('/users/:profile', auth, uriRoute.retrieveProfileData);
 
-app.post('/login', userRoute.loginUserData);
+app.post('/login', uriRoute.loginUserData);
 
 app.get('/logout', function(req, res) {
 	req.session.user = null;

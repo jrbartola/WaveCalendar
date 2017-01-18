@@ -2,7 +2,7 @@
 
 /* Filter database operations */
 
-var schemas = require('/schemas.js');
+var schemas = require('../schemas.js');
 
 exports.retrieveFilters = function(callback) {
 	// Retrieve all filter entries

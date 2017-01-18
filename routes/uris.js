@@ -24,7 +24,7 @@ exports.auth = function(req, res, next) {
     if (req.session && req.session.user) {
         return next();
   	} else {
-  	    return res.sendFile(__dirname + "/assets/templates/index.html");
+  	    return res.sendFile(__dirname + "../assets/templates/index.html");
 	}  
 };
 
@@ -49,7 +49,7 @@ exports.retrieveProfileData = function(req, res) {
 		if (usr === null) {
 			res.redirect('/404');
 		} else {
-			res.sendFile(__dirname + "/assets/templates/profile.html");
+			res.sendFile(__dirname + "../assets/templates/profile.html");
 		}
 	});
 };

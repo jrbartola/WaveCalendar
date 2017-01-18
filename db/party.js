@@ -2,7 +2,7 @@
 
 /* Party database operations */
 
-var schemas = require('./schemas.js');
+var schemas = require('../schemas.js');
 
 
 exports.getParty = function(code, callback) {

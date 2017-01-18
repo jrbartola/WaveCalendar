@@ -2,7 +2,7 @@
 
 /* User database operations */
 
-var schemas = require('./schemas.js');
+var schemas = require('../schemas.js');
 
 exports.addUsername = function(email, username, callback) {
 

@@ -2,7 +2,7 @@
 
 /* Rating database operations */
 
-var schemas = require("./schemas.js");
+var schemas = require("../schemas.js");
 
 exports.findRating = function(user, party, callback) {
 	schemas.Rating.findOne({'user': user.email, 'party': party}, function(err, rate) {
