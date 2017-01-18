@@ -10,11 +10,11 @@ exports.findRating = function(user, party, callback) {
 			return callback(rate)
 		return callback(null);
 	});
-}
+};
 
 // Adjust rating by the party code identifier and user who rated it
 exports.addRating = function(user, party, rating, callback) {
-	getParty(party, function(newparty) {
+	schemas.Party.findOne({"reg_code": party}, function(err, newparty) {
 		// Check if the party exists or if the user is allowed to rate the party
 		if (newparty == null || user.attending.indexOf(newparty.reg_code) < 0) {
 			console.log(user.attending + ' does not have ' + newparty.reg_code);
@@ -49,7 +49,7 @@ exports.addRating = function(user, party, rating, callback) {
 			});		
 		}
 	});
-}
+};
 
 exports.updateRating = function(party, add, callback) {
 	schemas.Rating.aggregate([{ '$match': { 'party': party.reg_code }},
@@ -65,4 +65,4 @@ exports.updateRating = function(party, add, callback) {
   			return callback(avg[0].rating);
   		});
 	});
-}
+};
