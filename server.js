@@ -101,6 +101,7 @@ app.post('/api/user', users.createUserData);
 
 app.put('/api/user/:username', users.updateUserData);
 
+app.get('/api/currentuser', users.getCurrentUserData);
 
 /* TODO: Figure out what this route is used for. This looks extremely
    questionable; we already have a POST route for user
