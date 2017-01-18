@@ -37,40 +37,43 @@ typeAhead.animation('.wave', [function() {
 }]);
 
 
+// Scrap this- we don't need two different factories to do the
+// same thing. Let' just make use of the $http service
+
 // Factory that retrieves stored filter objects from API
-typeAhead.factory('filterFactory', function($http) {
-  return {
-    get: function(url) {
-      return $http.get(url).then(function(resp) {
-        return resp.data;
-      });
-    }
-  }
-});
+// typeAhead.factory('filterFactory', function($http) {
+//   return {
+//     get: function(url) {
+//       return $http.get(url).then(function(resp) {
+//         return resp.data;
+//       });
+//     }
+//   }
+// });
 
-// Factory that retrieves stored party objects from API
-typeAhead.factory('partyFactory', function($http) {
-  return {
-    post: function(url, data) {
+// // Factory that retrieves stored party objects from API
+// typeAhead.factory('partyFactory', function($http) {
+//   return {
+//     post: function(url, data) {
       
-      if (data) {
-        return $http.post(url, data).then(function(resp) {
+//       if (data) {
+//         return $http.post(url, data).then(function(resp) {
         
-          return resp.data;
-        });
-      } else {
-        return $http.post(url).then(function(resp) {
+//           return resp.data;
+//         });
+//       } else {
+//         return $http.post(url).then(function(resp) {
         
-          return resp.data;
-        });
-      }
+//           return resp.data;
+//         });
+//       }
       
-    }
-  }
-});
+//     }
+//   }
+// });
 
 
-typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, filterFactory, partyFactory, dataService) { // DI in action
+typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $timeout, dataService) { // DI in action
   
   // Use dataservice to get user data from API
   dataService.updateCurrentUser(function(cu) {

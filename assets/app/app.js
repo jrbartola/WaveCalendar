@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('waveCal', ['ngAnimate'])
+var app = angular.module('waveCal', ['ngAnimate'])
 
-.service('dataService', function() {
+app.service('dataService', function() {
   var currentUser = {};
 
   var updateCurrentUser = function(callback) {
