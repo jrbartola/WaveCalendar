@@ -15,7 +15,7 @@ exports.addUsername = function(email, username, callback) {
 			});
 		}
 	});
-}
+};
 
 // Retrieve user by field and specified value of that field
 exports.getUser = function(field, value, callback) {
@@ -51,8 +51,7 @@ exports.getUser = function(field, value, callback) {
 	}
 
 	throw new error();
-	
-}
+};
 
 exports.createUser = function(props, callback) {
 	getUser('email', props.email, function(user) {
@@ -70,8 +69,7 @@ exports.createUser = function(props, callback) {
 			return callback(null);
 		}
 	});
-	
-}
+};
 
 exports.updateUser = function(id, props, callback) {
 	schemas.User.findByIdAndUpdate(id, {'$set': {'location': props.location, 
@@ -79,8 +77,7 @@ exports.updateUser = function(id, props, callback) {
 
 	  	return callback(updated);
 	});
-}
-
+};
 
 
 
@@ -93,7 +90,7 @@ exports.loginUser = function(email, password, callback) {
 		if (err) throw err;
 		return callback(user);
 	});
-}
+};
 
 exports.updateLogins = function(email) {
 	schemas.User.findOne({'email': email}, function(err, user) {
@@ -106,7 +103,7 @@ exports.updateLogins = function(email) {
 		
 		
 	});
-}
+};
 
 exports.attendParty = function(user, party, callback) {
 	// Check if user is already attending the party
@@ -122,4 +119,4 @@ exports.attendParty = function(user, party, callback) {
 			
 		});
 	});
-}
+};

@@ -2,7 +2,7 @@
 
 var schemas = require("./schemas.js");
 
-function findRating(user, party, callback) {
+exports.findRating = function(user, party, callback) {
 	schemas.Rating.findOne({'user': user.email, 'party': party}, function(err, rate) {
 		if (rate)
 			return callback(rate)
@@ -11,7 +11,7 @@ function findRating(user, party, callback) {
 }
 
 // Adjust rating by the party code identifier and user who rated it
-function addRating(user, party, rating, callback) {
+exports.addRating = function(user, party, rating, callback) {
 	getParty(party, function(newparty) {
 		// Check if the party exists or if the user is allowed to rate the party
 		if (newparty == null || user.attending.indexOf(newparty.reg_code) < 0) {
@@ -49,7 +49,7 @@ function addRating(user, party, rating, callback) {
 	});
 }
 
-function updateRating(party, add, callback) {
+exports.updateRating = function(party, add, callback) {
 	schemas.Rating.aggregate([{ '$match': { 'party': party.reg_code }},
 	  { '$group': { '_id': null, 'rating': {'$avg': '$rating'}}}], function(err, avg) {
 

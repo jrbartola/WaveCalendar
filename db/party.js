@@ -5,15 +5,15 @@
 var schemas = require('./schemas.js');
 
 
-function getParty(code, callback) {
+exports.getParty = function(code, callback) {
 	schemas.Party.findOne({"reg_code": code}, function(err, party) {
 		if (err) throw err;
 		// Return callback with matched party
 		return callback(party);
 	});
-}
+};
 
-function retrieveParties(callback, filters, location) {
+exports.retrieveParties = function(callback, filters, location) {
 
 	// Filter party entries based on tags
 
@@ -55,9 +55,9 @@ function retrieveParties(callback, filters, location) {
 		});
 	}
 	
-}
+};
 
-function attendParty(user, party, callback) {
+exports.attendParty = function(user, party, callback) {
 	// Check if user is already attending the party
 	schemas.User.findOne({'email': user.email, 'attending': 
 		{ '$in': [party] }}, function(err, matched) {
@@ -71,23 +71,23 @@ function attendParty(user, party, callback) {
 			
 		});
 	});
-}
+};
 
 
 
 /* Why are these two seemingly identical functions here? */
 
 
-function addParty(props, callback) {
-	// Add party with entered properties
-	var newParty = new schemas.Party(props);
-	newParty.save(function(err) {
-		if (err) throw err;
-		return callback(newParty);
-	});
-}
+// exports.addParty = function(props, callback) {
+// 	// Add party with entered properties
+// 	var newParty = new schemas.Party(props);
+// 	newParty.save(function(err) {
+// 		if (err) throw err;
+// 		return callback(newParty);
+// 	});
+// }
 
-function createParty(user, props, callback) {
+exports.createParty = function(user, props, callback) {
 	var newWave = new schemas.Party(props);
 	newWave.save(function(err) {
 		if (err) {
@@ -97,9 +97,9 @@ function createParty(user, props, callback) {
 		schemas.User.update({'email': user.email}, {'$inc': {'num_parties': 1 }}).exec();
 		return callback(newWave);
 	});
-}
+};
 
-function removeParty(user, reg_code, callback) {
+exports.removeParty = function(user, reg_code, callback) {
 	schemas.Party.findOne({'owner': user._id, 'reg_code': reg_code}, function(err, toremove) {
 		if (toremove != null) {
 			toremove.remove();
@@ -109,62 +109,41 @@ function removeParty(user, reg_code, callback) {
 		return callback(null);
 
 	});
-}
+};
 
-function enumerateAttended(attending, callback) {
+exports.enumerateAttended = function(attending, callback) {
 	// Match the waves up with their registration codes
 	schemas.Party.find({'reg_code': { '$in': attending}})
 	.sort({'time.start': 'descending'})
 	.exec(function(err, parties) {
 		return callback(parties);
 	});
-}
+};
 
-function getUserParties(userid, callback) {
+exports.getUserParties = function(userid, callback) {
 	schemas.Party.find({'owner': userid}).
 	sort({'time.start': 'descending'})
 	.exec(function(err, parties) {
 		return callback(parties);
 	});
-}
+};
 
 // There is probably a better way to do this
 // Runs every time a user logs in, updates party statuses in 
 // database by checking if the end time is past the current date
-function updatePartyStatuses() {
+exports.updatePartyStatuses = function() {
 	var curDate = new Date();
 	schemas.Party.update({'time.end': {'$lt': curDate}}, { '$set': { 'status': 'over'}}, {multi: true}).exec();
 	schemas.Party.update({'$and': [ {'time.start': {'$lt': curDate}}, {'time.end': 
 	  {'$gt': curDate}} ]}, { '$set': {'status': 'ongoing'}}, {multi: true}).exec();
-}
+};
 
-function updateParty(user, reg_code, props, callback) {
+exports.updateParty = function(user, reg_code, props, callback) {
 	schemas.Party.findOneAndUpdate({'owner': user._id, 'reg_code': reg_code}, 
 		{'$set': {'title': props.title, 'invite_only': props.invite_only,
 		'filters': props.filters, 'ratio': props.ratio}}, {new: true}, function(upd) {
-			// Return the updated party
-			return callback(upd);
-		});
-}
-
-
-
-
-// There is probably a better way to do this
-// Runs every time a user logs in, updates party statuses in 
-// database by checking if the end time is past the current date
-function updatePartyStatuses() {
-	var curDate = new Date();
-	schemas.Party.update({'time.end': {'$lt': curDate}}, { '$set': { 'status': 'over'}}, {multi: true}).exec();
-	schemas.Party.update({'$and': [ {'time.start': {'$lt': curDate}}, {'time.end': 
-	  {'$gt': curDate}} ]}, { '$set': {'status': 'ongoing'}}, {multi: true}).exec();
-}
-
-function updateParty(user, reg_code, props, callback) {
-	schemas.Party.findOneAndUpdate({'owner': user._id, 'reg_code': reg_code}, 
-		{'$set': {'title': props.title, 'invite_only': props.invite_only,
-		'filters': props.filters, 'ratio': props.ratio}}, {new: true}, function(upd) {
-			// Return the updated party
-			return callback(upd);
-		});
-}
+		
+		// Return the updated party
+		return callback(upd);
+	});
+};

@@ -24,6 +24,16 @@ exports.getPartyData = function(req, res) {
 	
 };
 
+exports.getPartyByLocationData = function(req, res) {
+	var location = req.body.location;
+	var filters = req.body.filters;
+
+	db.retrieveParties(function(parties) {
+		res.json(parties);
+	}, filters, location);
+	
+};
+
 exports.updatePartyData = function(req, res) {
 	// Why do I need the currentuser here?
 	var user = req.session.user;

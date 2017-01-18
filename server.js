@@ -161,15 +161,7 @@ app.get('/api/filters', filters.getFilterData);
 app.get('/api/party/:partycode', parties.getPartyData);
 
 // TODO: find a way to consolidate this endpoint into a GET request
-app.post('/api/party/location', function(req, res) {
-	var location = req.body.location;
-	var filters = req.body.filters;
-
-	db.retrieveParties(function(parties) {
-		res.json(parties);
-	}, filters, location);
-	
-});
+app.post('/api/party/location', parties.getPartyByLocationData);
 
 app.post('/api/party', parties.createPartyData);
 
