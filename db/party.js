@@ -1,6 +1,6 @@
 'use strict'
 
-// File containing party database operations
+/* Party database operations */
 
 var schemas = require('./schemas.js');
 

@@ -1,5 +1,7 @@
 'use strict'
 
+/* Rating database operations */
+
 var schemas = require("./schemas.js");
 
 exports.findRating = function(user, party, callback) {

@@ -1,6 +1,6 @@
 'use strict'
 
-// File containing User database operations
+/* User database operations */
 
 var schemas = require('./schemas.js');
 

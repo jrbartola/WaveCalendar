@@ -8,10 +8,11 @@ var session = require('express-session');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 /* Enumerate our API routes */
-var users = require('./routes/users');
-var ratings = require('./routes/ratings');
-var parties = require('./routes/parties');
-var filters = require('./routes/filters');
+var userRoute = require('./routes/users');
+var ratingRoute = require('./routes/ratings');
+var partyRoute = require('./routes/parties');
+var filterRoute = require('./routes/filters');
+
 
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
@@ -27,28 +28,7 @@ app.use(session({
 }));
 
 
-var auth = function(req, res, next) {
-	//
-	// For testing purposes only!!!
-	// 
-	db.loginUser('jrbartola@gmail.com', 'pass123', function(user) {
-		if (!user) {
-			res.json(null);
-		} else {
-			db.updatePartyStatuses();
-			db.updateLogins('jrbartola@gmail.com');
-			req.session.user = user;
-		}
-	});
-	//
-	//
-	//
-    if (req.session && req.session.user) {
-        return next();
-  	} else {
-  	    return res.sendFile(__dirname + "/assets/templates/index.html");
-	}  
-};
+var auth = userRoute.auth;
 
 /* Main URI Routing */
 
@@ -56,31 +36,12 @@ app.get('/', auth, function(req, res) {
 	res.sendFile(__dirname + "/assets/templates/home.html");
 });
 
-app.get('/users/:profile', auth, function(req, res) {
-	db.getUser('username', req.params.profile, function(usr) {
-		if (usr === null) {
-			res.redirect('/404');
-		} else {
-			res.sendFile(__dirname + "/assets/templates/profile.html");
-		}
-	});
-});
 
-app.post('/login', function(req, res) {
-	var email = req.body.email;
-	var password = req.body.password;
+// TODO: Fix the following two routes so they are not encapsulated in
+// the userRoutes module.
+app.get('/users/:profile', auth, userRoute.retrieveProfileData);
 
-	db.loginUser(email, password, function(user) {
-		if (!user) {
-			res.json(null);
-		} else {
-			db.updatePartyStatuses();
-			db.updateLogins(email);
-			req.session.user = user;
-			res.json(user);
-		}
-	});
-});
+app.post('/login', userRoute.loginUserData);
 
 app.get('/logout', function(req, res) {
 	req.session.user = null;
@@ -94,102 +55,64 @@ app.get('/404', function(req, res) {
 
 /* User API routes */
 
-app.get('/api/user/:username', auth, users.getUserData);
+app.get('/api/user/:username', auth, userRoute.getUserData);
 
-app.post('/api/user', users.createUserData);
+app.post('/api/user', userRoute.createUserData);
 
-app.put('/api/user/:username', users.updateUserData);
+app.put('/api/user/:username', userRoute.updateUserData);
 
-app.get('/api/currentuser', users.getCurrentUserData);
+app.get('/api/currentuser', userRoute.getCurrentUserData);
 
 /* TODO: Figure out what this route is used for. This looks extremely
    questionable; we already have a POST route for user
 */
 
-app.post('/api/user/:username', function(req, res) {
-	//var field = req.body.field;
-	var value = req.body.value;
-	var user = req.session.user;
-	var party = req.body.party;
-	var username = req.body.username;
-	var adduser = req.body.add;
+app.post('/api/user/:username', userRoute.secondUserPostData);
 
-	// If a party field is passed to the API, add the user to the party's attend list
-	if (party) {
-		// Returns true if user did not attend party yet, returns false if they did
-		db.attendParty(user, party, function(response) {
-			res.json(response);
-		});
-	} else if (username && adduser) {
-		db.addUsername(user.email, username, function(resp) {
-			if (resp == true)
-				res.json({'success': true})
-			else
-				res.json({'success': false})
-		});
-	} else {
-	 	db.getUser(field, value, function(user) {
-	 		res.json(user);
-		});
-	 }
-	
-});
-
-
-
-// We don't need this either. Just reroute all requests to
-// /api/currentuser to /api/user/<currentuser>
-
-// app.get('/api/currentuser', function(req, res) {
-// 	if (req.session && req.session.user) {
-// 		db.getUser('username', req.session.user.username, function(usr) {
-// 			res.json(usr);
-// 		});
-// 	} else {
-// 		res.json(null);
-// 	}
-// });
 
 /* Filter API routes */
 
-app.get('/api/filters', filters.getFilterData);
+app.get('/api/filters', filterRoute.getFilterData);
 
 
 
 /* Party API routes */
 
-app.get('/api/party/:partycode', parties.getPartyData);
+app.get('/api/party/:partycode', partyRoute.getPartyData);
 
 // TODO: find a way to consolidate this endpoint into a GET request
-app.post('/api/party/location', parties.getPartyByLocationData);
+app.post('/api/party/location', partyRoute.getPartyByLocationData);
 
-app.post('/api/party', parties.createPartyData);
+app.post('/api/party', partyRoute.createPartyData);
 
-app.put('/api/party/:partycode', parties.updatePartyData);
+app.put('/api/party/:partycode', partyRoute.updatePartyData);
 
-app.delete('/api/party/:partycode', parties.removePartyData);
+app.delete('/api/party/:partycode', partyRoute.removePartyData);
 
 
 
 /* Rating API routes */
 
-app.get('/api/rating/:partycode/:username', ratings.getRatingData);
+app.get('/api/rating/:partycode/:username', ratingRoute.getRatingData);
 
-app.post('/api/rating', ratings.createRatingData);
+app.post('/api/rating', ratingRoute.createRatingData);
 
 
+/* Register our 404 page */
 
 app.use(function(req, res, next) {
   res.status(404).sendFile(__dirname + "/assets/templates/404.html");
 });
 
 
-// generates a random string
-function randomString(length, chars) {
+// Generates a random string from a given charset
+function randomString(length, charset) {
     var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    for (var i = length; i > 0; --i) result += charset[Math.floor(Math.random() * charset.length)];
     return result;
 }
+
+/* Run our server */
 
 http.listen(3002, function() {
 	console.log("Running Wave Calendar port 3002...");

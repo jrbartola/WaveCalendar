@@ -1,10 +1,10 @@
 'use strict'
 
-// File containing Filter database operations
+/* Filter database operations */
 
 var schemas = require('/schemas.js');
 
-function retrieveFilters(callback) {
+exports.retrieveFilters = function(callback) {
 	// Retrieve all filter entries
 	schemas.Filter.find({'pending': {'$ne': true}}, function(err, filters) {
 		if (err) throw err;
@@ -13,7 +13,7 @@ function retrieveFilters(callback) {
 	});
 }
 
-function addFilter(props, callback) {
+exports.addFilter = function(props, callback) {
 	// Add filter with entered properties
 	var newFilter = new schemas.Filter(props);
 	newFilter.save(function(err) {
