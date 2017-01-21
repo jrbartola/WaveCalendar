@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('waveCal', ['ngAnimate'])
+var app = angular.module('waveCal', ['ngAnimate', 'ngResource'])
 
 app.service('currentuserService', function($http) {
   var currentUser = null;
@@ -21,4 +21,8 @@ app.service('currentuserService', function($http) {
     getCurrentUser: getCurrentUser
   };
 
+});
+
+app.factory('User', function($resource) {
+  return $resource('/api/user/:username');
 });

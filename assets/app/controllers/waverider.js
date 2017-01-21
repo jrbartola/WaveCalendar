@@ -26,7 +26,7 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $scope, $http, curren
   // Chosen filters
   $scope.chosen = [];
 
-  $.get('/api/filters', function(filters) {
+  $http.get('/api/filters').then(function(filters) {
     $scope.filters = filters;
   });
 
@@ -35,7 +35,7 @@ waveRider.controller('WaveRiderCtrl', function($rootScope, $scope, $http, curren
   $scope.getParty = function() {
     
 
-    partyCodeFactory.get('/api/party/' + $scope.code).then(function(data) {
+    $http.get('/api/party/' + $scope.code).then(function(data) {
       // Set current party
     	$scope.party = data;
 
