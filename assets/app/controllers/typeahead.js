@@ -106,10 +106,16 @@ typeAhead.controller('TypeaheadCtrl', function($rootScope, $scope, $http, $timeo
   $scope.distance = -1; // Holds distance/location filter
   $scope.name = ''; // This will hold the selected item
 
+
+
+
+  // Deprecated: Let's use our $resource class function instead
+
+  /*
   $http.get('/api/filters').then(function(resp) {
     // Gets filters 
     $scope.items = resp.data;
-  });
+  });*/
 
 
   
@@ -289,7 +295,7 @@ typeAhead.directive('wavefilter', function($timeout, $rootScope) {
       }
 
       scope.sendRate = function(rating, party) {
-        $.post('/api/rating', {'rating': parseInt(rating), 'party': party, 'user': JSON.stringify($rootScope.currentUser)}, function(response) {
+        $http.post('/api/rating', {'rating': parseInt(rating), 'party': party, 'user': JSON.stringify($rootScope.currentUser)}).then(function(response) {
           if (response == null) {
             swal('No can do!', 'You must attend this party before you can rate it!', 'error');
           } else {

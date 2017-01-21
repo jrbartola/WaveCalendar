@@ -23,6 +23,16 @@ app.service('currentuserService', function($http) {
 
 });
 
+/* Three $resource(s) for API calls */
+
 app.factory('User', function($resource) {
   return $resource('/api/user/:username');
+});
+
+app.factory('Filter', function($resource) {
+  return $resource('/api/filter/:filterid');
+});
+
+app.factory('Party', function($resource) {
+  return $resource('/api/party/:partycode');
 });

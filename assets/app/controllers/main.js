@@ -13,7 +13,7 @@ main.factory('formFactory', function($http) {
   }
 });
 
-main.controller('MainCtrl', function($scope, formFactory) {
+main.controller('MainCtrl', function($scope, $http) {
 	// Scope view of 0 is the description of wave calendar
 	// Scope view of 1 is the login form
 	// Scope view of 2 is the registration form; leads to dashboard
@@ -69,7 +69,7 @@ main.controller('MainCtrl', function($scope, formFactory) {
       var submission = {'name': $scope.name, 'email': $scope.reg.email, 
         'password': $scope.reg.pass, 'location': $scope.location, 'attending': []};
             
-      formFactory.post('/api/register', {'props': submission}).then(function(data) {
+      $http.post('/api/register', {'props': submission}).then(function(data) {
 
         if (data === null) {
           swal({title: "Uh Oh!",
@@ -107,7 +107,7 @@ main.controller('MainCtrl', function($scope, formFactory) {
   }
 
   $scope.login = function() {
-    formFactory.post('/login', {'email': $scope.login.email, 'password': $scope.login.pass}).then(function(data) {
+    $http.post('/login', {'email': $scope.login.email, 'password': $scope.login.pass}).then(function(data) {
       if (data) {
         swal({title: "Logging in",
             text: "Please wait a moment...", 
